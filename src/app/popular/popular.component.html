@@ -1,0 +1,16 @@
+
+  <div class="row">
+    <div class="col-md-5">
+      <app-popular-list
+      (postWasSelected)="selectPost($event)"></app-popular-list>
+    </div>
+    <div class="col-md-7">
+    <app-popular-details
+      *ngIf="selectedPost; else infoText"
+      [post]="selectedPost"></app-popular-details>
+    <ng-template #infoText>
+      <h5>No Post Selected</h5>
+    </ng-template>
+    </div>
+  </div>
+  

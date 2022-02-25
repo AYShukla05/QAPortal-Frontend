@@ -1,0 +1,27 @@
+<div class="row">
+  <a (click)="onSubscribedPosts()" *ngIf="!isSubscribed"><button class="btn btn-primary">Subscribed Posts</button></a>
+  <a (click)="onPopularPosts()" *ngIf="isSubscribed"><button class="btn btn-primary">Popular Posts</button></a>
+
+    <div class="col-xs-12">
+      <button class="btn btn-success" (click)="onCreatePost()">Create New Post</button>
+    </div>
+  </div>
+  <hr>
+  <div class="row" *ngIf="isSubscribed">
+    <div class="col-xs-12">
+      <app-popular-item *ngFor="let post of subscribedPosts"
+      [post]="post"
+      (postSelected)="onPostSelected(post)" (postDeleted)="onPostDeleted(post)"></app-popular-item>
+      
+    </div>
+    
+  </div>
+  <div class="row" *ngIf="!isSubscribed">
+    <div class="col-xs-12">
+      <app-popular-item *ngFor="let post of popularPosts"
+      [post]="post"
+      (postSelected)="onPostSelected(post)" (postDeleted)="onPostDeleted(post)"></app-popular-item>
+      
+    </div>
+    
+  </div>
