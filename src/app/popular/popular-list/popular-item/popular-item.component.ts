@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Post } from '../../post.model';
+import { PostService } from '../../posts.service';
 
 @Component({
   selector: 'app-popular-item',
@@ -8,19 +9,16 @@ import { Post } from '../../post.model';
 })
 export class PopularItemComponent implements OnInit {
   @Input() post!: Post;
-  @Output() postSelected = new EventEmitter<void>();
-  @Output() postDeleted = new EventEmitter<void>();
+  
 
-  constructor() { }
+  constructor(private postService: PostService) { }
 
   ngOnInit(): void {
   }
-  onSelected(){
-    this.postSelected.emit()
-  }
+  
 
   onDeleted(){
-    this.postDeleted.emit()
+    this.postService.postDeleted.emit(this.post)
     console.log("Event from popular-item")
 
   }

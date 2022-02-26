@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { posts, subscribedUsers } from 'src/app/shared/dummydata';
+import { subscribedUsers } from 'src/app/shared/dummydata';
 import { Post } from '../post.model';
+import { PostService } from '../posts.service';
 
 @Component({
   selector: 'app-popular-list',
@@ -12,14 +13,19 @@ export class PopularListComponent implements OnInit {
   popularPosts:Post[] = [];
   subscribedPosts:Post[] = [];
   count:number = 0;
-  @Output() postWasSelected = new EventEmitter<Post>()
   @Output() postWasDeleted = new EventEmitter<number>()
 
-  constructor() { }
+  constructor(private postService: PostService) { }
 
   ngOnInit(): void {
-    this.popularPosts.push(...posts)
+    this.popularPosts= this.postService.getPosts()
     this.count = this.popularPosts.length
+
+    this.postService.postDeleted.subscribe(
+      (p: Post) => {
+        this.popularPosts = this.popularPosts.filter(post => post.id !== p.id)
+      }
+    )
   }
   onSubscribedPosts(){
     this.subscribedPosts = this.popularPosts.filter(p => subscribedUsers.map(u => u.name).includes(p.owner))
@@ -35,12 +41,12 @@ export class PopularListComponent implements OnInit {
     this.popularPosts.push(post)
   }
   
-  onPostSelected(post:Post){
-    this.postWasSelected.emit(post)
-  }
-  onPostDeleted(p:Post){
-    this.popularPosts = this.popularPosts.filter(post => post.id !== p.id)
-    console.log("Event from popular-list")
-    console.log(this.popularPosts)
-  }
+  
+  // onPostDeleted(p:Post){
+  //   this.popularPosts = this.popularPosts.filter(post => post.id !== p.id)
+  //   console.log("Event from popular-list")
+  //   console.log(this.popularPosts)
+  // }
 }
+
+

@@ -10,6 +10,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { PopularListComponent } from './popular/popular-list/popular-list.component';
 import { PopularDetailsComponent } from './popular/popular-details/popular-details.component';
 import { PopularItemComponent } from './popular/popular-list/popular-item/popular-item.component';
+import { PostEditComponent } from './popular/post-edit/post-edit.component';
+import { PostStartComponent } from './popular/post-start/post-start.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { PopularItemComponent } from './popular/popular-list/popular-item/popula
     ProfileComponent,
     PopularListComponent,
     PopularDetailsComponent,
-    PopularItemComponent
+    PopularItemComponent,
+    PostEditComponent,
+    PostStartComponent
   ],
   imports: [
     BrowserModule,
