@@ -19,7 +19,7 @@ export class PopularItemComponent implements OnInit {
 
   onDeleted(){
     this.postService.postDeleted.emit(this.post)
-    console.log("Event from popular-item")
+    // console.log("Event from popular-item")
 
   }
 }

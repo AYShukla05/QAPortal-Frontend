@@ -9,18 +9,19 @@ import { PostService } from '../posts.service';
   styleUrls: ['./popular-details.component.css']
 })
 export class PopularDetailsComponent implements OnInit {
-  post!: Post;
+  post!: {[key: string]:any};
   id: number | undefined;
   constructor(private postService: PostService, 
-    private route: ActivatedRoute,
-    private router: Router) { }
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.params
       .subscribe(
         (params: Params) => {
-          this.id = +params['id'];
-          this.post = this.postService.getPost(this.id-1);
+          // console.log(this.post)
+          this.id = params['id'];
+          this.post = this.postService.getPost(this.id);
+
         }
       );
   }

@@ -1,18 +1,18 @@
 
   <div class="row">
     <div class="col-xs-12">
-      <h1>{{ post.title }}</h1>
+      <h1>{{ post['title'] }}</h1>
     </div>
   </div>
   
   <div class="row">
     <div class="col-xs-12">
-      <h5>Made by{{ post.owner }}</h5>
+      <h5>Made by {{ post['owner']['name'] }}</h5>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12">
-      {{ post.body }}
+      {{ post['body'] }}
     </div>
   </div>
   

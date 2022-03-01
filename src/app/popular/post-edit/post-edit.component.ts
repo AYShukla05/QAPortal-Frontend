@@ -19,7 +19,7 @@ export class PostEditComponent implements OnInit {
     const value = form.value
     const newPost = new Post('profile 2', value.title, value. body, this.postService.getPosts().length+1)
     this.postService.getPosts().push(newPost)
-    console.log(this.postService.getPosts())
+    // console.log(this.postService.getPosts())
     form.reset();
   }
 }

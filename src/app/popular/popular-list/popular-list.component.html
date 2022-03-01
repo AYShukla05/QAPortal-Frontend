@@ -1,5 +1,3 @@
-<button class="btn btn-primary" (click)="getAsyncPosts()">Async Post</button>
-
 <div class="row">
   <a (click)="onSubscribedPosts()" *ngIf="!isSubscribed"><button class="btn btn-primary">Subscribed Posts</button></a>
   <a (click)="onPopularPosts()" *ngIf="isSubscribed"><button class="btn btn-primary">Popular Posts</button></a>

@@ -17,18 +17,18 @@ export class ProfileComponent implements OnInit {
     this.thissubscribedUsers.push(...this.profilesService.profiles)
   }
   onSubscribe(user: { name:string;}){
-    console.log(this.profilesService.subscribedUsers, user)
+    // console.log(this.profilesService.subscribedUsers, user)
 
     if (this.profilesService.subscribedUsers.includes(user)){
-      console.log(user)
+      // console.log(user)
       this.profilesService.subscribedUsers = this.profilesService.subscribedUsers.filter(u => u.name !== user.name)
-      console.log(this.profilesService.subscribedUsers.filter(u => u.name !== user.name))
+      // console.log(this.profilesService.subscribedUsers.filter(u => u.name !== user.name))
       // console.log(subscribedUsers)
     }
     else{
-    console.log(user)
+    // console.log(user)
     this.profilesService.subscribedUsers.push(user)
-    console.log(this.profilesService.subscribedUsers)
+    // console.log(this.profilesService.subscribedUsers)
   }
   }
 

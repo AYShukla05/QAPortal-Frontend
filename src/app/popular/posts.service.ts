@@ -18,22 +18,30 @@ private posts: Post[] = [{owner: 'Profile 1', title: 'First Post', body:"This is
 
 getPosts() { 
    
-    console.log("From inital")
-    return this.posts
-    // return this.http
-    //   .get<Post[]>('http://127.0.0.1:8000/api/posts')
+    // console.log("From inital, Copy")
+    return this.posts.slice()
+}
+
+setPosts(updatedPosts: Post[]){
+    return this.posts = updatedPosts
 }
 getPostsasync(){
     return this.http.get<Post[]>('http://127.0.0.1:8000/api/posts')
     .pipe(map(result => {
-        console.log("Result:",result)
-        return result.map(post => {console.log("Post:",post);return {...post}})
+        // console.log("Result:",result)
+        return result
+    //     .map(post => {console.log("Post:",post);
+    //     return {...post}
+    // })
     }),
     );
 }
 
-getPost(id: number) {
-    return this.posts[id]
+getPost(id: any) {
+    // console.log("From getPost", this.posts, "Post:", this.posts[id])
+    let post = this.posts.filter(p => p.id == id)
+    // console.log("Post Owner:", post[0]['owner'])
+    return post[0]
 }
 
 }
