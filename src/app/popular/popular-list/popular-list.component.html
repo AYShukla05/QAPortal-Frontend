@@ -1,9 +1,11 @@
+<button class="btn btn-primary" (click)="getAsyncPosts()">Async Post</button>
+
 <div class="row">
   <a (click)="onSubscribedPosts()" *ngIf="!isSubscribed"><button class="btn btn-primary">Subscribed Posts</button></a>
   <a (click)="onPopularPosts()" *ngIf="isSubscribed"><button class="btn btn-primary">Popular Posts</button></a>
 
     <div class="col-xs-12">
-      <button class="btn btn-success" (click)="onCreatePost()">Create New Post</button>
+      <a routerLink="new"><button class="btn btn-success" (click)="onCreatePost()">Create New Post</button></a>
     </div>
   </div>
   <hr>

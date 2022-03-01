@@ -17,7 +17,9 @@ const routes: Routes = [
   ] },
   { path: 'subscriptions', component: SubscriptionsComponent },
   { path: 'notifications', component: NotificationsComponent },
-  { path: 'profile', component: ProfileComponent }
+  { path: 'profile', component: ProfileComponent },
+  { path: 'new', component: PostEditComponent }
+
 
 ];
 

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { subscribedUsers } from 'src/app/shared/dummydata';
+import { ProfilesService } from 'src/app/profiles.service';
 import { Post } from '../post.model';
 import { PostService } from '../posts.service';
 
@@ -15,7 +15,7 @@ export class PopularListComponent implements OnInit {
   count:number = 0;
   @Output() postWasDeleted = new EventEmitter<number>()
 
-  constructor(private postService: PostService) { }
+  constructor(private postService: PostService, private profilesService:ProfilesService) { }
 
   ngOnInit(): void {
     this.popularPosts= this.postService.getPosts()
@@ -28,7 +28,7 @@ export class PopularListComponent implements OnInit {
     )
   }
   onSubscribedPosts(){
-    this.subscribedPosts = this.popularPosts.filter(p => subscribedUsers.map(u => u.name).includes(p.owner))
+    this.subscribedPosts = this.popularPosts.filter(p => this.profilesService.subscribedUsers.map(u => u.name).includes(p.owner))
     console.log(this.subscribedPosts)
     this.isSubscribed = true
   }
@@ -41,7 +41,10 @@ export class PopularListComponent implements OnInit {
     this.popularPosts.push(post)
   }
   
-  
+  getAsyncPosts(){
+    let posts = this.postService.getPostsasync().subscribe()
+    console.log(posts)
+  }
   // onPostDeleted(p:Post){
   //   this.popularPosts = this.popularPosts.filter(post => post.id !== p.id)
   //   console.log("Event from popular-list")

@@ -1,8 +1,11 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 import { Post } from "./post.model"
-
+@Injectable()
 export class PostService{
+    constructor(private http: HttpClient){}
 postSelected = new EventEmitter<Post>();
 postDeleted = new EventEmitter<Post>();
 
@@ -14,7 +17,19 @@ private posts: Post[] = [{owner: 'Profile 1', title: 'First Post', body:"This is
 
 
 getPosts() { 
+   
+    console.log("From inital")
     return this.posts
+    // return this.http
+    //   .get<Post[]>('http://127.0.0.1:8000/api/posts')
+}
+getPostsasync(){
+    return this.http.get<Post[]>('http://127.0.0.1:8000/api/posts')
+    .pipe(map(result => {
+        console.log("Result:",result)
+        return result.map(post => {console.log("Post:",post);return {...post}})
+    }),
+    );
 }
 
 getPost(id: number) {

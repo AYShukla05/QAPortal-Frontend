@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { profiles, subscribedUsers } from '../shared/dummydata';
+import { ProfilesService } from '../profiles.service';
 
 @Component({
   selector: 'app-subscriptions',
@@ -7,27 +7,18 @@ import { profiles, subscribedUsers } from '../shared/dummydata';
   styleUrls: ['./subscriptions.component.css']
 })
 export class SubscriptionsComponent implements OnInit {
-  thissubscribedUsers:{ name:string; }[] = []
-  subscribedUser: { name: string; } | undefined;
-  constructor() { }
+  subscribedUsers:{ name:string; }[] = []
+  // subscribedUser: { name: string; } | undefined;
+  constructor(private profilesService:ProfilesService) { }
 
   ngOnInit(): void {
-    this.thissubscribedUsers.push(...profiles)
+    this.subscribedUsers.push(...this.profilesService.subscribedUsers)
   }
 
-  onSubscribe(user: { name:string;}){
-    console.log(subscribedUsers, user)
-
-    if (subscribedUsers.includes(user)){
-      console.log(user)
-      console.log(subscribedUsers.filter(u => u.name !== user.name))
-      // console.log(subscribedUsers)
-    }
-    else{
-    console.log(user)
-    subscribedUsers.push(user)
-    console.log(subscribedUsers)
-  }
-  }
+  
 
 }
+// function subscribedUsers(subscribedUsers: any, user: { name: string; }) {
+//   throw new Error('Function not implemented.');
+// }
+

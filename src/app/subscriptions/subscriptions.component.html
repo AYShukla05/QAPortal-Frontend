@@ -1,7 +1,8 @@
-<div *ngFor="let user of thissubscribedUsers" >
-    <div>
-        <h1>{{ user.name }}</h1>
-        <button class="btn-secondary"  (click)="onSubscribe(user)">Subscribe</button>
+<div  *ngIf="subscribedUsers">
+    <div style="border: 1px solid #000" *ngFor="let user of subscribedUsers" >
+        <div>
+            <h1>{{ user.name }}</h1>
+        </div>
     </div>
-
+    
 </div>
