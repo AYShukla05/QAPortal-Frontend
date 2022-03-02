@@ -9,8 +9,8 @@ import { PostService } from '../posts.service';
   styleUrls: ['./popular-details.component.css']
 })
 export class PopularDetailsComponent implements OnInit {
-  post!: {[key: string]:any};
-  id: number | undefined;
+  post!: Post;
+  id: string | undefined;
   constructor(private postService: PostService, 
     private route: ActivatedRoute) { }
 
@@ -18,12 +18,20 @@ export class PopularDetailsComponent implements OnInit {
     this.route.params
       .subscribe(
         (params: Params) => {
-          // console.log(this.post)
           this.id = params['id'];
           this.post = this.postService.getPost(this.id);
-
+          console.log(this.post)
         }
       );
+  }
+  onDeleted(){
+    if(this.id!==undefined)
+    {
+      console.log('sending request')
+      this.postService.deletePost(this.id)
+      
+      // console.log("Response",response)
+    }
   }
 
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Post } from '../post.model';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { PostService } from '../posts.service';
 
 @Component({
@@ -9,17 +10,31 @@ import { PostService } from '../posts.service';
   styleUrls: ['./post-edit.component.css']
 })
 export class PostEditComponent implements OnInit {
-
-  constructor(private postService: PostService) { }
+  private routeSub!: Subscription;
+  id: string | undefined
+  constructor(private postService: PostService,private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-  }
-
+    this.routeSub = this.route.params.subscribe(params => {
+      this.id = params['id'] 
+  })
+  
+}
   onSubmit(form: NgForm){
     const value = form.value
-    const newPost = new Post('profile 2', value.title, value. body, this.postService.getPosts().length+1)
-    this.postService.getPosts().push(newPost)
-    // console.log(this.postService.getPosts())
+    const newPost = { title: value.title, body: value.body}
+    console.log("Inside edit",this.route.snapshot.params)
+    
+    if (this.id==undefined){
+      this.postService.createPost(newPost)
+      }
+    else{
+    this.postService.savePost(this.id, newPost)
+    this.id = undefined
+    }
     form.reset();
+  }
+  onDestroy(){
+    this.routeSub.unsubscribe();
   }
 }

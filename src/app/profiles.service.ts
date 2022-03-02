@@ -1,8 +1,14 @@
 import { Injectable } from "@angular/core";
+import { HttpClient } from '@angular/common/http';
+import { Profile } from "./profile/profile.model";
 
 @Injectable( {providedIn: 'root'})
 export class ProfilesService{
-    subscribedUsers: {name:string}[] = []
-    profiles = [{name: 'Profile 1'},{name: 'Profile 2'},{name: 'Profile 3'}]
+    constructor(private http: HttpClient){}
 
+    subscribedUsers: Profile[] = []
+
+    getProfiles(){
+        return this.http.get<any[]>('http://127.0.0.1:8000/api/profiles')
+    }
 }

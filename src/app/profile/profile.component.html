@@ -1,8 +1,7 @@
-<div *ngFor="let user of thissubscribedUsers" >
+<div *ngFor="let user of allProfiles" >
     <div>
         <h1>{{ user.name }}</h1>
-        <button class="btn-secondary"  (click)="onSubscribe(user)">Subscribe</button>
+        <button class="btn-secondary" (click)="onSubscribe(user)">Subscribe</button>
     </div>
 
 </div>
-

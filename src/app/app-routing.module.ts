@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'notifications', component: NotificationsComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'new', component: PostEditComponent }
-
+  
 
 ];
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfilesService } from '../profiles.service';
+import { Profile } from './profile.model';
 
 @Component({
   selector: 'app-profile',
@@ -7,28 +8,26 @@ import { ProfilesService } from '../profiles.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  thissubscribedUsers:{ name:string; }[] = []
+  allProfiles:Profile[] = []
   profile = {
     name: 'Profile 1'
   }
   constructor(private profilesService:ProfilesService) { }
 
   ngOnInit(): void {
-    this.thissubscribedUsers.push(...this.profilesService.profiles)
+    this.profilesService.getProfiles().subscribe((profiles:Profile[])=>{
+      this.allProfiles.push(...profiles);
+      // console.log(this.allProfiles)
+    })
   }
-  onSubscribe(user: { name:string;}){
-    // console.log(this.profilesService.subscribedUsers, user)
+  onSubscribe(user: Profile){
+
 
     if (this.profilesService.subscribedUsers.includes(user)){
-      // console.log(user)
       this.profilesService.subscribedUsers = this.profilesService.subscribedUsers.filter(u => u.name !== user.name)
-      // console.log(this.profilesService.subscribedUsers.filter(u => u.name !== user.name))
-      // console.log(subscribedUsers)
     }
     else{
-    // console.log(user)
     this.profilesService.subscribedUsers.push(user)
-    // console.log(this.profilesService.subscribedUsers)
   }
   }
 

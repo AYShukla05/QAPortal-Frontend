@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Post } from '../../post.model';
 import { PostService } from '../../posts.service';
 
@@ -9,17 +10,15 @@ import { PostService } from '../../posts.service';
 })
 export class PopularItemComponent implements OnInit {
   @Input() post!: Post;
-  
+  id: string | undefined
 
-  constructor(private postService: PostService) { }
+
+  constructor(private postService: PostService,private route: ActivatedRoute ) { }
 
   ngOnInit(): void {
-  }
+
+}
   
-
-  onDeleted(){
-    this.postService.postDeleted.emit(this.post)
-    // console.log("Event from popular-item")
-
-  }
+  
+  
 }

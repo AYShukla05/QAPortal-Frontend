@@ -3,18 +3,17 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 import { Post } from "./post.model"
-@Injectable()
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+@Injectable({
+    providedIn: 'root'
+  })
 export class PostService{
-    constructor(private http: HttpClient){}
+constructor(private http: HttpClient,private router: Router){}
 postSelected = new EventEmitter<Post>();
-postDeleted = new EventEmitter<Post>();
 
 
-private posts: Post[] = [{owner: 'Profile 1', title: 'First Post', body:"This is the first post", id:1}, 
-{owner: 'Profile 2',title: 'Second Post', body:"This is the second post", id:2}, 
-{owner: 'Profile 3', title: 'Third Post', body:"This is the first post", id:3},
-{owner: 'Profile 1', title: 'Fourth Post', body:"This is the first post", id:4} ]
-
+private posts: Post[] = []
 
 getPosts() { 
    
@@ -28,20 +27,40 @@ setPosts(updatedPosts: Post[]){
 getPostsasync(){
     return this.http.get<Post[]>('http://127.0.0.1:8000/api/posts')
     .pipe(map(result => {
-        // console.log("Result:",result)
         return result
-    //     .map(post => {console.log("Post:",post);
-    //     return {...post}
-    // })
     }),
     );
 }
 
 getPost(id: any) {
-    // console.log("From getPost", this.posts, "Post:", this.posts[id])
     let post = this.posts.filter(p => p.id == id)
-    // console.log("Post Owner:", post[0]['owner'])
     return post[0]
+}
+
+
+
+createPost(post: {title: string, body: string}){
+    this.http.post('http://127.0.0.1:8000/api/create-post',post)
+    .subscribe()
+    this.router.navigate(['popular'])
+}
+
+
+savePost(postID: string, post: {title: string, body: string}) {
+    const updatedPostID = postID
+    const updatedPost = { title: post.title, body: post.body}
+    this.http.put('http://127.0.0.1:8000/api/update-post/'+updatedPostID,updatedPost)
+    .subscribe()
+    this.router.navigate([''])
+
+}
+
+deletePost(id:string){
+    this.router.navigate([''])
+    this.http.delete('http://127.0.0.1:8000/api/delete-post/'+id)
+    .subscribe(data => console.log(data));
+    
+    
 }
 
 }

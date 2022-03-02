@@ -8,7 +8,6 @@ import { PostService } from './posts.service';
   selector: 'app-popular',
   templateUrl: './popular.component.html',
   styleUrls: ['./popular.component.css'],
-  providers: [PostService]
 })
 export class PopularComponent implements OnInit {
   selectedPost: Post | undefined;

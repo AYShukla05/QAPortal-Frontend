@@ -15,4 +15,6 @@
       {{ post['body'] }}
     </div>
   </div>
-  
+
+  <a routerLink="edit"><button class="btn btn-secondary">Edit Post</button></a>
+  <button class="btn btn-danger" (click)="onDeleted()">Delete Post</button>
