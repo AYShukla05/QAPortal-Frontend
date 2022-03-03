@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfilesService } from '../profiles.service';
+import { ProfilesService } from './profiles.service';
 import { Profile } from './profile.model';
 
 @Component({
@@ -9,15 +9,12 @@ import { Profile } from './profile.model';
 })
 export class ProfileComponent implements OnInit {
   allProfiles:Profile[] = []
-  profile = {
-    name: 'Profile 1'
-  }
   constructor(private profilesService:ProfilesService) { }
 
   ngOnInit(): void {
     this.profilesService.getProfiles().subscribe((profiles:Profile[])=>{
       this.allProfiles.push(...profiles);
-      // console.log(this.allProfiles)
+      this.profilesService.profiles = this.allProfiles
     })
   }
   onSubscribe(user: Profile){

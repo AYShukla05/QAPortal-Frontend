@@ -1,6 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { ProfilesService } from 'src/app/profiles.service';
+import { Component, OnInit } from '@angular/core';
+import { ProfilesService } from 'src/app/profile/profiles.service';
 import { Post } from '../post.model';
 import { PostService } from '../posts.service';
 

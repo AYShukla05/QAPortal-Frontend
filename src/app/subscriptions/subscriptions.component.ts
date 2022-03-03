@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfilesService } from '../profiles.service';
+import { ProfilesService } from '../profile/profiles.service';
 
 @Component({
   selector: 'app-subscriptions',

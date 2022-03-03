@@ -4,7 +4,6 @@ import { map } from 'rxjs/operators';
 
 import { Post } from "./post.model"
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 @Injectable({
     providedIn: 'root'
   })
@@ -16,8 +15,6 @@ postSelected = new EventEmitter<Post>();
 private posts: Post[] = []
 
 getPosts() { 
-   
-    // console.log("From inital, Copy")
     return this.posts.slice()
 }
 
@@ -56,10 +53,10 @@ savePost(postID: string, post: {title: string, body: string}) {
 }
 
 deletePost(id:string){
-    this.router.navigate([''])
     this.http.delete('http://127.0.0.1:8000/api/delete-post/'+id)
     .subscribe(data => console.log(data));
-    
+    this.router.navigate([''])
+
     
 }
 

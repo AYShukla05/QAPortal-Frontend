@@ -13,9 +13,9 @@
     <a class="nav-link" routerLink="popular">Home <span class="sr-only">(current)</span></a>
     <a class="nav-link" routerLink="subscriptions">Subscriptions</a>    
     <a class="nav-link" routerLink="notifications">Notifications</a>
-    <a class="nav-link" routerLink="profile">Profile</a>
+    <a class="nav-link" routerLink="profiles">Profile</a>
   <li class="nav-item btn btn-outline">
-        <a class="nav-link" *ngIf="!isLoggedIn" (click)="changeLogIn">Login</a>
+        <a routerLink="login" class="nav-link" *ngIf="!isLoggedIn" (click)="changeLogIn">Login/Sign Up</a>
       </li>
       <li class="nav-item btn btn-outline">
         <a class="nav-link" *ngIf="isLoggedIn" (click)="changeLogIn">Logout</a>

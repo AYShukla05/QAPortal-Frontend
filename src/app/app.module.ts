@@ -14,6 +14,8 @@ import { PopularDetailsComponent } from './popular/popular-details/popular-detai
 import { PopularItemComponent } from './popular/popular-list/popular-item/popular-item.component';
 import { PostEditComponent } from './popular/post-edit/post-edit.component';
 import { PostStartComponent } from './popular/post-start/post-start.component';
+import { ProfileEditComponent } from './profile/profile-edit/profile-edit.component';
+import { ProfileDetailsComponent } from './profile/profile-details/profile-details.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { PostStartComponent } from './popular/post-start/post-start.component';
     PopularDetailsComponent,
     PopularItemComponent,
     PostEditComponent,
-    PostStartComponent
+    PostStartComponent,
+    ProfileEditComponent,
+    ProfileDetailsComponent
   ],
   imports: [
     BrowserModule,

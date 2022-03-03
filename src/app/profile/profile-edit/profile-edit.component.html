@@ -1,0 +1,33 @@
+<form (ngSubmit)="onSubmit(fo)" #fo="ngForm">
+    <div class="form-group">
+      <label for="profile-name">Name</label>
+      <input type="text" class="form-control" 
+      id="profile-title" placeholder="Enter your name" 
+      ngModel name="first_name">
+    </div>
+    <div class="form-group">
+      <label for="profile-username">Username</label>
+      <input type="text" class="form-control" 
+      id="profile-username" placeholder="Enter your username" 
+      ngModel name="username">
+    </div>
+    <div class="form-group">
+      <label for="profile-email">Email</label>
+      <input type="text" class="form-control" 
+      id="profile-email" placeholder="Enter your email" 
+      ngModel name="email">
+    </div>
+    <div class="form-group">
+      <label for="Password1">Password</label>
+      <input type="password" class="form-control" 
+      id="password" placeholder="Enter the password" 
+      ngModel name="password">
+    </div>
+    <div class="form-group">
+      <label for="Password">Confirm Password</label>
+      <input type="password" class="form-control" 
+      id="confirm-password" placeholder="Confirm the password" 
+      ngModel name="confirm-password">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>

@@ -21,9 +21,9 @@ export class PostEditComponent implements OnInit {
   
 }
   onSubmit(form: NgForm){
+    console.log(form)
     const value = form.value
     const newPost = { title: value.title, body: value.body}
-    console.log("Inside edit",this.route.snapshot.params)
     
     if (this.id==undefined){
       this.postService.createPost(newPost)

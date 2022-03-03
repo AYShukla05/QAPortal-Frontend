@@ -2,11 +2,10 @@ Display:
 Popular Posts
 Subscribed Posts
 Profiles
-
+Posts form
 CRUD posts logic
 
 Remaining:
-Posts form
 CRUD profiles
 Authentication
 Upvotes and comments
