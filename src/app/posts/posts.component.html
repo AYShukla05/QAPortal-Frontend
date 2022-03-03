@@ -1,0 +1,37 @@
+<div class="row">
+    <a (click)="onSubscribedPosts()" *ngIf="!isSubscribed"><button class="btn btn-primary">Subscribed Posts</button></a>
+    <a (click)="onPopularPosts()" *ngIf="isSubscribed"><button class="btn btn-primary">Popular Posts</button></a>
+  
+      <div class="col-xs-12">
+        <a routerLink="/new"><button class="btn btn-success">Create New Post</button></a>
+      </div>
+</div>
+<hr>
+<div *ngIf="!isSubscribed">
+<div *ngFor="let post of allPosts" >
+    <a
+routerLink="{{post.id}}"
+class="list-group-item clearfix"
+>
+<div class="pull-left">
+  <h4 class="list-group-item-heading">{{ post.title }}</h4>
+  <p class="list-group-item-text">{{ post.body }}</p>
+</div></a>
+
+</div>
+</div>
+
+<div *ngIf="isSubscribed">
+<div *ngFor="let post of subscribedPosts" >
+    <a
+routerLink="{{post.id}}"
+class="list-group-item clearfix"
+>
+<div class="pull-left">
+  <h4 class="list-group-item-heading">{{ post.title }}</h4>
+  <p class="list-group-item-text">{{ post.body }}</p>
+</div></a>
+
+</div>
+</div>
+<router-outlet></router-outlet>

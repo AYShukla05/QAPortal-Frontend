@@ -1,0 +1,25 @@
+<div>
+    <div>{{post.title}}</div>
+    <div>{{post.body}}</div>
+
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+      <div class="form-group">
+        <input type="text" class="form-control" 
+        id="comment" placeholder="Comment on this post"
+        ngModel name="comment">
+      </div>
+      <button type="submit" class="btn btn-primary">Comment</button>
+
+    </form>
+<hr />
+<div *ngIf="comments.length>0">
+  <div *ngFor="let comment of comments">
+    <p>{{comment.body}}</p>
+    Made by {{ comment.owner.name }}
+  </div>
+
+</div>
+<hr />
+  <a routerLink="edit"><button class="btn btn-secondary">Edit Profile</button></a>
+  <button class="btn btn-danger" (click)="onDelete()">Delete Profile</button>
+</div>

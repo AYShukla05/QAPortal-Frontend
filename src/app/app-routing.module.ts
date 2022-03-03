@@ -1,22 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NotificationsComponent } from './notifications/notifications.component';
-import { PopularDetailsComponent } from './popular/popular-details/popular-details.component';
-import { PopularComponent } from './popular/popular.component';
-import { PostEditComponent } from './popular/post-edit/post-edit.component';
-import { PostStartComponent } from './popular/post-start/post-start.component';
+import { PostDetailsComponent } from './posts/post-details-component/post-details-component.component';
+import { PostEditComponentComponent } from './posts/post-edit-component/post-edit-component.component';
+import { PostsComponent } from './posts/posts.component';
 import { ProfileDetailsComponent } from './profile/profile-details/profile-details.component';
 import { ProfileEditComponent } from './profile/profile-edit/profile-edit.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 
 const routes: Routes = [
-  { path: '',  redirectTo: '/popular', pathMatch: 'full' },
-  { path: 'popular', component: PopularComponent, children: [
-    { path: '', component: PostStartComponent, pathMatch: 'full' },
-    { path: ':id', component: PopularDetailsComponent },
-    { path: ':id/edit', component: PostEditComponent },
-  ] },
+  { path: '',  redirectTo: '/posts', pathMatch: 'full' },
+  { path: 'posts', children: [
+    { path: '', component: PostsComponent, pathMatch: 'full'},
+    { path: ':id', component: PostDetailsComponent },
+    { path: ':id/edit', component: PostEditComponentComponent },
+  ]},
+
   { path: 'subscriptions', component: SubscriptionsComponent },
   { path: 'notifications', component: NotificationsComponent },
   { path: 'profiles', children: [
@@ -24,7 +24,7 @@ const routes: Routes = [
     { path: ':id', component: ProfileDetailsComponent },
     { path: ':id/edit', component: ProfileEditComponent },
   ]},
-  { path: 'new', component: PostEditComponent },
+  { path: 'new', component: PostEditComponentComponent },
   { path: 'login', component: ProfileEditComponent}
   
 

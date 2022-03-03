@@ -8,11 +8,12 @@ import { Router } from '@angular/router';
     providedIn: 'root'
   })
 export class PostService{
+subscribedUsers: any;
 constructor(private http: HttpClient,private router: Router){}
 postSelected = new EventEmitter<Post>();
 
 
-private posts: Post[] = []
+posts: Post[] = []
 
 getPosts() { 
     return this.posts.slice()
@@ -29,7 +30,7 @@ getPostsasync(){
     );
 }
 
-getPost(id: any) {
+getPost(id: string) {
     let post = this.posts.filter(p => p.id == id)
     return post[0]
 }
@@ -39,11 +40,11 @@ getPost(id: any) {
 createPost(post: {title: string, body: string}){
     this.http.post('http://127.0.0.1:8000/api/create-post',post)
     .subscribe()
-    this.router.navigate(['popular'])
+    this.router.navigate(['posts'])
 }
 
 
-savePost(postID: string, post: {title: string, body: string}) {
+updatePost(postID: string, post: {title: string, body: string}) {
     const updatedPostID = postID
     const updatedPost = { title: post.title, body: post.body}
     this.http.put('http://127.0.0.1:8000/api/update-post/'+updatedPostID,updatedPost)
@@ -54,10 +55,23 @@ savePost(postID: string, post: {title: string, body: string}) {
 
 deletePost(id:string){
     this.http.delete('http://127.0.0.1:8000/api/delete-post/'+id)
-    .subscribe(data => console.log(data));
+    .subscribe();
     this.router.navigate([''])
 
-    
 }
 
+
+addComment(postID:string, comment:{'body':string}){
+    this.http.post('http://127.0.0.1:8000/api/add-comment/'+postID,comment).subscribe()
+    this.router.navigate(['posts',postID])
+}
+
+getComments(postID:string){
+    return this.http.get('http://127.0.0.1:8000/api/get-comments/'+postID)
+    .pipe(map(result => {
+        return result
+    }),
+    );
+
+}
 }
