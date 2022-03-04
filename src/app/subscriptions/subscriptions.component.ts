@@ -7,12 +7,14 @@ import { ProfilesService } from '../profile/profiles.service';
   styleUrls: ['./subscriptions.component.css']
 })
 export class SubscriptionsComponent implements OnInit {
+  loading = true
   subscribedUsers:{ name:string; }[] = []
   // subscribedUser: { name: string; } | undefined;
   constructor(private profilesService:ProfilesService) { }
 
   ngOnInit(): void {
     this.subscribedUsers.push(...this.profilesService.subscribedUsers)
+    this.loading = false
   }
 
   

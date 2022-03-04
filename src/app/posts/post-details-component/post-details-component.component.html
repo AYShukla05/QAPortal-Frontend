@@ -1,6 +1,8 @@
 <div>
     <div>{{post.title}}</div>
     <div>{{post.body}}</div>
+    <span class="badge rounded-pill bg-success">Upvote</span>
+    <span class="badge rounded-pill bg-danger">Downvote</span>
 
     <form (ngSubmit)="onSubmit(f)" #f="ngForm">
       <div class="form-group">
@@ -12,14 +14,37 @@
 
     </form>
 <hr />
-<div *ngIf="comments.length>0">
-  <div *ngFor="let comment of comments">
-    <p>{{comment.body}}</p>
-    Made by {{ comment.owner.name }}
+
+<div *ngIf="comments.length>0; else infoText">
+  <div *ngIf="loading" class="d-flex justify-content-center">
+    <div class="spinner-border" role="status">
+    </div>
   </div>
+  <div *ngFor="let comment of comments" >
+    <div *ngIf="!editCommentMode">
+
+    <p><b>{{comment.body}}</b></p>
+    <small> Made by {{ comment.owner.name }}</small>
+    <button type="button" class="btn btn-warning btn-sm" (click)="onEditComment()" >Edit</button>
+    <button type="button" class="btn btn-danger btn-sm" (click)="onDeleteComment(comment.id)">Delete</button>
+  </div>
+  <div *ngIf="editCommentMode">
+    <form (ngSubmit)="onSubmitComment(f, comment.id)" #f="ngForm" >
+      <div class="form-group">
+        <input type="text" class="form-control" 
+        id="comment" 
+        [(ngModel)]="comment.body" name="comment">
+      </div>
+      <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+</div>
+</div>
 
 </div>
+<ng-template #infoText>
+  <p>No comments Yet! Be the first to comment.</p>
+</ng-template>
 <hr />
-  <a routerLink="edit"><button class="btn btn-secondary">Edit Profile</button></a>
-  <button class="btn btn-danger" (click)="onDelete()">Delete Profile</button>
+  <a routerLink="edit"><button class="btn btn-secondary">Edit Post</button></a>
+  <button class="btn btn-danger" (click)="onDelete()">Delete Post</button>
 </div>

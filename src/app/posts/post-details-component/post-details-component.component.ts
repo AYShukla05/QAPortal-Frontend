@@ -10,6 +10,9 @@ import { PostService } from '../posts.service';
   styleUrls: ['./post-details-component.component.css']
 })
 export class PostDetailsComponent implements OnInit {
+  loading = true
+  comment:{ 'body': string} = { 'body': 'string'};
+  editCommentMode: boolean = false;
   comments:any[] = []
   post!: Post; 
   id: string | undefined;
@@ -28,16 +31,20 @@ export class PostDetailsComponent implements OnInit {
     if(this.id!==undefined) {
       this.postService.getComments(this.id).subscribe(
         (comments:any) => {
+          this.loading = false
           this.comments.push(...comments)
         }
         )
     }
+
+    
+
   }
 
   onSubmit(form: NgForm) {
-    const comment = {'body':form.value.comment};
+    this.comment = {'body':form.value.comment};
     if (this.id!==undefined){
-      this.postService.addComment(this.id, comment)
+      this.postService.addComment(this.id, this.comment)
     }
     form.reset()
 
@@ -48,6 +55,26 @@ export class PostDetailsComponent implements OnInit {
       this.postService.deletePost(this.id)
     }
 
+  }
+
+  onEditComment(){
+    this.editCommentMode = true
+  }
+
+  onSubmitComment(form: NgForm, comId: string){
+    this.comment['body'] = form.value.comment;
+    if (this.id!==undefined ){
+      this.postService.editComment(comId, this.comment,this.id)
+    }
+    this.editCommentMode = false
+
+  }
+
+
+  onDeleteComment(comId: string){
+    if (this.id!==undefined ){
+      this.postService.deleteComment(comId,this.id)
+    }
   }
 
 }

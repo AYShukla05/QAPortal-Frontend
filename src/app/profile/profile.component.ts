@@ -8,12 +8,14 @@ import { Profile } from './profile.model';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  loading = true
   allProfiles:Profile[] = []
   constructor(private profilesService:ProfilesService) { }
 
   ngOnInit(): void {
     this.profilesService.getProfiles().subscribe((profiles:Profile[])=>{
       this.allProfiles.push(...profiles);
+      this.loading = false;
       this.profilesService.profiles = this.allProfiles
     })
   }

@@ -30,6 +30,11 @@ getPostsasync(){
     );
 }
 
+getPostAsync(id: string){
+    return this.http.get('http://127.0.0.1:8000/api/posts/'+id)
+    // .pipe(map(result => result))
+}
+
 getPost(id: string) {
     let post = this.posts.filter(p => p.id == id)
     return post[0]
@@ -45,9 +50,7 @@ createPost(post: {title: string, body: string}){
 
 
 updatePost(postID: string, post: {title: string, body: string}) {
-    const updatedPostID = postID
-    const updatedPost = { title: post.title, body: post.body}
-    this.http.put('http://127.0.0.1:8000/api/update-post/'+updatedPostID,updatedPost)
+    this.http.put('http://127.0.0.1:8000/api/update-post/'+postID, post)
     .subscribe()
     this.router.navigate([''])
 
@@ -74,4 +77,16 @@ getComments(postID:string){
     );
 
 }
+
+editComment(commentID:string, comment:{ 'body': string}, id:string){
+    this.http.put('http://127.0.0.1:8000/api/edit-comment/'+commentID, comment).subscribe()
+    this.router.navigate(['posts', id])
+}
+
+deleteComment(commentID:string, id:string){
+    this.http.delete('http://127.0.0.1:8000/api/delete-comment/'+commentID).subscribe()
+    this.router.navigate(['posts', id])
+}
+
+
 }

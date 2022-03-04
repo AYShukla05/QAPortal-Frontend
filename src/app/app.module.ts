@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
@@ -12,6 +12,8 @@ import { ProfileDetailsComponent } from './profile/profile-details/profile-detai
 import { PostsComponent } from './posts/posts.component';
 import { PostDetailsComponent } from './posts/post-details-component/post-details-component.component';
 import { PostEditComponentComponent } from './posts/post-edit-component/post-edit-component.component';
+import { AuthComponent } from './auth/auth.component';
+import { AuthInterceptorService } from './auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { PostEditComponentComponent } from './posts/post-edit-component/post-edi
     ProfileDetailsComponent,
     PostsComponent,
     PostDetailsComponent,
-    PostEditComponentComponent
+    PostEditComponentComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +35,13 @@ import { PostEditComponentComponent } from './posts/post-edit-component/post-edi
     HttpClientModule,
 
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    {
+        provide: HTTP_INTERCEPTORS,
+        useClass: AuthInterceptorService,
+        multi: true
+    }
+],
+bootstrap: [AppComponent]
 })
 export class AppModule { }

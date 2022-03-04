@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthComponent } from './auth/auth.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { PostDetailsComponent } from './posts/post-details-component/post-details-component.component';
 import { PostEditComponentComponent } from './posts/post-edit-component/post-edit-component.component';
@@ -25,7 +26,8 @@ const routes: Routes = [
     { path: ':id/edit', component: ProfileEditComponent },
   ]},
   { path: 'new', component: PostEditComponentComponent },
-  { path: 'login', component: ProfileEditComponent}
+  { path: 'login', component: ProfileEditComponent},
+  { path: 'auth', component: AuthComponent}
   
 
 ];

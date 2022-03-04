@@ -10,6 +10,9 @@ export class ProfilesService{
 
     subscribedUsers: Profile[] = []
 
+
+
+
     getProfiles(){
         return this.http.get<Profile[]>('http://127.0.0.1:8000/api/profiles')
     }

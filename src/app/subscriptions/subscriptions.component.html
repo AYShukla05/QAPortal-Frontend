@@ -1,3 +1,7 @@
+<div *ngIf="loading" class="d-flex justify-content-center">
+    <div class="spinner-border" role="status">
+    </div>
+  </div>
 <div  *ngIf="subscribedUsers">
     <div style="border: 1px solid #000" *ngFor="let user of subscribedUsers" >
         <div>
