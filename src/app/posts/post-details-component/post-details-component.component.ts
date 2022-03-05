@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Post } from '../post.model';
 import { PostService } from '../posts.service';
 
 @Component({
@@ -10,11 +9,12 @@ import { PostService } from '../posts.service';
   styleUrls: ['./post-details-component.component.css']
 })
 export class PostDetailsComponent implements OnInit {
-  loading = true
+  loading = true;
+  loadingComments = true
   comment:{ 'body': string} = { 'body': 'string'};
   editCommentMode: boolean = false;
   comments:any[] = []
-  post!: Post; 
+  post = { 'title': "Dummy",'body': 'string', 'owner': {'name': 'Default'}}; 
   id: string | undefined;
   constructor(private route: ActivatedRoute, private postService: PostService) { }
 
@@ -24,14 +24,24 @@ export class PostDetailsComponent implements OnInit {
         (params: Params) => {
           this.id = params['id'];
           if(this.id!==undefined) {
-          this.post = this.postService.getPost(this.id);
+          this.post = this.postService.getPost(this.id)
+          this.loading=this.post?false:true
+          if (this.post == undefined){
+            this.postService.getPostAsync(this.id).subscribe(
+              (post:any)=>{
+                this.post = post;
+                this.loading = false
+              })
+            }
           }
         }
       );
+
+    
     if(this.id!==undefined) {
       this.postService.getComments(this.id).subscribe(
         (comments:any) => {
-          this.loading = false
+          this.loadingComments = false
           this.comments.push(...comments)
         }
         )

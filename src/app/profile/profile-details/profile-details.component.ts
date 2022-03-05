@@ -9,8 +9,9 @@ import { ProfilesService } from '../profiles.service';
   styleUrls: ['./profile-details.component.css']
 })
 export class ProfileDetailsComponent implements OnInit {
+  loading = true;
 
-  profile!: Profile; 
+  profile:any={'name': 'default','username': 'default', 'email': 'default'}; 
   id: string | undefined;
 
   constructor(private route: ActivatedRoute, private profilesService:ProfilesService) { }
@@ -22,6 +23,15 @@ export class ProfileDetailsComponent implements OnInit {
           this.id = params['id'];
           if(this.id!==undefined) {
           this.profile = this.profilesService.getProfile(this.id);
+          this.loading=this.profile?false:true
+
+          if (this.profile == undefined){
+            this.profilesService.getProfileAsync(this.id).subscribe(
+              (profile:any)=>{
+                this.profile = profile;
+                this.loading = false
+              })
+            }
           }
         }
       );

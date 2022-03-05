@@ -3,12 +3,13 @@
     </div>
 </div>
 <div *ngFor="let user of allProfiles" >
-    <a routerLink="{{user.id}}">
+    <a routerLink="{{user.id}}" [id]="user.id">
     <div>
         <h1>{{ user.name }}</h1>
         
     </div>
     </a>
     <button class="btn-secondary" (click)="onSubscribe(user)">Subscribe</button>
+    
 </div>
 <router-outlet></router-outlet>

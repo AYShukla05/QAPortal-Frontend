@@ -22,6 +22,10 @@ export class ProfilesService{
         return profile[0]
     }
 
+    getProfileAsync(id:string){
+        return this.http.get('http://127.0.0.1:8000/api/profiles/'+id)
+    }
+
     createProfile(profile:{ "first_name": string;
     "username": string;
     "email":  string;
@@ -46,8 +50,15 @@ export class ProfilesService{
     }
 
     
-deleteProfile(id:string){
-    this.http.delete('http://127.0.0.1:8000/api/delete-profile/'+id).subscribe()
-    this.router.navigate(['profiles'])
-}
+    deleteProfile(id:string){
+        this.http.delete('http://127.0.0.1:8000/api/delete-profile/'+id).subscribe()
+        this.router.navigate(['profiles'])
+    }
+
+
+    subscribeProfile(profileId:string){
+        const profId = {'id':profileId}
+        this.http.post('http://127.0.0.1:8000/api/subscribe',profId).subscribe()
+    }
+
 }

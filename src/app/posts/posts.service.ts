@@ -23,16 +23,13 @@ setPosts(updatedPosts: Post[]){
     return this.posts = updatedPosts
 }
 getPostsasync(){
+    console.log("Sending...")
     return this.http.get<Post[]>('http://127.0.0.1:8000/api/posts')
-    .pipe(map(result => {
-        return result
-    }),
-    );
+    
 }
 
 getPostAsync(id: string){
     return this.http.get('http://127.0.0.1:8000/api/posts/'+id)
-    // .pipe(map(result => result))
 }
 
 getPost(id: string) {

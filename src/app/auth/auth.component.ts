@@ -19,7 +19,7 @@ export class AuthComponent implements OnInit {
 
   onSubmit(form: NgForm){
     const body = { "username": form.value.username, "password": form.value.password}
-    this.authService.login(body).subscribe((data:{"token":string}) => {this.token = data['token']})
-    // .subscribe(data => this.token = data.token)
+    this.authService.login(body)
+    
   }
 }

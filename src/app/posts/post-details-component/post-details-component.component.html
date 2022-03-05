@@ -1,5 +1,12 @@
+<!-- Spinner -->
+<div *ngIf="loading" class="d-flex justify-content-center">
+  <div class="spinner-border" role="status">
+  </div>
+</div>
+<!-- Post -->
 <div>
-    <div>{{post.title}}</div>
+    <div><h1>{{post.title}}</h1><small><h5>Made by {{post.owner.name}}</h5></small></div>
+    
     <div>{{post.body}}</div>
     <span class="badge rounded-pill bg-success">Upvote</span>
     <span class="badge rounded-pill bg-danger">Downvote</span>
@@ -15,11 +22,14 @@
     </form>
 <hr />
 
+<!-- Comments -->
 <div *ngIf="comments.length>0; else infoText">
-  <div *ngIf="loading" class="d-flex justify-content-center">
-    <div class="spinner-border" role="status">
-    </div>
+<!-- Spinner -->
+<div *ngIf="loadingComments" class="d-flex justify-content-center">
+  <div class="spinner-border" role="status">
   </div>
+</div>
+<!-- Comment List -->
   <div *ngFor="let comment of comments" >
     <div *ngIf="!editCommentMode">
 
