@@ -23,7 +23,6 @@ setPosts(updatedPosts: Post[]){
     return this.posts = updatedPosts
 }
 getPostsasync(){
-    console.log("Sending...")
     return this.http.get<Post[]>('http://127.0.0.1:8000/api/posts')
     
 }

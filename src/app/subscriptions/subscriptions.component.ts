@@ -8,23 +8,23 @@ import { subscriptionService } from './subscriptions.service'
 })
 export class SubscriptionsComponent implements OnInit {
   loading = true
+  id: string | undefined
   subscribedUsers:{ name:string; }[] = []
   // subscribedUser: { name: string; } | undefined;
-  constructor(private subscriptionService: subscriptionService) { }
+  constructor(private subscriptionService: subscriptionService, private profilesService: ProfilesService) { }
 
   ngOnInit(): void {
     this.subscriptionService.getSubscribedUsers().subscribe(
       sub=>
       this.subscribedUsers.push(...sub)
     )
-    // this.subscribedUsers.push(...this.profilesService.subscribedUsers)
+    this.subscribedUsers.push(...this.profilesService.subscribedUsers)
     this.loading = false
   }
 
-  
+  onUnsubscribe(){
+
+  }
 
 }
-// function subscribedUsers(subscribedUsers: any, user: { name: string; }) {
-//   throw new Error('Function not implemented.');
-// }
 
