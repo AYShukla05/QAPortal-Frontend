@@ -15,7 +15,9 @@ export class SubscriptionsComponent implements OnInit {
     this.loading = false
   }
 
-  
+  onUnsubscribe(){
+
+  }
 
 }
 
