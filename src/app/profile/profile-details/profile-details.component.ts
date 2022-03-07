@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Profile } from '../profile.model';
 import { ProfilesService } from '../profiles.service';
+
 
 @Component({
   selector: 'app-profile-details',
@@ -10,11 +11,12 @@ import { ProfilesService } from '../profiles.service';
 })
 export class ProfileDetailsComponent implements OnInit {
   loading = true;
-
-  profile:any={'name': 'default','username': 'default', 'email': 'default'}; 
+  profilePosts:any[] = []
+  profileComments:any[] = []
+  profile:any={'username': 'default', 'email': 'default', 'id':'string'}; 
   id: string | undefined;
 
-  constructor(private route: ActivatedRoute, private profilesService:ProfilesService) { }
+  constructor(private route: ActivatedRoute,private router: Router, private profilesService:ProfilesService) { }
 
   ngOnInit(): void {
     this.route.params
@@ -25,7 +27,6 @@ export class ProfileDetailsComponent implements OnInit {
           this.profile = this.profilesService.getProfile(this.id);
           this.loading=this.profile?false:true
 
-          if (this.profile == undefined){
             this.profilesService.getProfileAsync(this.id).subscribe(
               (profile:any)=>{
                 this.profile = profile;
@@ -33,8 +34,19 @@ export class ProfileDetailsComponent implements OnInit {
               })
             }
           }
-        }
       );
+      console.log(this.router.url)
+      if(this.router.url == "/my-profile"){
+        this.profilesService.getMyProfile().subscribe(
+          (response:{"Profile":{'id':string, 'email':string| undefined, 'username':string},"Posts": any[],"Comments":any[]}) => {
+            console.log(response)
+            this.profilesService.profile = this.profile = response['Profile']
+            this.profilePosts = response["Posts"]
+            this.profileComments = response['Comments']
+            this.loading = false
+          }
+        )
+      }
   }
 
   onDelete(){

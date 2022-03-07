@@ -1,13 +1,15 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
+import { subscriptionService } from '../subscriptions/subscriptions.service';
+
 import { Profile } from "./profile.model";
 import { Router } from "@angular/router";
 
 @Injectable( {providedIn: 'root'})
 export class ProfilesService{
     profiles: Profile[] = []
-    constructor(private http: HttpClient,private router: Router){}
-
+    constructor(private http: HttpClient,private router: Router,private subscriptionService:subscriptionService){}
+    profile: any
     subscribedUsers: Profile[] = []
 
 
@@ -59,6 +61,13 @@ export class ProfilesService{
     subscribeProfile(profileId:string){
         const profId = {'id':profileId}
         this.http.post('http://127.0.0.1:8000/api/subscribe',profId).subscribe()
+        this.subscriptionService.getSubscribedUsers()
+        this.router.navigate(['profiles'])
     }
+
+    getMyProfile(){
+        return this.http.get<{"Profile":{'id':string, 'email':string| undefined, 'username':string},"Posts": any[],"Comments":any[]}>('http://127.0.0.1:8000/api/get-my-profile')
+    }
+
 
 }

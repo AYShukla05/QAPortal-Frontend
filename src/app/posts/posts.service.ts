@@ -23,7 +23,6 @@ setPosts(updatedPosts: Post[]){
     return this.posts = updatedPosts
 }
 getPostsasync(){
-    console.log("Sending...")
     return this.http.get<Post[]>('http://127.0.0.1:8000/api/posts')
     
 }
@@ -60,9 +59,18 @@ deletePost(id:string){
 
 }
 
+vote(id:string,vote:{'value':string}){
+    this.http.post('http://127.0.0.1:8000/api/add-vote/'+id,vote)
+    .subscribe(
+        response => console.log(response)
+    )
+}
+
 
 addComment(postID:string, comment:{'body':string}){
-    this.http.post('http://127.0.0.1:8000/api/add-comment/'+postID,comment).subscribe()
+    this.http.post('http://127.0.0.1:8000/api/add-comment/'+postID,comment).subscribe(
+        post => console.log(post)
+    )
     this.router.navigate(['posts',postID])
 }
 

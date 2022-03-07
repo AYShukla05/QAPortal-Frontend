@@ -12,9 +12,9 @@ export class subscriptionService{
     getSubscribedUsers(){
         const data = {}
         return this.http.get<any[]>('http://127.0.0.1:8000/api/get-subscribed',data)
-        // .subscribe(
-        //     (users)=>
-        //     this.subscribedUsers = users
-        // )
+        .subscribe(
+            (users)=>
+            this.subscribedUsers = users
+        )
     }
 }

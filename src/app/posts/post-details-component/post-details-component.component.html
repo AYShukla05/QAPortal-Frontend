@@ -8,8 +8,9 @@
     <div><h1>{{post.title}}</h1><small><h5>Made by {{post.owner.name}}</h5></small></div>
     
     <div>{{post.body}}</div>
-    <span class="badge rounded-pill bg-success">Upvote</span>
-    <span class="badge rounded-pill bg-danger">Downvote</span>
+    <span class="badge rounded-pill bg-success"style="cursor: pointer;" (click)="vote('up')">Upvote</span>
+    {{post.vote_ratio}}%
+    <span class="badge rounded-pill bg-danger"style="cursor: pointer;" (click)="vote('down')">Downvote</span>
 
     <form (ngSubmit)="onSubmit(f)" #f="ngForm">
       <div class="form-group">
@@ -20,7 +21,7 @@
       <button type="submit" class="btn btn-primary">Comment</button>
 
     </form>
-<hr />
+    <hr />
 
 <!-- Comments -->
 <div *ngIf="comments.length>0; else infoText">
@@ -31,14 +32,16 @@
 </div>
 <!-- Comment List -->
   <div *ngFor="let comment of comments" >
-    <div *ngIf="!editCommentMode">
+    <div *ngIf="!comment.editCommentMode">
 
     <p><b>{{comment.body}}</b></p>
     <small> Made by {{ comment.owner.name }}</small>
-    <button type="button" class="btn btn-warning btn-sm" (click)="onEditComment()" >Edit</button>
+    <div *ngIf="comment.owner==profile">
+    <button type="button" class="btn btn-warning btn-sm" (click)="onEditComment(comment.id)" >Edit</button>
     <button type="button" class="btn btn-danger btn-sm" (click)="onDeleteComment(comment.id)">Delete</button>
   </div>
-  <div *ngIf="editCommentMode">
+  </div>
+  <div *ngIf="comment.editCommentMode">
     <form (ngSubmit)="onSubmitComment(f, comment.id)" #f="ngForm" >
       <div class="form-group">
         <input type="text" class="form-control" 
@@ -55,6 +58,10 @@
   <p>No comments Yet! Be the first to comment.</p>
 </ng-template>
 <hr />
+
+<div *ngIf="post.owner==profile">
   <a routerLink="edit"><button class="btn btn-secondary">Edit Post</button></a>
   <button class="btn btn-danger" (click)="onDelete()">Delete Post</button>
+</div>
+
 </div>

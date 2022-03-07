@@ -22,7 +22,7 @@ export class ProfileComponent implements OnInit {
   }
   onSubscribe(user: Profile){
 
-
+    console.log("Clicked")
     if (this.profilesService.subscribedUsers.includes(user)){
       this.profilesService.subscribedUsers = 
       this.profilesService.subscribedUsers.filter(u => u.name !== user.name)

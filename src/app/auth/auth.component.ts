@@ -9,12 +9,10 @@ import { AuthService } from './auth.service';
 })
 export class AuthComponent implements OnInit {
   isLoggedIn = false;
-  token: string| undefined
 
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.token = this.authService.token
   }
 
   onSubmit(form: NgForm){

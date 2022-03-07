@@ -6,7 +6,8 @@ export class Post{
     public body: string;
     public id:string;
 
-    constructor(owner: Profile, title: string, body: string, id:string) {
+
+    constructor(owner: Profile, title: string, body: string, id:string,public vote_total:number, public vote_ratio: number) {
         this.owner = owner;
         this.title = title;
         this.body = body;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfilesService } from '../profile/profiles.service';
+import { subscriptionService } from '../subscriptions/subscriptions.service';
 import { Post } from './post.model';
 import { PostService } from './posts.service';
 
@@ -14,7 +14,7 @@ export class PostsComponent implements OnInit {
 
   allPosts:Post[] = []
   subscribedPosts:Post[] = []
-  constructor(private postService: PostService, private profilesService:ProfilesService) { }
+  constructor(private postService: PostService, private subscriptionService:subscriptionService) { }
 
   ngOnInit(): void {
     this.postService.getPostsasync().subscribe(
@@ -31,7 +31,7 @@ export class PostsComponent implements OnInit {
     this.subscribedPosts = this.allPosts
     .filter
     ((post:Post) => 
-      this.profilesService.subscribedUsers
+      this.subscriptionService.subscribedUsers
       .map((post: { id: any; }) => post.id).includes(post.owner.id)
       )
       }
