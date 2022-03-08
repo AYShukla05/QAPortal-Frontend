@@ -5,16 +5,17 @@
 </div>
 <!-- Profile -->
 <div>
-    <div><h1>{{profile.name}}</h1></div>
+    <div><h1>{{ profile.name }}</h1></div>
     <div><h5>{{profile.username}}</h5></div>
     <div>{{profile.email}}</div>
-    <a routerLink="edit"><button class="btn btn-secondary">Edit Profile</button></a>
+    <a routerLink="/profiles/{{profile.id}}/edit"><button class="btn btn-secondary">Edit Profile</button></a>
   <button class="btn btn-danger" (click)="onDelete()">Delete Profile</button>
 </div>
 
 
 <div>
   <h4>Posts</h4>
+  <div *ngIf="profilePosts.length>0; else infoText">
   <div *ngFor="let post of profilePosts">
     <div>
       <a routerLink="/posts/{{post.id}}">
@@ -24,8 +25,14 @@
 
     </div>
   </div>
+</div>
+<h5>Comments</h5>
+  <div *ngIf="profileComments.length > 0; else infoText">
   <div *ngFor="let comment of profileComments">
-    <h5>Comments</h5>
     {{comment.body}}
   </div>
 </div>
+</div>
+<ng-template #infoText>
+  <p>No activity here</p>
+</ng-template>

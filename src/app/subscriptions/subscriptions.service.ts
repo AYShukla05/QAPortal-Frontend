@@ -7,14 +7,14 @@ import { Router } from "@angular/router";
   })
 export class subscriptionService{
     subscribedUsers:any[] = []
-    constructor(private http: HttpClient,private router: Router){}
+    constructor(private router: Router){}
 
     getSubscribedUsers(){
         const data = {}
-        return this.http.get<any[]>('http://127.0.0.1:8000/api/get-subscribed',data)
-        .subscribe(
-            (users)=>
-            this.subscribedUsers = users
-        )
+        return 
+        // .subscribe(
+        //     (users)=>
+        //     this.subscribedUsers = users
+        // )
     }
 }

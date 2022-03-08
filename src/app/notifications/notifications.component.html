@@ -2,3 +2,11 @@
     <div class="spinner-border" role="status">
     </div>
   </div>
+<div *ngIf="notifications.length>0; else infoText">
+<div *ngFor="let notification of notifications">
+  {{notification.messages}}
+</div>
+</div>
+<ng-template #infoText>
+  <h5>No notifications for you</h5>
+</ng-template>

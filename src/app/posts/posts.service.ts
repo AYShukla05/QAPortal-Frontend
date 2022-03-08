@@ -28,7 +28,7 @@ getPostsasync(){
 }
 
 getPostAsync(id: string){
-    return this.http.get('http://127.0.0.1:8000/api/posts/'+id)
+    return this.http.get<{"Post":Post,"Comments":[]}>('http://127.0.0.1:8000/api/posts/'+id)
 }
 
 getPost(id: string) {
@@ -60,18 +60,15 @@ deletePost(id:string){
 }
 
 vote(id:string,vote:{'value':string}){
-    this.http.post('http://127.0.0.1:8000/api/add-vote/'+id,vote)
-    .subscribe(
-        response => console.log(response)
-    )
+    return this.http.post('http://127.0.0.1:8000/api/add-vote/'+id,vote)
+    
 }
 
 
 addComment(postID:string, comment:{'body':string}){
-    this.http.post('http://127.0.0.1:8000/api/add-comment/'+postID,comment).subscribe(
-        post => console.log(post)
-    )
-    this.router.navigate(['posts',postID])
+    return this.http.post('http://127.0.0.1:8000/api/add-comment/'+postID,comment)
+    
+    // this.router.navigate(['posts',postID])
 }
 
 getComments(postID:string){
@@ -89,8 +86,8 @@ editComment(commentID:string, comment:{ 'body': string}, id:string){
 }
 
 deleteComment(commentID:string, id:string){
-    this.http.delete('http://127.0.0.1:8000/api/delete-comment/'+commentID).subscribe()
-    this.router.navigate(['posts', id])
+    return this.http.delete<any[]>('http://127.0.0.1:8000/api/delete-comment/'+commentID)
+    // this.router.navigate(['posts', id])
 }
 
 

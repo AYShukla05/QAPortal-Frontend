@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵɵsetComponentScope } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Profile } from '../profile.model';
+import { AuthService } from 'src/app/auth/auth.service';
 import { ProfilesService } from '../profiles.service';
 
 
@@ -16,7 +16,10 @@ export class ProfileDetailsComponent implements OnInit {
   profile:any={'username': 'default', 'email': 'default', 'id':'string'}; 
   id: string | undefined;
 
-  constructor(private route: ActivatedRoute,private router: Router, private profilesService:ProfilesService) { }
+  constructor(private route: ActivatedRoute,
+    private router: Router,
+    private authService:AuthService, 
+    private profilesService:ProfilesService) { }
 
   ngOnInit(): void {
     this.route.params
@@ -28,10 +31,15 @@ export class ProfileDetailsComponent implements OnInit {
           this.loading=this.profile?false:true
 
             this.profilesService.getProfileAsync(this.id).subscribe(
-              (profile:any)=>{
-                this.profile = profile;
+              (response:{"Profile":{'id':string, 'email':string| undefined, 'username':string},"Posts": any[],"Comments":any[]}) => {
+                console.log(response)
+                this.authService.profile = this.profile = response['Profile']
+                // console.log(this.profilesService.profile)
+                this.profilePosts = response["Posts"]
+                this.profileComments = response['Comments']
                 this.loading = false
-              })
+              }
+              )
             }
           }
       );
@@ -40,7 +48,8 @@ export class ProfileDetailsComponent implements OnInit {
         this.profilesService.getMyProfile().subscribe(
           (response:{"Profile":{'id':string, 'email':string| undefined, 'username':string},"Posts": any[],"Comments":any[]}) => {
             console.log(response)
-            this.profilesService.profile = this.profile = response['Profile']
+            this.authService.profile = this.profile = response['Profile']
+            // console.log(this.profilesService.profile)
             this.profilePosts = response["Posts"]
             this.profileComments = response['Comments']
             this.loading = false

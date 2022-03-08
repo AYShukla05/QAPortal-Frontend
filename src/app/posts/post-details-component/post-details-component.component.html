@@ -5,7 +5,7 @@
 </div>
 <!-- Post -->
 <div>
-    <div><h1>{{post.title}}</h1><small><h5>Made by {{post.owner.name}}</h5></small></div>
+    <div><h1>{{ post.title }}</h1><small><h5>Made by {{post.owner.name}}</h5></small></div>
     
     <div>{{post.body}}</div>
     <span class="badge rounded-pill bg-success"style="cursor: pointer;" (click)="vote('up')">Upvote</span>
@@ -36,7 +36,7 @@
 
     <p><b>{{comment.body}}</b></p>
     <small> Made by {{ comment.owner.name }}</small>
-    <div *ngIf="comment.owner==profile">
+    <div *ngIf="comment.owner.id==profile.id">
     <button type="button" class="btn btn-warning btn-sm" (click)="onEditComment(comment.id)" >Edit</button>
     <button type="button" class="btn btn-danger btn-sm" (click)="onDeleteComment(comment.id)">Delete</button>
   </div>
@@ -51,6 +51,7 @@
       <button type="submit" class="btn btn-success">Submit</button>
     </form>
 </div>
+<hr>
 </div>
 
 </div>
@@ -59,7 +60,7 @@
 </ng-template>
 <hr />
 
-<div *ngIf="post.owner==profile">
+<div *ngIf="post.owner['id'] == profile['id']">
   <a routerLink="edit"><button class="btn btn-secondary">Edit Post</button></a>
   <button class="btn btn-danger" (click)="onDelete()">Delete Post</button>
 </div>

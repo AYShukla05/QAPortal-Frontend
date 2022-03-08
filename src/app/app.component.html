@@ -16,10 +16,10 @@
     <a class="nav-link" routerLink="profiles">Profile</a>
     <a class="nav-link" routerLink="my-profile">My Profile</a>
   <li class="nav-item btn btn-outline">
-        <a routerLink="auth" class="nav-link" *ngIf="!isLoggedIn" (click)="changeLogIn">Login/Sign Up</a>
+        <a routerLink="login" class="nav-link" *ngIf="!isLoggedIn">Login/Sign Up</a>
       </li>
       <li class="nav-item btn btn-outline">
-        <a class="nav-link" *ngIf="isLoggedIn" (click)="changeLogIn">Logout</a>
+        <a class="nav-link" *ngIf="isLoggedIn" (click)="logout()">Logout</a>
       </li>
   </nav>
   

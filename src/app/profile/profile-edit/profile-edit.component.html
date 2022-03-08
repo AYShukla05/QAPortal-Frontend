@@ -1,19 +1,19 @@
 <form (ngSubmit)="onSubmit(fo)" #fo="ngForm">
     <div class="form-group">
       <label for="profile-name">Name</label>
-      <input type="text" class="form-control" 
+      <input type="text" class="form-control" defaultValue="{{ profile.name }}"
       id="profile-title" placeholder="Enter your name" 
-      ngModel name="first_name">
+      ngModel name="name">
     </div>
     <div class="form-group">
       <label for="profile-username">Username</label>
-      <input type="text" class="form-control" 
+      <input type="text" class="form-control" defaultValue="{{ profile.username }}"
       id="profile-username" placeholder="Enter your username" 
       ngModel name="username">
     </div>
     <div class="form-group">
       <label for="profile-email">Email</label>
-      <input type="text" class="form-control" 
+      <input type="text" class="form-control" defaultValue="{{ profile.email }}"
       id="profile-email" placeholder="Enter your email" 
       ngModel name="email">
     </div>

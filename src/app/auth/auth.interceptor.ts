@@ -12,6 +12,7 @@ export class AuthInterceptorService implements HttpInterceptor {
     const modifiedRequest = req.clone({
         headers: req.headers.append('Authorization',`Bearer ${this.authService.token}`)
     })
+    console.log(modifiedRequest)
     return next.handle(modifiedRequest).pipe(
         catchError(
           (err, caught) => {
@@ -25,8 +26,11 @@ export class AuthInterceptorService implements HttpInterceptor {
       );
     }
     private handleAuthError() {
+      // this.authService.token = localStorage.getItem('token');
+      // this.router.navigate(['posts'])
       localStorage.removeItem('token');
-      this.router.navigate(['auth']);
+      localStorage.removeItem('Profile');
+      this.router.navigate(['login']);
     };
 }
  

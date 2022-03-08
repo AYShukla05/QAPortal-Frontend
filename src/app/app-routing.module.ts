@@ -26,8 +26,8 @@ const routes: Routes = [
     { path: ':id/edit', component: ProfileEditComponent },
   ]},
   { path: 'new', component: PostEditComponentComponent },
-  { path: 'login', component: ProfileEditComponent},
-  { path: 'auth', component: AuthComponent},
+  { path: 'signup', component: ProfileEditComponent},
+  { path: 'login', component: AuthComponent},
   { path: 'my-profile', component: ProfileDetailsComponent}
   
 

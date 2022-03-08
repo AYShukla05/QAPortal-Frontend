@@ -10,10 +10,9 @@ import { ProfilesService } from '../profiles.service';
   styleUrls: ['./profile-edit.component.css']
 })
 export class ProfileEditComponent implements OnInit {
-  private routeSub!: Subscription;
   id: string | undefined
   profile = {
-    "first_name": "a",
+    "name": "a",
     "username": "as",
     "email":  "as",
     "password":  "as",
@@ -22,7 +21,7 @@ export class ProfileEditComponent implements OnInit {
   constructor(private profilesService: ProfilesService,private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.routeSub = this.route.params.subscribe(params => {
+    this.route.params.subscribe(params => {
       this.id = params['id'] 
   })
   }
@@ -31,7 +30,7 @@ export class ProfileEditComponent implements OnInit {
     const value = form.value
     console.log(form)
     const profile= {
-      first_name: value['first_name'],
+      name: value['name'],
       username: value['username'],
       email:value['email'],
       password: value['password'],

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
+import { AuthService } from 'src/app/auth/auth.service';
 import { ProfilesService } from 'src/app/profile/profiles.service';
 import { PostService } from '../posts.service';
 
@@ -15,10 +16,11 @@ export class PostDetailsComponent implements OnInit {
   comment:{ 'body': string} = { 'body': 'string'};
   editCommentMode: boolean = false;
   comments:any[] = []
-  post = { 'title': "Dummy",'body': 'string', 'owner': {'name': 'Default'}, 'vote_total':0, 'vote_ratio':0}; 
+  post:any = { 'title': "Dummy",'body': 'string', 'owner': {'name': 'string', 'id': 'string'}, 'vote_total':0, 'vote_ratio':0}; 
   id: string | undefined;
   constructor(private route: ActivatedRoute, 
-    private postService: PostService, 
+    private postService: PostService,
+    private authService:AuthService,    
     private profilesService: ProfilesService) { }
   profile: any
   ngOnInit(): void {
@@ -26,14 +28,16 @@ export class PostDetailsComponent implements OnInit {
       .subscribe(
         (params: Params) => {
           this.id = params['id'];
+          this.profile = this.authService.profile
           if(this.id!==undefined) {
           this.post = this.postService.getPost(this.id)
           this.loading=this.post?false:true
           if (this.post == undefined){
             this.postService.getPostAsync(this.id).subscribe(
-              (post:any)=>{
-                this.post = post;
-                this.profile = this.profilesService.profile
+              (resp)=>{
+                this.post = resp['Post'];
+                this.comments = resp['Comments'];
+                this.profile = this.authService.profile
                 this.loading = false
               })
             }
@@ -59,14 +63,19 @@ export class PostDetailsComponent implements OnInit {
   vote(event:string){
     const vote = {'value': event}
     if (this.id!=undefined){
-      this.postService.vote(this.id, vote)
+      this.postService.vote(this.id, vote).subscribe((response) => this.post = response)
     }
   }
 
   onSubmit(form: NgForm) {
     this.comment = {'body':form.value.comment};
     if (this.id!==undefined){
-      this.postService.addComment(this.id, this.comment)
+      this.postService.addComment(this.id, this.comment).subscribe(
+        post => 
+        {
+        this.comments.push(post)
+      }
+    )
     }
     form.reset()
 
@@ -98,7 +107,12 @@ export class PostDetailsComponent implements OnInit {
 
   onDeleteComment(comId: string){
     if (this.id!==undefined ){
-      this.postService.deleteComment(comId,this.id)
+      this.postService.deleteComment(comId,this.id).subscribe(
+        com => 
+        {
+          this.comments = com;
+        }
+    )
     }
   }
 

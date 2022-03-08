@@ -4,11 +4,15 @@ import { subscriptionService } from '../subscriptions/subscriptions.service';
 
 import { Profile } from "./profile.model";
 import { Router } from "@angular/router";
+import { AuthService } from "../auth/auth.service";
 
 @Injectable( {providedIn: 'root'})
 export class ProfilesService{
     profiles: Profile[] = []
-    constructor(private http: HttpClient,private router: Router,private subscriptionService:subscriptionService){}
+    constructor(private http: HttpClient,
+        private router: Router,
+        private subscriptionService:subscriptionService,
+        private authService:AuthService){}
     profile: any
     subscribedUsers: Profile[] = []
 
@@ -25,21 +29,25 @@ export class ProfilesService{
     }
 
     getProfileAsync(id:string){
-        return this.http.get('http://127.0.0.1:8000/api/profiles/'+id)
+        return this.http.get<{"Profile":{'id':string, 'email':string| undefined, 'username':string},"Posts": any[],"Comments":any[]}>('http://127.0.0.1:8000/api/profiles/'+id)
     }
 
-    createProfile(profile:{ "first_name": string;
+    createProfile(profile:{ "name": string;
     "username": string;
     "email":  string;
     "password":  string;
     "password2":  string;}
     ){
-        this.http.post('http://127.0.0.1:8000/api/create-profile',profile).subscribe()
+        this.http.post('http://127.0.0.1:8000/api/create-profile',profile).subscribe(
+            response => {
+                this.authService.login({"username":profile.username, "password":profile.password})
+            }
+        )
         this.router.navigate(['profiles'])
     }
 
 
-    updateProfile(id:string,profile:{ "first_name": string;
+    updateProfile(id:string,profile:{ "name": string;
     "username": string;
     "email":  string;
     "password":  string;
