@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfilesService } from './profiles.service';
 import { Profile } from './profile.model';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -8,12 +9,15 @@ import { Profile } from './profile.model';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  profile = this.authService.loggedProfile
   id: string| undefined
+  // ownerId !: string
   loading = true
   allProfiles:Profile[] = []
-  constructor(private profilesService:ProfilesService) { }
+  constructor(private profilesService:ProfilesService, private authService:AuthService) { }
 
   ngOnInit(): void {
+    // this.ownerId = this.authService.profile.id
     this.profilesService.getProfiles().subscribe((profiles:Profile[])=>{
       this.allProfiles.push(...profiles);
       this.loading = false;

@@ -36,14 +36,20 @@ export class ProfilesService{
     "username": string;
     "email":  string;
     "password":  string;
-    "password2":  string;}
+    "password1":  string;}
     ){
         this.http.post('http://127.0.0.1:8000/api/create-profile',profile).subscribe(
             response => {
-                this.authService.login({"username":profile.username, "password":profile.password})
+                console.log("Response",response)
+                this.authService.login(
+                    {"username":profile.username, "password":profile.password}
+                    )
+            }, error =>{
+                console.log("Error ",error)
+                this.router.navigate(['login'])
             }
         )
-        this.router.navigate(['profiles'])
+        // this.router.navigate(['profiles'])
     }
 
 
@@ -51,7 +57,7 @@ export class ProfilesService{
     "username": string;
     "email":  string;
     "password":  string;
-    "password2":  string;}){
+    "password1":  string;}){
         const updatedProfileId = id
         const updatedProfile = profile
         this.http.put('http://127.0.0.1:8000/api/update-profile/'+updatedProfileId,updatedProfile)

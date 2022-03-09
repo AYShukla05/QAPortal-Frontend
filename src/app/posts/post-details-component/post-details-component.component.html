@@ -4,14 +4,22 @@
   </div>
 </div>
 <!-- Post -->
-<div>
-    <div><h1>{{ post.title }}</h1><small><h5>Made by {{post.owner.name}}</h5></small></div>
+<div class="container-fluid">
+    <div>
+      <h1>{{ post.title }}</h1>
+      <small><p>Made by <b>{{post.owner.name}}</b></p></small>
+    </div>
     
-    <div>{{post.body}}</div>
+    <div class="container border col" style="display: flex">
+      {{post.body}}
+    </div>
+    <br>
     <span class="badge rounded-pill bg-success"style="cursor: pointer;" (click)="vote('up')">Upvote</span>
     {{post.vote_ratio}}%
     <span class="badge rounded-pill bg-danger"style="cursor: pointer;" (click)="vote('down')">Downvote</span>
-
+<!-- Comment Form -->
+<br>
+<br>
     <form (ngSubmit)="onSubmit(f)" #f="ngForm">
       <div class="form-group">
         <input type="text" class="form-control" 
@@ -22,6 +30,7 @@
 
     </form>
     <hr />
+    <br>
 
 <!-- Comments -->
 <div *ngIf="comments.length>0; else infoText">
@@ -35,7 +44,7 @@
     <div *ngIf="!comment.editCommentMode">
 
     <p><b>{{comment.body}}</b></p>
-    <small> Made by {{ comment.owner.name }}</small>
+    <small> Made by <a routerLink="/profiles/{{comment.owner.id}}">{{ comment.owner.name }}</a></small>
     <div *ngIf="comment.owner.id==profile.id">
     <button type="button" class="btn btn-warning btn-sm" (click)="onEditComment(comment.id)" >Edit</button>
     <button type="button" class="btn btn-danger btn-sm" (click)="onDeleteComment(comment.id)">Delete</button>

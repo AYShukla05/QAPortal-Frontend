@@ -2,14 +2,16 @@
     <div class="spinner-border" role="status">
     </div>
 </div>
-<div *ngFor="let user of allProfiles" >
+<br>
+<div class="container" style="border: 1px solid #000; padding: 15px" *ngFor="let user of allProfiles" >
     <a routerLink="{{user.id}}" [id]="user.id">
     <div>
         <h1>{{ user.name }}</h1>
         
     </div>
     </a>
-    <button class="btn-secondary" (click)="onSubscribe(user)">Subscribe</button>
+    <button class="btn-secondary" (click)="onSubscribe(user)" 
+    *ngIf="profile.id != user.id">Subscribe</button>
     
 </div>
 <router-outlet></router-outlet>

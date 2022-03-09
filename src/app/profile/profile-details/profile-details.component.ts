@@ -15,7 +15,7 @@ export class ProfileDetailsComponent implements OnInit {
   profileComments:any[] = []
   profile:any={'username': 'default', 'email': 'default', 'id':'string'}; 
   id: string | undefined;
-
+  ownerId!: string
   constructor(private route: ActivatedRoute,
     private router: Router,
     private authService:AuthService, 
@@ -29,11 +29,10 @@ export class ProfileDetailsComponent implements OnInit {
           if(this.id!==undefined) {
           this.profile = this.profilesService.getProfile(this.id);
           this.loading=this.profile?false:true
-
+            this.ownerId = this.authService.loggedProfile.id
             this.profilesService.getProfileAsync(this.id).subscribe(
               (response:{"Profile":{'id':string, 'email':string| undefined, 'username':string},"Posts": any[],"Comments":any[]}) => {
                 console.log(response)
-                this.authService.profile = this.profile = response['Profile']
                 // console.log(this.profilesService.profile)
                 this.profilePosts = response["Posts"]
                 this.profileComments = response['Comments']
@@ -48,8 +47,8 @@ export class ProfileDetailsComponent implements OnInit {
         this.profilesService.getMyProfile().subscribe(
           (response:{"Profile":{'id':string, 'email':string| undefined, 'username':string},"Posts": any[],"Comments":any[]}) => {
             console.log(response)
-            this.authService.profile = this.profile = response['Profile']
-            // console.log(this.profilesService.profile)
+            this.authService.loggedProfile = this.profile = response['Profile']
+            console.log(this.profilesService.profile)
             this.profilePosts = response["Posts"]
             this.profileComments = response['Comments']
             this.loading = false

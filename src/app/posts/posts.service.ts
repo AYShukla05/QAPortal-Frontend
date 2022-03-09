@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
 export class PostService{
 subscribedUsers: any;
 constructor(private http: HttpClient,private router: Router){}
-postSelected = new EventEmitter<Post>();
 
 
 posts: Post[] = []

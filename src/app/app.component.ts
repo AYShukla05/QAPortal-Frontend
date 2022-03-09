@@ -17,6 +17,11 @@ export class AppComponent implements OnInit {
     this.authService.token = localStorage.getItem('token');
     this.isLoggedIn = this.authService.isLoggedIn;
   }
+  myInterval = setInterval(() => {
+    this.isLoggedIn=this.authService.isLoggedIn
+    // const token = localStorage.getItem('token');
+    // if(token == undefined) {this.logout()}
+  },100)
   login(){
     this.isLoggedIn = this.authService.isLoggedIn
   }

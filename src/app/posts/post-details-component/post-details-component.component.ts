@@ -21,14 +21,14 @@ export class PostDetailsComponent implements OnInit {
   constructor(private route: ActivatedRoute, 
     private postService: PostService,
     private authService:AuthService,    
-    private profilesService: ProfilesService) { }
+   ) { }
   profile: any
   ngOnInit(): void {
     this.route.params
       .subscribe(
         (params: Params) => {
           this.id = params['id'];
-          this.profile = this.authService.profile
+          this.profile = this.authService.loggedProfile
           if(this.id!==undefined) {
           this.post = this.postService.getPost(this.id)
           this.loading=this.post?false:true
@@ -37,8 +37,10 @@ export class PostDetailsComponent implements OnInit {
               (resp)=>{
                 this.post = resp['Post'];
                 this.comments = resp['Comments'];
-                this.profile = this.authService.profile
+                this.profile = this.authService.loggedProfile
                 this.loading = false
+              }, (error)=>{
+                console.log(error)
               })
             }
           }

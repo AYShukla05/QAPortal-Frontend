@@ -1,10 +1,12 @@
 <div *ngIf="loading" class="d-flex justify-content-center">
-    <div class="spinner-border" role="status">
-    </div>
+  <div class="spinner-border" role="status">
   </div>
+</div>
+<br>
 <div *ngIf="notifications.length>0; else infoText">
-<div *ngFor="let notification of notifications">
-  {{notification.messages}}
+<div class="container" *ngFor="let notification of notifications">
+  <h4>All Notifications</h4>
+  <div class="row" style="border: 1px solid #000; padding: 10px">{{notification.messages}}</div>
 </div>
 </div>
 <ng-template #infoText>

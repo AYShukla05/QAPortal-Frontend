@@ -1,13 +1,30 @@
+<br>
+<br>
 <!-- Toggling between popular and subscribed -->
-<div class="row">
-    <a (click)="onSubscribedPosts()" *ngIf="!isSubscribed"><button class="btn btn-primary">Subscribed Posts</button></a>
-    <a (click)="onPopularPosts()" *ngIf="isSubscribed"><button class="btn btn-primary">Popular Posts</button></a>
-     
-    <div class="col-xs-12">
-      <a routerLink="/new"><button class="btn btn-success">Create New Post</button></a>
+<div class="container">
+  <div class="row">
+    <div class="col" style="margin-left:20px;margin-right:10px">
+      <a (click)="onSubscribedPosts()" *ngIf="!isSubscribed;else popular">
+        <button class="btn btn-primary">Subscribed Posts</button>
+      </a>
     </div>
+    <ng-template #popular>
+    <div class="col" style="margin-left:20px;margin-right:10px">
+      <a (click)="onPopularPosts()" >
+        <button class="btn btn-primary">Popular Posts</button>
+      </a>
+    </div>
+  </ng-template>
+   
+    <div class="col" style="margin-right:20px;margin-left:10px;text-align:right">
+      <a routerLink="/new">
+        <button class="btn btn-success">Create New Post</button>
+      </a>
+    </div>
+  </div>
 </div>
-<hr>
+
+<br>
 <!-- Spinner -->
 <div *ngIf="loading" class="d-flex justify-content-center">
   <div class="spinner-border" role="status">
@@ -16,30 +33,47 @@
 <!-- Popular posts -->
 <div *ngIf="!isSubscribed">
 <div *ngFor="let post of allPosts" >
-    <a
-routerLink="{{post.id}}"
-class="list-group-item clearfix"
->
-<div class="pull-left">
-  <h4 class="list-group-item-heading">{{ post.title }}</h4>
-  <p class="list-group-item-text">{{ post.body }}</p>
-</div></a>
-
+  <br>
+  <div class="row">
+    <div class="container col-md-6" style="border: 1px solid #000;padding-top: 15px">
+      <a routerLink="{{post.id}}">
+        <h4 class="list-group-item-heading list-group-item-dark">{{ post.title }}</h4>
+      </a>
+      <a routerLink="/profiles/{{post.owner.id}}">
+        <h5>Made by <b>{{post.owner.name}}</b></h5>
+      </a>
+      <p>{{ post.body.slice(0,50) }}<span *ngIf="post.body.length>51">...</span></p>
+      <div>
+        <label for="file">Audience Rating:</label>
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" [ngStyle]="{width: post.vote_ratio + '%'}"  aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+      </div>
+      <div><small><b>{{post.vote_ratio}}% Upvotes</b>({{ post.vote_total }})</small></div>
+    </div>
+  </div>
 </div>
 </div>
 
 <!-- Subscribed Posts -->
 <div *ngIf="isSubscribed">
-<div *ngFor="let post of subscribedPosts" >
-    <a
-routerLink="{{post.id}}"
-class="list-group-item clearfix"
->
-<div class="pull-left">
-  <h4 class="list-group-item-heading">{{ post.title }}</h4>
-  <p class="list-group-item-text">{{ post.body }}</p>
-</div></a>
-
-</div>
+  <div *ngFor="let post of subscribedPosts" >
+    <br>
+    <div class="row">
+      <div class="container col-md-6" style="border: 1px solid #000;padding-top: 15px">
+        <a routerLink="{{post.id}}">
+          <h4 class="list-group-item-heading list-group-item-dark">{{ post.title }}</h4>
+        </a>
+        <p>{{ post.body.slice(0,50) }}<span *ngIf="post.body.length>51">...</span></p>
+        <div>
+          <label for="file">Audience Rating:</label>
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" [ngStyle]="{width: post.vote_ratio + '%'}"  aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        </div>
+        <div><small><b>{{post.vote_ratio}}% Upvotes</b>({{ post.vote_total }})</small></div>
+      </div>
+    </div>
+  </div>
 </div>
 <router-outlet></router-outlet>

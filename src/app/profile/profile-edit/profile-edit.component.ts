@@ -16,7 +16,7 @@ export class ProfileEditComponent implements OnInit {
     "username": "as",
     "email":  "as",
     "password":  "as",
-    "password2":  "as",
+    "password1":  "as",
   };
   constructor(private profilesService: ProfilesService,private route: ActivatedRoute) { }
 
@@ -34,7 +34,7 @@ export class ProfileEditComponent implements OnInit {
       username: value['username'],
       email:value['email'],
       password: value['password'],
-      password2:value['confirm-password']
+      password1:value['confirm-password']
   } 
   this.profile = profile;
   if (this.id==undefined){

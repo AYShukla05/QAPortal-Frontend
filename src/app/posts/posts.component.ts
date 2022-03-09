@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { subscriptionService } from '../subscriptions/subscriptions.service';
+import { ProfilesService } from '../profile/profiles.service';
 import { Post } from './post.model';
 import { PostService } from './posts.service';
 
@@ -10,18 +10,22 @@ import { PostService } from './posts.service';
 })
 export class PostsComponent implements OnInit {
   loading = true;
-  isSubscribed: boolean = false;
+  isSubscribed!: boolean;
 
   allPosts:Post[] = []
   subscribedPosts:Post[] = []
-  constructor(private postService: PostService, private subscriptionService:subscriptionService) { }
+  constructor(private postService: PostService, 
+  private profilesService: ProfilesService) { }
 
   ngOnInit(): void {
+    this.isSubscribed = false
     this.postService.getPostsasync().subscribe(
       (posts:Post[]) => {
         this.allPosts.push(...posts)
         this.loading=false
       this.postService.posts = this.allPosts
+    }, (error)=>{
+      console.log(error)
     }
       )
   }
@@ -31,10 +35,10 @@ export class PostsComponent implements OnInit {
     this.subscribedPosts = this.allPosts
     .filter
     ((post:Post) => 
-      this.subscriptionService.subscribedUsers
+      this.profilesService.subscribedUsers
       .map((post: { id: any; }) => post.id).includes(post.owner.id)
       )
-      }
+  }
 
   
   onPopularPosts(){

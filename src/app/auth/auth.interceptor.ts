@@ -12,6 +12,9 @@ export class AuthInterceptorService implements HttpInterceptor {
     const modifiedRequest = req.clone({
         headers: req.headers.append('Authorization',`Bearer ${this.authService.token}`)
     })
+    if(req.url=="http://127.0.0.1:8000/api/create-profile"){
+      return next.handle(req)
+    }
     console.log(modifiedRequest)
     return next.handle(modifiedRequest).pipe(
         catchError(

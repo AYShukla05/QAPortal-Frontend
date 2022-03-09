@@ -1,16 +1,24 @@
-<form (ngSubmit)="onSubmit(f)" #f="ngForm">
+<br>
+<br>
+<div class="container-fluid">
+  <form (ngSubmit)="onSubmit(f)" #f="ngForm">
     <div class="form-group">
+      <label for="username">Username:</label>
       <input type="text" class="form-control" 
       id="username" placeholder="Enter your username"
       ngModel name="username">
     </div>
     <div class="form-group">
-        <label for="Password1">Password</label>
+        <label for="Password1">Password:</label>
         <input type="password" class="form-control" 
         id="password" placeholder="Enter the password" 
         ngModel name="password">
       </div>
     <button type="submit" class="btn btn-primary">Login</button>
-      <p>Don't have an account? Signup Now</p>
-      <a routerLink="/signup"><button class="btn">Sign Up</button></a>
   </form>
+    </div>
+    <br>
+<div class="container-fluid">
+  <p>Don't have an account? Signup Now</p>
+  <a routerLink="/signup"><button class="btn btn-secondary">Sign Up</button></a>
+</div>

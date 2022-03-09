@@ -4,32 +4,41 @@
   </div>
 </div>
 <!-- Profile -->
-<div>
+<br>
+<div class="container-fluid">
     <div><h1>{{ profile.name }}</h1></div>
     <div><h5>{{profile.username}}</h5></div>
     <div>{{profile.email}}</div>
-    <a routerLink="/profiles/{{profile.id}}/edit"><button class="btn btn-secondary">Edit Profile</button></a>
-  <button class="btn btn-danger" (click)="onDelete()">Delete Profile</button>
+    <div *ngIf="profile.id==ownerId">
+      <a routerLink="/profiles/{{profile.id}}/edit">
+      <button class="btn btn-secondary">Edit Profile</button></a>
+      <button class="btn btn-danger" (click)="onDelete()">Delete Profile</button>
+  </div>
 </div>
 
-
-<div>
+<br>
+<div class="container-fluid">
   <h4>Posts</h4>
   <div *ngIf="profilePosts.length>0; else infoText">
-  <div *ngFor="let post of profilePosts">
-    <div>
+  <div class="container-fluid" *ngFor="let post of profilePosts">
+    <hr>
+    <div class="row" style="padding: 10px">
       <a routerLink="/posts/{{post.id}}">
         {{post.title}}
-        {{post.body}}
       </a>
-
     </div>
   </div>
 </div>
+<br>
+<br>
 <h5>Comments</h5>
   <div *ngIf="profileComments.length > 0; else infoText">
   <div *ngFor="let comment of profileComments">
-    {{comment.body}}
+    <hr>
+    <div class="container-fluid" style="padding: 10px">
+      <div class="row">{{comment.body}}</div>
+      <div class="row"><a routerLink="/posts/{{comment.post.id}}"><b>{{comment.post.title}}</b></a></div>
+    </div>
   </div>
 </div>
 </div>
