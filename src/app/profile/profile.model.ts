@@ -4,6 +4,7 @@ export class Profile{
     email:string|undefined;
     password:string;
     username:string;
+  isSubscribed: any;
 
     constructor(id:string, name:string,email:string, password:string, username:string){
         this.id = id;

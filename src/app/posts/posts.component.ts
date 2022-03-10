@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfilesService } from '../profile/profiles.service';
+import { SubscriptionService } from '../subscriptions/subscriptions.service';
 import { Post } from './post.model';
 import { PostService } from './posts.service';
 
@@ -11,31 +12,39 @@ import { PostService } from './posts.service';
 export class PostsComponent implements OnInit {
   loading = true;
   isSubscribed!: boolean;
-
+  searchQuery: string = '';
+  isSearching = false;
   allPosts:Post[] = []
+  popularPosts:Post[] = []
   subscribedPosts:Post[] = []
   constructor(private postService: PostService, 
-  private profilesService: ProfilesService) { }
+  private subscriptionService: SubscriptionService) { }
 
   ngOnInit(): void {
     this.isSubscribed = false
     this.postService.getPostsasync().subscribe(
       (posts:Post[]) => {
         this.allPosts.push(...posts)
+        this.popularPosts = this.allPosts
         this.loading=false
       this.postService.posts = this.allPosts
     }, (error)=>{
       console.log(error)
     }
       )
-  }
 
+  }
+  search(){
+    this.isSearching = true
+    this.popularPosts = this.allPosts.filter(post => this.allPosts.map(post => post.title.toLocaleLowerCase())
+    .filter(title => title.includes(this.searchQuery)).includes(post.title.toLowerCase()))
+  }
   onSubscribedPosts(){
     this.isSubscribed = true
-    this.subscribedPosts = this.allPosts
+    this.popularPosts = this.allPosts
     .filter
     ((post:Post) => 
-      this.profilesService.subscribedUsers
+      this.subscriptionService.subscribedUsers
       .map((post: { id: any; }) => post.id).includes(post.owner.id)
       )
   }
@@ -43,6 +52,7 @@ export class PostsComponent implements OnInit {
   
   onPopularPosts(){
     this.isSubscribed = false
+    this.popularPosts = this.allPosts
   }
 
 }

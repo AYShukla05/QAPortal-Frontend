@@ -41,6 +41,7 @@ export class PostDetailsComponent implements OnInit {
                 this.loading = false
               }, (error)=>{
                 console.log(error)
+                this.post = { 'title': "Dummy",'body': 'string', 'owner': {'name': 'string', 'id': 'string'}, 'vote_total':0, 'vote_ratio':0}
               })
             }
           }
@@ -71,6 +72,8 @@ export class PostDetailsComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     this.comment = {'body':form.value.comment};
+    console.log("New comment",form)
+    console.log("Value", form.value)
     if (this.id!==undefined){
       this.postService.addComment(this.id, this.comment).subscribe(
         post => 
@@ -98,6 +101,8 @@ export class PostDetailsComponent implements OnInit {
   }
 
   onSubmitComment(form: NgForm, comId: string){
+    console.log("Editing Comment",form)
+    console.log("Edited value", form.value)
     this.comment['body'] = form.value.comment;
     if (this.id!==undefined ){
       this.postService.editComment(comId, this.comment,this.id)

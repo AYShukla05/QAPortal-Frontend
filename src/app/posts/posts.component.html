@@ -30,9 +30,17 @@
   <div class="spinner-border" role="status">
   </div>
 </div>
+<!-- Search Bar -->
+  <div class="container">
+    <div class="d-flex form-inputs"> 
+      <input class="form-control" type="text" [(ngModel)]="searchQuery"
+      placeholder="Search Post" name="searchQuery" (ngModelChange)="search()"> 
+      <button class="btn btn-dark">Search</button> 
+    </div>
+  </div>
 <!-- Popular posts -->
-<div *ngIf="!isSubscribed">
-<div *ngFor="let post of allPosts" >
+<!-- <div *ngIf="!isSubscribed"> -->
+<div *ngFor="let post of popularPosts"   >
   <br>
   <div class="row">
     <div class="container col-md-6" style="border: 1px solid #000;padding-top: 15px">
@@ -53,10 +61,10 @@
     </div>
   </div>
 </div>
-</div>
+<!-- </div> -->
 
 <!-- Subscribed Posts -->
-<div *ngIf="isSubscribed">
+<!-- <div *ngIf="isSubscribed">
   <div *ngFor="let post of subscribedPosts" >
     <br>
     <div class="row">
@@ -75,5 +83,5 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 <router-outlet></router-outlet>

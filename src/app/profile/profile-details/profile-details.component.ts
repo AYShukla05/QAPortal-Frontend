@@ -33,7 +33,7 @@ export class ProfileDetailsComponent implements OnInit {
             this.profilesService.getProfileAsync(this.id).subscribe(
               (response:{"Profile":{'id':string, 'email':string| undefined, 'username':string},"Posts": any[],"Comments":any[]}) => {
                 console.log(response)
-                // console.log(this.profilesService.profile)
+                this.profile = response["Profile"]
                 this.profilePosts = response["Posts"]
                 this.profileComments = response['Comments']
                 this.loading = false
@@ -48,7 +48,7 @@ export class ProfileDetailsComponent implements OnInit {
           (response:{"Profile":{'id':string, 'email':string| undefined, 'username':string},"Posts": any[],"Comments":any[]}) => {
             console.log(response)
             this.authService.loggedProfile = this.profile = response['Profile']
-            console.log(this.profilesService.profile)
+            this.ownerId = this.authService.loggedProfile.id
             this.profilePosts = response["Posts"]
             this.profileComments = response['Comments']
             this.loading = false
@@ -58,12 +58,12 @@ export class ProfileDetailsComponent implements OnInit {
   }
 
   onDelete(){
-    if (this.id!==undefined){
-      this.profilesService.deleteProfile(this.id)
+    console.log("Delete")
+    console.log(this.id)
+    if (this.ownerId!==undefined){
+      this.profilesService.deleteProfile(this.ownerId)
     }
 
-  }
-
-  
+  } 
 
 }

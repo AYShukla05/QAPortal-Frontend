@@ -24,9 +24,9 @@
       <div class="form-group">
         <input type="text" class="form-control" 
         id="comment" placeholder="Comment on this post"
-        ngModel name="comment">
+        ngModel name="comment" required>
       </div>
-      <button type="submit" class="btn btn-primary">Comment</button>
+      <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Comment</button>
 
     </form>
     <hr />
@@ -55,9 +55,9 @@
       <div class="form-group">
         <input type="text" class="form-control" 
         id="comment" 
-        [(ngModel)]="comment.body" name="comment">
+        [ngModel]="comment.body" name="comment">
       </div>
-      <button type="submit" class="btn btn-success">Submit</button>
+      <button type="submit" class="btn btn-success" [disabled]="!f.valid">Submit</button>
     </form>
 </div>
 <hr>

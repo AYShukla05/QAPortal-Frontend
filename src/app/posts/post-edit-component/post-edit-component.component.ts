@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { PostService } from '../posts.service';
 
@@ -10,20 +10,47 @@ import { PostService } from '../posts.service';
   styleUrls: ['./post-edit-component.component.css']
 })
 export class PostEditComponentComponent implements OnInit {
-  private routeSub!: Subscription;
   id: string | undefined
-  post= {title: "Dummy Title", body: "Dummy Body"}
-  constructor(private route: ActivatedRoute, private postService: PostService) { }
+  postEdit!:FormGroup
+  post!: {title: string, body: string}
+  constructor(private route: ActivatedRoute, 
+    private router: Router,
+
+    private postService: PostService) { }
 
   ngOnInit(): void {
-    this.routeSub = this.route.params.subscribe(params => {
+    this.route.params.subscribe(params => {
       this.id = params['id'] 
-  })
-  }
+      if(this.id!==undefined){
+        this.post = this.postService.getPost(this.id)
+        if (this.post == undefined){
+          this.postService.getPostAsync(this.id).subscribe(
+            (resp)=>{
+              this.post = resp['Post'];
+              this.postEdit = new FormGroup({
+                'title': new FormControl(this.post?this.post.title:null, Validators.required),
+                'body': new FormControl(this.post?this.post.body:null, Validators.required)
+              
+              })
+            })
+          }}
+        })
 
-  onSubmit(form: NgForm){
-    const value = form.value
-    console.log(form)
+        if (this.router.url == "/new"){
+          this.post = {
+            'title': '', 
+            'body':''
+    }
+  }
+  this.postEdit = new FormGroup({
+    'title': new FormControl(this.post?this.post.title:null, Validators.required),
+    'body': new FormControl(this.post?this.post.body:null, Validators.required)
+  
+  })
+}
+
+  onSubmit(){
+    const value = this.postEdit.value
     const post= {
       title: value['title'],
       body: value['body']
@@ -35,7 +62,8 @@ export class PostEditComponentComponent implements OnInit {
       else{
         this.postService.updatePost(this.id,post)
       }
-    form.reset();
+    this.postEdit.reset();
   }
+  
 
 }

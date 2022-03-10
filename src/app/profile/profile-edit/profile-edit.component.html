@@ -2,33 +2,44 @@
 <form (ngSubmit)="onSubmit(fo)" #fo="ngForm">
     <div class="form-group">
       <label for="profile-name">Name</label>
-      <input type="text" class="form-control" defaultValue="{{ profile.name }}"
+      <input type="text" class="form-control" 
       id="profile-title" placeholder="Enter your name" 
-      ngModel name="name">
+      [ngModel]="profile.name" name="name" required>
     </div>
     <div class="form-group">
       <label for="profile-username">Username</label>
-      <input type="text" class="form-control" defaultValue="{{ profile.username }}"
+      <input type="text" class="form-control"
       id="profile-username" placeholder="Enter your username" 
-      ngModel name="username">
+      [ngModel]="profile.username" name="username" required>
     </div>
     <div class="form-group">
       <label for="profile-email">Email</label>
-      <input type="text" class="form-control" defaultValue="{{ profile.email }}"
+      <input type="text" class="form-control" 
       id="profile-email" placeholder="Enter your email" 
-      ngModel name="email">
+      [ngModel]="profile.email" name="email" required email>
     </div>
     <div class="form-group">
       <label for="Password1">Password</label>
       <input type="password" class="form-control" 
       id="password" placeholder="Enter the password" 
-      ngModel name="password">
+      ngModel name="password" required>
     </div>
     <div class="form-group">
       <label for="Password">Confirm Password</label>
       <input type="password" class="form-control" 
       id="confirm-password" placeholder="Confirm the password" 
-      ngModel name="confirm-password">
+      ngModel name="confirm-password" required>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!fo.valid || fo.value['password']!=fo.value['confirm-password']">Submit</button>
   </form>
+
+
+
+<div *ngIf="signingUp">
+
+  <div class="container-fluid">
+    <p>Already have an account? Log In</p>
+    <a routerLink="/login"><button class="btn btn-secondary">Login</button></a>
+  </div>
+  
+</div>

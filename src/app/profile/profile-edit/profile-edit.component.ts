@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 import { ProfilesService } from '../profiles.service';
 
 @Component({
@@ -11,24 +12,48 @@ import { ProfilesService } from '../profiles.service';
 })
 export class ProfileEditComponent implements OnInit {
   id: string | undefined
-  profile = {
-    "name": "a",
-    "username": "as",
-    "email":  "as",
-    "password":  "as",
-    "password1":  "as",
+  profile!: {
+    "name": string,
+    "username": string,
+    "email":  string|undefined,
+    
   };
-  constructor(private profilesService: ProfilesService,private route: ActivatedRoute) { }
+  signingUp: boolean = false;
+  constructor(private profilesService: ProfilesService,
+    private route: ActivatedRoute, 
+    private router: Router,
+    // private authService: AuthService
+    ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.id = params['id'] 
+      this.id = params['id']
+      if(this.id!==undefined){
+        this.profile = this.profilesService.getProfile(this.id)
+        if (this.profile==undefined){
+          this.profilesService.getProfileAsync(this.id).subscribe(
+            (response:{"Profile":{'id':string, 'email':string| undefined, 'username':string, 'name':string},"Posts": any[],"Comments":any[]}) => {
+            this.profile = response["Profile"]
+          }
+          )
+        }
+      }
   })
+  if (this.router.url == "/signup"){
+    this.signingUp = true
+    this.profile = {
+      'name': "",
+      "username": "",
+      "email": "", 
+    }
+  }
   }
   
   onSubmit(form: NgForm){
     const value = form.value
-    console.log(form)
+    console.log("Profile Edit form",form)
+    console.log("Profile Edit Value", form.value)
+    console.log("Value",value)
     const profile= {
       name: value['name'],
       username: value['username'],
@@ -38,6 +63,8 @@ export class ProfileEditComponent implements OnInit {
   } 
   this.profile = profile;
   if (this.id==undefined){
+    console.log(profile)
+    console.log(this.profile)
     this.profilesService.createProfile(profile)
       }
       else{

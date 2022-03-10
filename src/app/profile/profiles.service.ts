@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
-import { subscriptionService } from '../subscriptions/subscriptions.service';
+import { SubscriptionService } from '../subscriptions/subscriptions.service';
 
 import { Profile } from "./profile.model";
 import { Router } from "@angular/router";
@@ -11,10 +11,8 @@ export class ProfilesService{
     profiles: Profile[] = []
     constructor(private http: HttpClient,
         private router: Router,
-        private subscriptionService:subscriptionService,
+        private subscriptionService:SubscriptionService,
         private authService:AuthService){}
-    profile: any
-    subscribedUsers: Profile[] = []
 
 
 
@@ -29,7 +27,7 @@ export class ProfilesService{
     }
 
     getProfileAsync(id:string){
-        return this.http.get<{"Profile":{'id':string, 'email':string| undefined, 'username':string},"Posts": any[],"Comments":any[]}>('http://127.0.0.1:8000/api/profiles/'+id)
+        return this.http.get<{"Profile":{'name':string,'id':string, 'email':string| undefined, 'username':string},"Posts": any[],"Comments":any[]}>('http://127.0.0.1:8000/api/profiles/'+id)
     }
 
     createProfile(profile:{ "name": string;
@@ -40,6 +38,7 @@ export class ProfilesService{
     ){
         this.http.post('http://127.0.0.1:8000/api/create-profile',profile).subscribe(
             response => {
+                console.log(profile)
                 console.log("Response",response)
                 this.authService.login(
                     {"username":profile.username, "password":profile.password}
@@ -67,8 +66,9 @@ export class ProfilesService{
 
     
     deleteProfile(id:string){
+        console.log("Deleting")
         this.http.delete('http://127.0.0.1:8000/api/delete-profile/'+id).subscribe()
-        this.router.navigate(['profiles'])
+        this.router.navigate(['login'])
     }
 
 

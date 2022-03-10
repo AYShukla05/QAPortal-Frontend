@@ -2,6 +2,8 @@ import { HttpClient } from "@angular/common/http";
 import {  Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 
+
+
 @Injectable({
     providedIn: 'root'
   })
@@ -10,35 +12,46 @@ export class AuthService{
     isLoggedIn:boolean = false;
     expiration!: Date;
     loggedProfile:any
-    constructor(private http: HttpClient,private router: Router){}
+    constructor(private http: HttpClient,private router: Router){
+
+    }
 
     login(body:{'username':string, 'password':string}){
         this.http.post<{"access":string, "refresh":string}>('http://127.0.0.1:8000/api/token',body)
-        .subscribe(token => {
-            this.token = token.access;
-            // this.expiration = new Date()
-            console.log(token)
-            // console.log(this.expiration)
-            localStorage.setItem('token',this.token)
-            this.isLoggedIn=true
-            this.http.get('http://127.0.0.1:8000/api/profile')
-            .subscribe(
-                (response)=>{
-                    console.log("Response",response)
-                    localStorage.setItem('Profile',JSON.stringify(response))
-                    this.loggedProfile = response
-                    this.router.navigate(['/my-profile'])
-                },
-                (error)=>{
-                    console.log(error)
-                })
-            }, (error)=>{
-                console.log(error)
-            })
-            
-    }
+        .subscribe(
+            token=>{
+                this.token = token.access;
+                // this.expiration = new Date()
+                console.log(token)
+                // console.log(this.expiration)
+                localStorage.setItem('token',this.token)
+                this.isLoggedIn=true
+                this.http.get('http://127.0.0.1:8000/api/profile')
+                .subscribe({
+                    next: response=>{
+                        console.log("Response",response)
+                        localStorage.setItem('Profile',JSON.stringify(response))
+                        this.loggedProfile = response
+                        console.log(this.router)
 
-    autoLogin(){
+                        this.router.navigate(['/my-profile'])
+                    },     // nextHandler
+                    error: error => { 
+                        console.log("After logging in Error")
+                        console.log(error) 
+                    },    // errorHandler 
+                })
+            },err=>console.log(err),
+            // (error:{'status':number, 'statusText':string}) => { 
+            //     console.log("Error") 
+            //     console.log(error)
+            //     if(error.status==401){ console.log("Unauthorized")}
+            // } // errorHandler
+        )
+        
+}
+
+    autoLogin() {
         this.token = localStorage.getItem('token')
         this.isLoggedIn = this.token !== null?true:false
         // this.LoginChanged.emit(this.isLoggedIn)
