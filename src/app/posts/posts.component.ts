@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../auth/auth.service';
 import { ProfilesService } from '../profile/profiles.service';
 import { SubscriptionService } from '../subscriptions/subscriptions.service';
 import { Post } from './post.model';
@@ -17,8 +18,11 @@ export class PostsComponent implements OnInit {
   allPosts:Post[] = []
   popularPosts:Post[] = []
   subscribedPosts:Post[] = []
+    // Pagination Controls
+    page: any = 1;
+    count: any = 5;
   constructor(private postService: PostService, 
-  private subscriptionService: SubscriptionService) { }
+  private subscriptionService: SubscriptionService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.isSubscribed = false
@@ -29,7 +33,9 @@ export class PostsComponent implements OnInit {
         this.loading=false
       this.postService.posts = this.allPosts
     }, (error)=>{
-      console.log(error)
+      // console.log(error)
+      this.authService.handleError(error)
+
     }
       )
 

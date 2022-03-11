@@ -14,6 +14,8 @@ import { PostDetailsComponent } from './posts/post-details-component/post-detail
 import { PostEditComponentComponent } from './posts/post-edit-component/post-edit-component.component';
 import { AuthComponent } from './auth/auth.component';
 import { AuthInterceptorService } from './auth/auth.interceptor';
+import { ModalModule } from './_modal';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,8 @@ import { AuthInterceptorService } from './auth/auth.interceptor';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    ModalModule,
+    NgxPaginationModule,
     HttpClientModule,
 
   ],

@@ -1,6 +1,8 @@
 import { HttpClient } from "@angular/common/http";
-import {  Injectable } from "@angular/core";
+import {  ElementRef, Injectable } from "@angular/core";
 import { Router } from "@angular/router";
+import { SubscriptionService } from "../subscriptions/subscriptions.service";
+import { ModalService } from "../_modal/modal.service";
 
 
 
@@ -10,9 +12,14 @@ import { Router } from "@angular/router";
 export class AuthService{
     token:string | null=localStorage.getItem('token');
     isLoggedIn:boolean = false;
-    expiration!: Date;
     loggedProfile:any
-    constructor(private http: HttpClient,private router: Router){
+    message = ''
+
+    constructor(private http: HttpClient,
+        private router: Router,
+        private subscriptionService: SubscriptionService, 
+        public modalService: ModalService
+        ){
 
     }
 
@@ -21,27 +28,46 @@ export class AuthService{
         .subscribe(
             token=>{
                 this.token = token.access;
-                // this.expiration = new Date()
                 console.log(token)
-                // console.log(this.expiration)
                 localStorage.setItem('token',this.token)
                 this.isLoggedIn=true
+                setTimeout(()=>{
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('Profile');
+                    this.router.navigate(['login']);
+                }, 86400000 )
                 this.http.get('http://127.0.0.1:8000/api/profile')
-                .subscribe({
-                    next: response=>{
+                .subscribe(
+                    {
+                    next: 
+                    response=>{
                         console.log("Response",response)
                         localStorage.setItem('Profile',JSON.stringify(response))
                         this.loggedProfile = response
                         console.log(this.router)
-
                         this.router.navigate(['/my-profile'])
+                        this.subscriptionService.getSubscribedUsers().subscribe(
+                            (users:any[]) => {
+                                this.subscriptionService.subscribedUsers = users
+                              }, error =>{
+                                //   console.log(error)
+                                this.handleError(error)
+                            }
+                        )
+                        
                     },     // nextHandler
-                    error: error => { 
-                        console.log("After logging in Error")
-                        console.log(error) 
+                    error: 
+                    error => { 
+
+                        // console.log("After logging in Error")
+                        this.handleError(error)
                     },    // errorHandler 
-                })
-            },err=>console.log(err),
+                }
+                )
+            },error=>{
+                // console.log("Wrong credentials")
+                this.handleError(error)
+            }
             // (error:{'status':number, 'statusText':string}) => { 
             //     console.log("Error") 
             //     console.log(error)
@@ -60,6 +86,14 @@ export class AuthService{
         const temp = localStorage.getItem('Profile')
         if (temp!=null){
             this.loggedProfile = JSON.parse(temp)
+            this.subscriptionService.getSubscribedUsers().subscribe(
+                (users:any[]) => {
+                    this.subscriptionService.subscribedUsers = users
+                  }, error =>{
+                    // console.log(error)
+                    this.handleError(error)
+                }
+            )
         }
     }
 
@@ -73,4 +107,41 @@ export class AuthService{
         this.router.navigate(['login']);
     }
 
+
+    handleError(error:{'status':number, 'message':string, 'statusText':string, 'error':{'detail':string}}) {
+        switch(error.status)
+        {case 0:
+          console.log("Server is Down")
+          this.message=error.error.detail
+          console.log(error.error.detail)
+
+          //   console.log(error.this.message)
+          break;
+          case 401: 
+          console.log("Unauthorized")
+          this.message=error.error.detail
+          console.log(error.error.detail)
+
+          break
+          case 403: 
+          console.log("User does not have Permission. Login with proper credentials")
+          this.message=error.error.detail
+
+          console.log(error.error.detail)
+          break
+          case 404:
+            console.log("URL not found")
+            this.message=error.error.detail
+            console.log(error.error.detail)
+
+            break
+            case 500: 
+            console.log("Internal Server Error")
+            this.message=error.statusText
+            console.log(error.error.detail)
+
+        }
+        this.modalService.open('error')
+        
+      }
 }

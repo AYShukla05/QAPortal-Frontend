@@ -4,9 +4,11 @@
 </div>
 <br>
 <div *ngIf="notifications.length>0; else infoText">
-<div class="container" *ngFor="let notification of notifications">
   <h4>All Notifications</h4>
-  <div class="row" style="border: 1px solid #000; padding: 10px">{{notification.messages}}</div>
+<div class="container" *ngFor="let notification of notifications">
+  <div class="row" style="border: 1px solid #000; padding: 10px">{{notification.messages}}
+    <a routerLink="/posts/{{notification.post.id}}">Check it out</a>
+  </div>
 </div>
 </div>
 <ng-template #infoText>

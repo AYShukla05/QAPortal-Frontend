@@ -4,12 +4,16 @@
     </div>
   </div>
 <div  *ngIf="subscribedUsers">
-    <div class="container-fluid" style="border: 1px solid #000" *ngFor="let user of subscribedUsers" >
+    <div class="container-fluid" style="border: 1px solid #000" *ngFor="let user of subscribedUsers | paginate: { itemsPerPage: count, currentPage: page }" >
         <a routerLink="/profiles/{{user.id}}"><div class="row">
             <h1>{{ user.name }}</h1>
         </div>
         </a>
     </div>
+    <!-- Pagination Control -->
+<div class="text-right" *ngIf="subscribedUsers.length>count">
+    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+  </div>
     
 </div>
 <div *ngIf="subscribedUsers.length == 0">

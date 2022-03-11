@@ -9,7 +9,7 @@
       </a>
     </div>
     <ng-template #popular>
-    <div class="col" style="margin-left:20px;margin-right:10px">
+    <div class="col" style="margin-left:20px;margin-right:30px">
       <a (click)="onPopularPosts()" >
         <button class="btn btn-primary">Popular Posts</button>
       </a>
@@ -39,8 +39,7 @@
     </div>
   </div>
 <!-- Popular posts -->
-<!-- <div *ngIf="!isSubscribed"> -->
-<div *ngFor="let post of popularPosts"   >
+<div *ngFor="let post of popularPosts | paginate:{ itemsPerPage: count, currentPage: page}"   >
   <br>
   <div class="row">
     <div class="container col-md-6" style="border: 1px solid #000;padding-top: 15px">
@@ -61,27 +60,9 @@
     </div>
   </div>
 </div>
-<!-- </div> -->
+<!-- Pagination Control -->
+<div class="text-right" *ngIf="popularPosts.length>count">
+  <pagination-controls (pageChange)="page = $event"></pagination-controls>
+</div>
 
-<!-- Subscribed Posts -->
-<!-- <div *ngIf="isSubscribed">
-  <div *ngFor="let post of subscribedPosts" >
-    <br>
-    <div class="row">
-      <div class="container col-md-6" style="border: 1px solid #000;padding-top: 15px">
-        <a routerLink="{{post.id}}">
-          <h4 class="list-group-item-heading list-group-item-dark">{{ post.title }}</h4>
-        </a>
-        <p>{{ post.body.slice(0,50) }}<span *ngIf="post.body.length>51">...</span></p>
-        <div>
-          <label for="file">Audience Rating:</label>
-          <div class="progress">
-            <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" [ngStyle]="{width: post.vote_ratio + '%'}"  aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
-          </div>
-        </div>
-        <div><small><b>{{post.vote_ratio}}% Upvotes</b>({{ post.vote_total }})</small></div>
-      </div>
-    </div>
-  </div>
-</div> -->
 <router-outlet></router-outlet>

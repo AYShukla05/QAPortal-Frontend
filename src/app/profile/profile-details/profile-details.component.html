@@ -12,7 +12,18 @@
     <div *ngIf="profile.id==ownerId">
       <a routerLink="/profiles/{{profile.id}}/edit">
       <button class="btn btn-secondary">Edit Profile</button></a>
-      <button class="btn btn-danger" (click)="onDelete()">Delete Profile</button>
+      <button class="btn btn-danger" (click)="modalService.open('Delete-profile');">Delete Profile</button>
+  </div>
+  <!-- Confirmation modal -->
+  <div class="modal hidden">
+    <jw-modal id="Delete-profile">
+      <h1>Warning</h1>
+      <h4>Are you sure you want to delete your profile?</h4>
+      
+      
+      <button class="btn btn-secondary" (click)="modalService.close('Delete-profile');">Cancel</button>
+      <button class="btn btn-danger" (click)="modalService.close('Delete-profile');" (click)="onDelete()">Delete Comment</button>
+    </jw-modal>
   </div>
 </div>
 

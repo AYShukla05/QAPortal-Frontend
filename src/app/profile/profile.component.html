@@ -13,16 +13,21 @@
   </div>
   <br>
   <!-- Profiles -->
-<div class="container" style="border: 1px solid #000; padding: 15px" *ngFor="let user of popularProfiles" >
+<div class="container"  
+*ngFor="let user of popularProfiles | paginate: { itemsPerPage: count, currentPage: page }" >
+  <div *ngIf="user.id!=profile.id" style="border: 1px solid #000; padding: 15px">
     <a routerLink="{{user.id}}" [id]="user.id">
     <div>
-        <h1>{{ user.name }}</h1>
-        
+      <h1>{{ user.name }}</h1>
+      
     </div>
-    </a>
-    <button class="btn-secondary" (click)="onSubscribe(user)" 
-    *ngIf="!profile.isSubscribed">Subscribe</button>
-    <button class="btn-secondary" (click)="onSubscribe(user)" 
-    *ngIf="profile.isSubscribed">Unsubscribe</button>
+  </a>
+  <button class="btn-secondary" (click)="onSubscribe(user)" *ngIf="!user.isSubscribed">Subscribe</button>
+  <button class="btn-danger" (click)="onSubscribe(user)" *ngIf="user.isSubscribed">Unsubscribe</button>
+</div>
+</div>
+<!-- Pagination Control -->
+<div class="text-right" *ngIf="popularProfiles.length>count">
+  <pagination-controls (pageChange)="page = $event"></pagination-controls>
 </div>
 <router-outlet></router-outlet>

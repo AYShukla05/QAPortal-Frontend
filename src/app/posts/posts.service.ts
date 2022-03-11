@@ -4,12 +4,13 @@ import { map } from 'rxjs/operators';
 
 import { Post } from "./post.model"
 import { Router } from '@angular/router';
+import { AuthService } from '../auth/auth.service';
 @Injectable({
     providedIn: 'root'
   })
 export class PostService{
 subscribedUsers: any;
-constructor(private http: HttpClient,private router: Router){}
+constructor(private http: HttpClient,private router: Router, private authService: AuthService){}
 
 
 posts: Post[] = []
@@ -46,15 +47,27 @@ createPost(post: {title: string, body: string}){
 
 updatePost(postID: string, post: {title: string, body: string}) {
     this.http.put('http://127.0.0.1:8000/api/update-post/'+postID, post)
-    .subscribe()
-    this.router.navigate([''])
+    .subscribe(
+        ()=>{}, err => {
+            // console.log(err)
+            this.authService.handleError(err)
+
+        },
+    )
+    this.router.navigate(['posts'])
 
 }
 
 deletePost(id:string){
     this.http.delete('http://127.0.0.1:8000/api/delete-post/'+id)
-    .subscribe();
-    this.router.navigate([''])
+    .subscribe(
+        ()=>{}, err => {
+            // console.log(err)
+            this.authService.handleError(err)
+
+        },
+    );
+    this.router.navigate(['posts'])
 
 }
 
@@ -80,8 +93,8 @@ getComments(postID:string){
 }
 
 editComment(commentID:string, comment:{ 'body': string}, id:string){
-    this.http.put('http://127.0.0.1:8000/api/edit-comment/'+commentID, comment).subscribe()
     this.router.navigate(['posts', id])
+    return this.http.put<{'body':string}>('http://127.0.0.1:8000/api/edit-comment/'+commentID, comment)
 }
 
 deleteComment(commentID:string, id:string){

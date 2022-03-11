@@ -45,7 +45,8 @@ export class ProfilesService{
                     )
             }, error =>{
                 console.log("Error ",error)
-                this.router.navigate(['login'])
+                this.authService.handleError(error)
+                // this.router.navigate(['login'])
             }
         )
         // this.router.navigate(['profiles'])
@@ -67,16 +68,22 @@ export class ProfilesService{
     
     deleteProfile(id:string){
         console.log("Deleting")
-        this.http.delete('http://127.0.0.1:8000/api/delete-profile/'+id).subscribe()
+        this.http.delete('http://127.0.0.1:8000/api/delete-profile/'+id).subscribe(
+            ()=>{}, err => {
+                // console.log(err)
+                this.authService.handleError(err)
+
+            },
+        )
         this.router.navigate(['login'])
     }
 
 
     subscribeProfile(profileId:string){
         const profId = {'id':profileId}
-        this.http.post('http://127.0.0.1:8000/api/subscribe',profId).subscribe()
         this.subscriptionService.getSubscribedUsers()
         this.router.navigate(['profiles'])
+        return this.http.post('http://127.0.0.1:8000/api/subscribe',profId)
     }
 
     getMyProfile(){

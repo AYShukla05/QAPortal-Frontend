@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 import { PostService } from '../posts.service';
 
 @Component({
@@ -15,7 +16,7 @@ export class PostEditComponentComponent implements OnInit {
   post!: {title: string, body: string}
   constructor(private route: ActivatedRoute, 
     private router: Router,
-
+    private authService: AuthService,
     private postService: PostService) { }
 
   ngOnInit(): void {
@@ -32,6 +33,11 @@ export class PostEditComponentComponent implements OnInit {
                 'body': new FormControl(this.post?this.post.body:null, Validators.required)
               
               })
+            }, 
+            error=>{
+              // console.log(error)
+              this.authService.handleError(error)
+
             })
           }}
         })

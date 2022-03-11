@@ -22,7 +22,7 @@ export class ProfileEditComponent implements OnInit {
   constructor(private profilesService: ProfilesService,
     private route: ActivatedRoute, 
     private router: Router,
-    // private authService: AuthService
+    private authService: AuthService
     ) { }
 
   ngOnInit(): void {
@@ -34,11 +34,20 @@ export class ProfileEditComponent implements OnInit {
           this.profilesService.getProfileAsync(this.id).subscribe(
             (response:{"Profile":{'id':string, 'email':string| undefined, 'username':string, 'name':string},"Posts": any[],"Comments":any[]}) => {
             this.profile = response["Profile"]
+          }, error =>{
+            // console.log(error)
+            this.authService.handleError(error)
+          
           }
           )
         }
       }
-  })
+  }, error =>{
+    // console.log(error)
+    this.authService.handleError(error)
+
+  }
+  )
   if (this.router.url == "/signup"){
     this.signingUp = true
     this.profile = {

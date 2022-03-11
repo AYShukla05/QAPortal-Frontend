@@ -9,7 +9,7 @@
 <body>
   
   <nav class="navbar navbar-dark bg-dark">
-    <a class="navbar-brand">Navbar</a>
+    <a class="navbar-brand">Quora</a>
     <a class="btn btn-light" routerLinkActive="active" routerLink="posts">Home <span class="sr-only">(current)</span></a>
     <a class="btn btn-light" routerLinkActive="active" routerLink="subscriptions">Subscriptions</a>    
     <a class="btn btn-light" routerLinkActive="active" routerLink="notifications">Notifications</a>
@@ -25,6 +25,14 @@
   
   <div class="col-md-12">
     <router-outlet ></router-outlet>
+  </div>
+  <div class="modal hidden">
+    <jw-modal id="error">
+      <h1>Error</h1>
+      <h4>{{authService.message}}</h4>
+      
+      <button class="btn btn-secondary" (click)="modalService.close('error');">Ok</button>
+    </jw-modal>
   </div>
 </body>
 </html>

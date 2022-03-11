@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth/auth.service';
+import { ModalService } from './_modal/modal.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import { AuthService } from './auth/auth.service';
 export class AppComponent implements OnInit {
   isLoggedIn: boolean = false;
   title = 'project';
-  constructor(private authService: AuthService){}
+  constructor(public authService: AuthService, public modalService: ModalService){}
 
   ngOnInit() {
     console.log("Getting token from localStorage...");

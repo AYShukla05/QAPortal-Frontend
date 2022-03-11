@@ -1,6 +1,7 @@
 import { Component, OnInit, ɵɵsetComponentScope } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
+import { ModalService } from 'src/app/_modal/modal.service';
 import { ProfilesService } from '../profiles.service';
 
 
@@ -19,7 +20,9 @@ export class ProfileDetailsComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private router: Router,
     private authService:AuthService, 
-    private profilesService:ProfilesService) { }
+    private profilesService:ProfilesService,
+    public modalService: ModalService  
+    ) { }
 
   ngOnInit(): void {
     this.route.params
@@ -37,12 +40,19 @@ export class ProfileDetailsComponent implements OnInit {
                 this.profilePosts = response["Posts"]
                 this.profileComments = response['Comments']
                 this.loading = false
+              }, error =>{
+                // console.log(error)
+                this.authService.handleError(error)
+
               }
               )
             }
+          }, error =>{
+            // console.log(error)
+            this.authService.handleError(error)
+
           }
       );
-      console.log(this.router.url)
       if(this.router.url == "/my-profile"){
         this.profilesService.getMyProfile().subscribe(
           (response:{"Profile":{'id':string, 'email':string| undefined, 'username':string},"Posts": any[],"Comments":any[]}) => {
@@ -52,6 +62,10 @@ export class ProfileDetailsComponent implements OnInit {
             this.profilePosts = response["Posts"]
             this.profileComments = response['Comments']
             this.loading = false
+          }, error => {
+            // console.log(error)
+            this.authService.handleError(error)
+
           }
         )
       }

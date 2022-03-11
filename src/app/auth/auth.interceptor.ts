@@ -16,25 +16,26 @@ export class AuthInterceptorService implements HttpInterceptor {
       return next.handle(req)
     }
     console.log(modifiedRequest)
-    return next.handle(modifiedRequest).pipe(
-        catchError(
-          (err, caught) => {
-            if (err.status === 401){
-              this.handleAuthError();
-              return of(err);
-            }
-            throw err;
-          }
-        )
-      );
+    return next.handle(modifiedRequest)
+    // .pipe(
+    //     catchError(
+    //       (err, caught) => {
+    //         // if (err.status === 401){
+    //           this.authService.handleError(err);
+    //           return of(err);
+            // }
+            // throw err;
+          // }
+        // )
+      // );
     }
-    private handleAuthError() {
-      // this.authService.token = localStorage.getItem('token');
-      // this.router.navigate(['posts'])
-      localStorage.removeItem('token');
-      localStorage.removeItem('Profile');
-      this.router.navigate(['login']);
-    };
+    // private handleAuthError() {
+    //   // this.authService.token = localStorage.getItem('token');
+    //   // this.router.navigate(['posts'])
+    //   localStorage.removeItem('token');
+    //   localStorage.removeItem('Profile');
+    //   this.router.navigate(['login']);
+    // };
 }
  
  
