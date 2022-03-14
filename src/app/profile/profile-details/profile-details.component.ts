@@ -19,7 +19,7 @@ export class ProfileDetailsComponent implements OnInit {
   ownerId!: string
   constructor(private route: ActivatedRoute,
     private router: Router,
-    private authService:AuthService, 
+    public authService:AuthService, 
     private profilesService:ProfilesService,
     public modalService: ModalService  
     ) { }
@@ -32,10 +32,13 @@ export class ProfileDetailsComponent implements OnInit {
           if(this.id!==undefined) {
           this.profile = this.profilesService.getProfile(this.id);
           this.loading=this.profile?false:true
-            this.ownerId = this.authService.loggedProfile.id
+          console.log("Inside subscribe")
+          console.log("Profile", this.profile)
+            this.ownerId = this.authService.isLoggedIn? this.authService.loggedProfile.id: ''
+            console.log("Owner Id")
             this.profilesService.getProfileAsync(this.id).subscribe(
-              (response:{"Profile":{'id':string, 'email':string| undefined, 'username':string},"Posts": any[],"Comments":any[]}) => {
-                console.log(response)
+              (response) => {
+                console.log("Response",response)
                 this.profile = response["Profile"]
                 this.profilePosts = response["Posts"]
                 this.profileComments = response['Comments']
@@ -43,7 +46,7 @@ export class ProfileDetailsComponent implements OnInit {
               }, error =>{
                 // console.log(error)
                 this.authService.handleError(error)
-
+                this.profile = {'name':'', 'username': '', 'email':''}
               }
               )
             }

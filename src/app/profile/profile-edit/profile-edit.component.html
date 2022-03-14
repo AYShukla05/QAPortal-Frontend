@@ -1,5 +1,7 @@
-<br>
-<form (ngSubmit)="onSubmit(fo)" #fo="ngForm">
+<!-- <div *ngIf="!signingUp">
+
+  <br>
+  <form (ngSubmit)="onSubmit(fo)" #fo="ngForm">
     <div class="form-group">
       <label for="profile-name">Name</label>
       <input type="text" class="form-control" 
@@ -16,7 +18,8 @@
       <label for="profile-email">Email</label>
       <input type="text" class="form-control" 
       id="profile-email" placeholder="Enter your email" 
-      [ngModel]="profile.email" name="email" required email>
+      [ngModel]="profile.email" name="email" required email #email="ngModel">
+      <span class="help-block" *ngIf="!email.valid && email.touched">Please enter a valid email!</span>
     </div>
     <div class="form-group">
       <label for="Password1">Password</label>
@@ -28,18 +31,143 @@
       <label for="Password">Confirm Password</label>
       <input type="password" class="form-control" 
       id="confirm-password" placeholder="Confirm the password" 
-      ngModel name="confirm-password" required>
+      ngModel name="confirm-password" required #confirmPassword="ngModel">
+      <span class="help-block" *ngIf="!confirmPassword.valid && confirmPassword.touched">Passwords must match!</span>
+      
     </div>
     <button type="submit" class="btn btn-primary" [disabled]="!fo.valid || fo.value['password']!=fo.value['confirm-password']">Submit</button>
   </form>
-
-
+</div>
+  
+  
 
 <div *ngIf="signingUp">
+  <section class="banner_main">
+    <div class="container">
+    <div class="row d_flex">
+       <div class="col-md-6">
+          <div class="text-bg">
+             <h1>Question Answer Portal</h1>
+             <p>This is a very open platform where you can post your queries, questions or opinions. You can also comment and vote on other people's posts. Be inclusive with everyone and enjoy!</p>
+          </div>
+       </div>
+       <div class="col-md-6">
+        <form (ngSubmit)="onSubmit(fo)" #fo="ngForm">
+          <div class="form-group">
+            <label for="profile-name">Name</label>
+            <input type="text" class="form-control" 
+            id="profile-title" placeholder="Enter your name" 
+            [ngModel]="profile.name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="profile-username">Username</label>
+            <input type="text" class="form-control"
+            id="profile-username" placeholder="Enter your username" 
+            [ngModel]="profile.username" name="username" required>
+          </div>
+          <div class="form-group">
+            <label for="profile-email">Email</label>
+            <input type="text" class="form-control" 
+            id="profile-email" placeholder="Enter your email" 
+            [ngModel]="profile.email" name="email" required email #email="ngModel">
+            <span class="help-block" *ngIf="!email.valid && email.touched">Please enter a valid email!</span>
+          </div>
+          <div class="form-group">
+            <label for="Password1">Password</label>
+            <input type="password" class="form-control" 
+            id="password" placeholder="Enter the password" 
+            ngModel name="password" required>
+          </div>
+          <div class="form-group">
+            <label for="Password">Confirm Password</label>
+            <input type="password" class="form-control" 
+            id="confirm-password" placeholder="Confirm the password" 
+            ngModel name="confirm-password" required #confirmPassword="ngModel">
+            <span class="help-block" *ngIf="!confirmPassword.valid && confirmPassword.touched">Passwords must match!</span>
+            
+          </div>
+          <button type="submit" class="btn btn-primary" [disabled]="!fo.valid || fo.value['password']!=fo.value['confirm-password']">Submit</button>
+        </form>
+        <div class="container-fluid">
+          <p>Already have an account? Log In</p>
+          <a routerLink="/login"><button class="btn btn-secondary">Login</button></a>
+        </div>
+       </div>
+    </div>
+    </div>
+  </section>
 
-  <div class="container-fluid">
-    <p>Already have an account? Log In</p>
-    <a routerLink="/login"><button class="btn btn-secondary">Login</button></a>
-  </div>
+
   
-</div>
+</div> -->
+
+
+<body>
+  <div class="auth">
+    <div class="card">
+      <div class="auth__header text-center">
+        <a href="/">
+          <img src="images/icon.svg" alt="icon" />
+        </a>
+        <h3>Account SignUp</h3>
+        <p>Create a new developer account</p>
+      </div>
+
+      <form action="#" class="form auth__form">
+        <!-- Input:Text -->
+        <div class="form__field">
+          <label for="formInput#text">Full Name: </label>
+          <input
+            class="input input--text"
+            id="formInput#text"
+            type="text"
+            name="text"
+            placeholder="e.g. Dennis Ivanov"
+          />
+        </div>
+
+        <!-- Input:Email -->
+        <div class="form__field">
+          <label for="formInput#email">Email Address: </label>
+          <input
+            class="input input--email"
+            id="formInput#email"
+            type="email"
+            name="email"
+            placeholder="e.g. user@domain.com"
+          />
+        </div>
+
+        <!-- Input:Password -->
+        <div class="form__field">
+          <label for="formInput#password">Password: </label>
+          <input
+            class="input input--password"
+            id="formInput#passowrd"
+            type="password"
+            name="password"
+            placeholder="••••••••"
+          />
+        </div>
+        <!-- Input:Password -->
+        <div class="form__field">
+          <label for="formInput#confirm-password">Confirm Password: </label>
+          <input
+            class="input input--password"
+            id="formInput#confirm-passowrd"
+            type="password"
+            name="confirm-password"
+            placeholder="••••••••"
+          />
+        </div>
+        <div class="auth__actions">
+          <input class="btn btn--sub btn--lg" type="submit" value="Sign  In" />
+        </div>
+      </form>
+      <div class="auth__alternative">
+        <p>Already have an Account?</p>
+        <a href="login.html">Log In</a>
+      </div>
+    </div>
+  </div>
+</body>

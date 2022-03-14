@@ -26,13 +26,14 @@
         id="comment" placeholder="Comment on this post"
         ngModel name="comment" required>
       </div>
-      <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Comment</button>
+      <button type="submit" class="btn btn-primary" [disabled]="!f.valid || (f.value['comment']?.trim().length == 0)">Comment</button>
 
     </form>
     <hr />
     <br>
 
 <!-- Comments -->
+<div *ngIf="authService.isLoggedIn">
 <div *ngIf="comments.length>0; else infoText">
 <!-- Spinner -->
 <div *ngIf="loadingComments" class="d-flex justify-content-center">
@@ -72,17 +73,22 @@
 </div>
 <hr>
 </div>
+</div>
 <!-- Pagination Control -->
 <div class="text-right" *ngIf="comments.length>count">
   <pagination-controls (pageChange)="page = $event"></pagination-controls>
 </div>
 </div>
-<ng-template #infoText>
+<ng-template  #infoText>
   <p>No comments Yet! Be the first to comment.</p>
 </ng-template>
+<div class="container-fluid" *ngIf="!authService.isLoggedIn">
+  <p>Login to see the comments</p>
+
+</div>
 <br />
 
-<div *ngIf="post.owner['id'] == profile['id']">
+<div *ngIf="authService.isLoggedIn && post.owner['id'] == profile['id']">
   <a routerLink="edit"><button class="btn btn-secondary">Edit Post</button></a>
   <button class="btn btn-danger" (click)="modalService.open('Delete-post')">Delete Post</button>
 </div>

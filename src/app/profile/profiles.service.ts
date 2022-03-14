@@ -22,7 +22,9 @@ export class ProfilesService{
     }
 
     getProfile(id:string){
+        console.log("From Service", this.profiles)
         let profile = this.profiles.filter(p => p.id == id)
+        console.log("From profile service", profile)
         return profile[0]
     }
 

@@ -1,24 +1,33 @@
-<br>
-<br>
-<div class="container-fluid">
-  <form (ngSubmit)="onSubmit(f)" #f="ngForm">
-    <div class="form-group">
-      <label for="username">Username:</label>
-      <input type="text" class="form-control" 
-      id="username" placeholder="Enter your username"
-      ngModel name="username" required>
-    </div>
-    <div class="form-group">
-        <label for="Password1">Password:</label>
-        <input type="password" class="form-control" 
-        id="password" placeholder="Enter the password" 
-        ngModel name="password" required>
-      </div>
-    <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Login</button>
-  </form>
-    </div>
-    <br>
-<div class="container-fluid">
-  <p>Don't have an account? Signup Now</p>
-  <a routerLink="/signup"><button class="btn btn-secondary">Sign Up</button></a>
-</div>
+<section class="banner_main">
+  <div class="container">
+  <div class="row d_flex">
+     <div class="col-md-6">
+        <div class="text-bg">
+           <h1>Question Answer Portal</h1>
+           <p>This is a very open platform where you can post your queries, questions or opinions. You can also comment and vote on other people's posts. Be inclusive with everyone and enjoy!</p>
+        </div>
+     </div>
+     <div class="col-md-6">
+        <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+           <div class="form-group">
+             <label for="username">Username:</label>
+             <input type="text" class="form-control" 
+             id="username" placeholder="Enter your username"
+             ngModel name="username" required>
+           </div>
+           <div class="form-group">
+               <label for="Password1">Password:</label>
+               <input type="password" class="form-control" 
+               id="password" placeholder="Enter the password" 
+               ngModel name="password" required>
+             </div>
+           <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Login</button>
+         </form>
+         <div class="container-fluid">
+           <p>Don't have an account? Signup Now</p>
+           <a routerLink="/signup"><button class="btn btn-secondary">Sign Up</button></a>
+         </div>
+     </div>
+  </div>
+  </div>
+</section>

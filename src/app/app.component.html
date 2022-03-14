@@ -11,13 +11,13 @@
   <nav class="navbar navbar-dark bg-dark">
     <a class="navbar-brand">Quora</a>
     <a class="btn btn-light" routerLinkActive="active" routerLink="posts">Home <span class="sr-only">(current)</span></a>
-    <a class="btn btn-light" routerLinkActive="active" routerLink="subscriptions">Subscriptions</a>    
-    <a class="btn btn-light" routerLinkActive="active" routerLink="notifications">Notifications</a>
+    <a *ngIf="isLoggedIn" class="btn btn-light" routerLinkActive="active" routerLink="subscriptions">Subscriptions</a>    
+    <a *ngIf="isLoggedIn" class="btn btn-light" routerLinkActive="active" routerLink="notifications">Notifications</a>
     <a class="btn btn-light" routerLink="profiles">Profile</a>
-    <a class="btn btn-light" routerLinkActive="active" routerLink="my-profile">My Profile</a>
-      <!-- <li class="nav-item btn btn-outline">
-        <a routerLink="login" class="btn btn-primary" *ngIf="!isLoggedIn">Login/Sign Up</a>
-      </li> -->
+    <a *ngIf="isLoggedIn" class="btn btn-light" routerLinkActive="active" routerLink="my-profile">My Profile</a>
+    <li class="nav-item btn btn-outline">
+      <a routerLink="login" class="btn btn-primary" *ngIf="!isLoggedIn">Login</a>
+    </li>
       <li class="nav-item btn btn-outline">
         <a class="btn btn-danger" *ngIf="isLoggedIn" (click)="logout()">Logout</a>
       </li>

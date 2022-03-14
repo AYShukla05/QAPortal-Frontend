@@ -22,8 +22,10 @@
       
     </div>
   </a>
-  <button class="btn-secondary" (click)="onSubscribe(user)" *ngIf="!user.isSubscribed">Subscribe</button>
-  <button class="btn-danger" (click)="onSubscribe(user)" *ngIf="user.isSubscribed">Unsubscribe</button>
+  <div *ngIf="authService.isLoggedIn">
+    <button class="btn-secondary" (click)="onSubscribe(user)" *ngIf="!user.isSubscribed">Subscribe</button>
+    <button class="btn-danger" (click)="onSubscribe(user)" *ngIf="user.isSubscribed">Unsubscribe</button>
+  </div>
 </div>
 </div>
 <!-- Pagination Control -->

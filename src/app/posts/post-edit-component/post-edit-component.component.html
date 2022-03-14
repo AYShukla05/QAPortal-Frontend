@@ -3,14 +3,14 @@
     <div class="form-group">
       <label for="post-title">Title</label>
       <input type="text" class="form-control" 
-      id="post-title" formControlName="title"  name="title">
+      id="post-title" formControlName="title"  name="title" maxlength="300">
     </div>
 
     <div class="form-group">
       <div>
         <label for="body">Body</label> 
       </div>
-      <textarea
+      <textarea class="container-fluid"
      name="body" id="body" formControlName="body"
       cols="175" rows="10" placeholder="Enter the post content"></textarea>
     </div>

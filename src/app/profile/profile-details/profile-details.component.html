@@ -22,7 +22,7 @@
       
       
       <button class="btn btn-secondary" (click)="modalService.close('Delete-profile');">Cancel</button>
-      <button class="btn btn-danger" (click)="modalService.close('Delete-profile');" (click)="onDelete()">Delete Comment</button>
+      <button class="btn btn-danger" (click)="modalService.close('Delete-profile');" (click)="onDelete()">Delete Profile</button>
     </jw-modal>
   </div>
 </div>
@@ -40,19 +40,24 @@
     </div>
   </div>
 </div>
+</div>
 <br>
 <br>
-<h5>Comments</h5>
+<div *ngIf="authService.isLoggedIn">
+  <h5>Comments</h5>
   <div *ngIf="profileComments.length > 0; else infoText">
-  <div *ngFor="let comment of profileComments">
-    <hr>
-    <div class="container-fluid" style="padding: 10px">
-      <div class="row">{{comment.body}}</div>
-      <div class="row"><a routerLink="/posts/{{comment.post.id}}"><b>{{comment.post.title}}</b></a></div>
+    <div *ngFor="let comment of profileComments">
+      <hr>
+      <div class="container-fluid" style="padding: 10px">
+        <div class="row">{{comment.body}}</div>
+        <div class="row">
+          <a routerLink="/posts/{{comment.post.id}}"><b>{{comment.post.title}}</b></a>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-</div>
-<ng-template #infoText>
-  <p>No activity here</p>
-</ng-template>
+  <ng-template #infoText>
+    <p>No activity here</p>
+  </ng-template>
+  

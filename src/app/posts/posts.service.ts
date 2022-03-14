@@ -72,7 +72,7 @@ deletePost(id:string){
 }
 
 vote(id:string,vote:{'value':string}){
-    return this.http.post('http://127.0.0.1:8000/api/add-vote/'+id,vote)
+    return this.http.post<{ 'title': string,'body': string, 'owner': {'name': string, 'id': string}, 'vote_total':number, 'vote_ratio':number}>('http://127.0.0.1:8000/api/add-vote/'+id,vote)
     
 }
 

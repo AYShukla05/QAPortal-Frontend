@@ -84,8 +84,9 @@ export class AuthService{
         // console.log(this.LoginChanged)
 
         const temp = localStorage.getItem('Profile')
-        if (temp!=null){
+        if (this.token!=null && temp!=null) {
             this.loggedProfile = JSON.parse(temp)
+            console.log("Getting subscribed initial")
             this.subscriptionService.getSubscribedUsers().subscribe(
                 (users:any[]) => {
                     this.subscriptionService.subscribedUsers = users
@@ -108,37 +109,47 @@ export class AuthService{
     }
 
 
-    handleError(error:{'status':number, 'message':string, 'statusText':string, 'error':{'detail':string}}) {
+    handleError(error:{'status':number, 'message':string, 'statusText':string, 'error':{'details':{'message':string}}}) {
         switch(error.status)
         {case 0:
           console.log("Server is Down")
-          this.message=error.error.detail
-          console.log(error.error.detail)
+          this.message="Server is Down"
+          console.log(error.error.details)
+          console.log("Error", error)
+
 
           //   console.log(error.this.message)
           break;
           case 401: 
           console.log("Unauthorized")
-          this.message=error.error.detail
-          console.log(error.error.detail)
+          this.message = error.error.details.message;
+          this.message==''?"Please Log in with proper credentials":''
+          console.log("Error Detail",error.error.details)
+          console.log("Error", error)
+
+          this.router.navigate(['login']);
 
           break
           case 403: 
           console.log("User does not have Permission. Login with proper credentials")
-          this.message=error.error.detail
+          this.message="User does not have Permission. Login with proper credentials"
+          console.log("Error", error)
 
-          console.log(error.error.detail)
+          console.log("Error Detail",error.error.details)
           break
           case 404:
             console.log("URL not found")
-            this.message=error.error.detail
-            console.log(error.error.detail)
+            this.message="URL not found"
+            console.log("Error Detail",error.error.details)
+            console.log("Error", error)
 
             break
             case 500: 
             console.log("Internal Server Error")
-            this.message=error.statusText
-            console.log(error.error.detail)
+            this.message="Internal Server Error"
+            console.log("Error Detail",error.error.details)
+            console.log("Error", error)
+
 
         }
         this.modalService.open('error')
