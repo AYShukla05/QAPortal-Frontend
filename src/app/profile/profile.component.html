@@ -4,7 +4,7 @@
 </div>
 <br>
 <!-- Search Bar -->
-<div class="container">
+<div class="container" >
     <div class="d-flex form-inputs"> 
       <input class="form-control" type="text" [(ngModel)]="searchQuery"
       placeholder="Search Post" name="searchQuery" (ngModelChange)="search()"> 
@@ -13,23 +13,25 @@
   </div>
   <br>
   <!-- Profiles -->
-<div class="container"  
-*ngFor="let user of popularProfiles | paginate: { itemsPerPage: count, currentPage: page }" >
-  <div *ngIf="user.id!=profile.id" style="border: 1px solid #000; padding: 15px">
-    <a routerLink="{{user.id}}" [id]="user.id">
-    <div>
-      <h1>{{ user.name }}</h1>
-      
+
+<div class="container-fluid" style="background-color: rgb(214, 182, 255); height: 100%;width:80%">
+<div *ngFor="let user of popularProfiles | paginate:{ itemsPerPage: count, currentPage: page}">
+  <br>
+  <div class="row" >
+    <div class="container col-md-6" style="border: 1px solid #000;padding-top: 15px;background-color:bisque">
+      <a routerLink="/profiles/{{user.id}}">
+        <h4 class="list-group-item-heading list-group-item-dark">{{ user.name }}</h4>
+      </a>
+      <div *ngIf="authService.isLoggedIn">
+        <button class="btn-secondary" (click)="onSubscribe(user)" *ngIf="!user.isSubscribed">Subscribe</button>
+        <button class="btn-danger" (click)="onSubscribe(user)" *ngIf="user.isSubscribed">Unsubscribe</button>
+      </div>
     </div>
-  </a>
-  <div *ngIf="authService.isLoggedIn">
-    <button class="btn-secondary" (click)="onSubscribe(user)" *ngIf="!user.isSubscribed">Subscribe</button>
-    <button class="btn-danger" (click)="onSubscribe(user)" *ngIf="user.isSubscribed">Unsubscribe</button>
   </div>
 </div>
-</div>
 <!-- Pagination Control -->
-<div class="text-right" *ngIf="popularProfiles.length>count">
+<div class="text-right" *ngIf="popularProfiles.length>count" >
   <pagination-controls (pageChange)="page = $event"></pagination-controls>
 </div>
 <router-outlet></router-outlet>
+</div>

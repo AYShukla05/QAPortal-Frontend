@@ -1,21 +1,30 @@
-<br>
+ 
+
 <div *ngIf="loading" class="d-flex justify-content-center">
     <div class="spinner-border" role="status">
     </div>
-  </div>
-<div  *ngIf="subscribedUsers">
-    <div class="container-fluid" style="border: 1px solid #000" *ngFor="let user of subscribedUsers | paginate: { itemsPerPage: count, currentPage: page }" >
-        <a routerLink="/profiles/{{user.id}}"><div class="row">
-            <h1>{{ user.name }}</h1>
-        </div>
+</div>
+<br>
+
+<!-- Profiles -->
+
+<div *ngIf="subscribedUsers" class="container-fluid">
+    <h3 class="text-center">Subscribed Users</h3>
+    <div *ngFor="let user of subscribedUsers | paginate: { itemsPerPage: count, currentPage: page }">
+        <br>
+        <div class="row" >
+    <div class="container col-md-6" style="border: 1px solid #000;padding-top: 15px;background-color:bisque">
+        <a routerLink="/profiles/{{user.id}}">
+            <h4 class="list-group-item-heading list-group-item-dark">{{ user.name }}</h4>
         </a>
     </div>
-    <!-- Pagination Control -->
-<div class="text-right" *ngIf="subscribedUsers.length>count">
-    <pagination-controls (pageChange)="page = $event"></pagination-controls>
-  </div>
-    
+</div>
 </div>
 <div *ngIf="subscribedUsers.length == 0">
     <h2>No Subscription Yet</h2>
+</div>
+<!-- Pagination Control -->
+<div class="text-right" *ngIf="subscribedUsers.length>count" >
+    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+</div>
 </div>

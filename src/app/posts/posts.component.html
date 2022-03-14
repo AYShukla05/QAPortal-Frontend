@@ -1,5 +1,6 @@
 <br>
 <br>
+<div class="container" style="height: 150%;width:100%">
 <!-- Toggling between popular and subscribed -->
 <div class="container">
   <div class="row">
@@ -43,7 +44,7 @@
 <div *ngFor="let post of popularPosts | paginate:{ itemsPerPage: count, currentPage: page}">
   <br>
   <div class="row" >
-    <div class="container col-md-6" style="border: 1px solid #000;padding-top: 15px">
+    <div class="container col-md-6" style="border: 1px solid #000;padding-top: 15px;background-color:bisque">
       <a routerLink="{{post.id}}">
         <h4 class="list-group-item-heading list-group-item-dark">{{ post.title }}</h4>
       </a>
@@ -54,7 +55,7 @@
       <div>
         <label for="file">Audience Rating:</label>
         <div class="progress">
-          <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" [ngStyle]="{width: post.vote_ratio + '%'}"  aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+          <div class="progress-bar progress-bar-striped bg-primary" role="progressbar" [ngStyle]="{width: post.vote_ratio + '%'}"  aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
       </div>
       <div><small><b>{{post.vote_ratio}}% Upvotes</b>({{ post.vote_total }})</small></div>
@@ -63,7 +64,8 @@
 </div>
 <!-- Pagination Control -->
 <div class="text-right" *ngIf="popularPosts.length>count">
-  <pagination-controls (pageChange)="page = $event"></pagination-controls>
+  <pagination-controls (pageChange)="page = $event" style="color:rgb(0, 0, 0)"></pagination-controls>
 </div>
 
 <router-outlet></router-outlet>
+</div>

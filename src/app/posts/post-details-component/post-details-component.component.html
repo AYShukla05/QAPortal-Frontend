@@ -10,7 +10,7 @@
       <small><p>Made by <b>{{post.owner.name}}</b></p></small>
     </div>
     
-    <div class="container border col" style="display: flex">
+    <div class="container border col" style="display: flex;background-color:bisque">
       {{post.body}}
     </div>
     <br>
@@ -42,13 +42,13 @@
 </div>
 <!-- Comment List -->
   <div *ngFor="let comment of comments | paginate:{ itemsPerPage: count, currentPage: page}" >
-    <div *ngIf="!comment.editCommentMode">
+    <div *ngIf="!comment.editCommentMode" style="border: 1px solid #000;padding-top: 15px;background-color:bisque; padding:10px">
 
     <p><b>{{comment.body}}</b></p>
     <small> Made by <a routerLink="/profiles/{{comment.owner.id}}">{{ comment.owner.name }}</a></small>
     <div *ngIf="comment.owner.id==profile.id">
-    <button type="button" class="btn btn-warning btn-sm" (click)="onEditComment(comment.id)" >Edit</button>
-    <button type="button" class="btn btn-danger btn-sm" (click)="modalService.open('Delete-comment')" (click)="DeleteInit(comment.id)">Delete</button>
+    <button type="button" class="btn btn-secondary btn-sm" (click)="onEditComment(comment.id)" style="margin:10px">Edit</button>
+    <button type="button" class="btn btn-danger btn-sm" (click)="modalService.open('Delete-comment')" (click)="DeleteInit(comment.id)" style="margin:10px">Delete</button>
     <div class="modal hidden">
       <jw-modal id="Delete-comment">
         <h1>Warning</h1>

@@ -1,18 +1,24 @@
 <br>
-<form [formGroup]="postEdit" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="post-title">Title</label>
-      <input type="text" class="form-control" 
-      id="post-title" formControlName="title"  name="title" maxlength="300">
-    </div>
 
-    <div class="form-group">
-      <div>
-        <label for="body">Body</label> 
+  <div class="wrapper" style="background-color: rgb(214, 182, 255);padding:10px">
+    <form [formGroup]="postEdit" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="post-title">Title</label>
+        <input type="text" class="form-control" 
+        id="post-title" formControlName="title"  name="title" maxlength="300" style="background-color:bisque">
       </div>
-      <textarea class="container-fluid"
-     name="body" id="body" formControlName="body"
-      cols="175" rows="10" placeholder="Enter the post content"></textarea>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
+  
+      <div class="form-group">
+        <div>
+          <label for="body">Body</label> 
+        </div>
+        <textarea class="container-fluid"
+       name="body" id="body" formControlName="body"
+        cols="175" rows="10" placeholder="Enter the post content" style="background-color:bisque"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+  </div>
+  
+  

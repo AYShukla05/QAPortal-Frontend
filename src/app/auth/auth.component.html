@@ -1,4 +1,4 @@
-<section class="banner_main">
+<!-- <section class="banner_main">
   <div class="container">
   <div class="row d_flex">
      <div class="col-md-6">
@@ -31,3 +31,58 @@
   </div>
   </div>
 </section>
+ -->
+<!-- 
+ <section class="banner_main" style="background-color:rgb(75, 2, 2)">
+   <br><br>
+  <div class="container">
+  <div class="row d_flex" style="background-color:bisque; height: 200%">
+     <div class="col-md-6">
+        <div class="text-bg">
+           <h1>Question Answer Portal</h1>
+           <p>This is a very open platform where you can post your queries, questions or opinions. You can also comment and vote on other people's posts. Be inclusive with everyone and enjoy!</p>
+        </div>
+     </div>
+     <div class="col-md-6">
+      <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input type="text" class="form-control" 
+          id="username" placeholder="Enter your username"
+          ngModel name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="Password1">Password:</label>
+            <input type="password" class="form-control" 
+            id="password" placeholder="Enter the password" 
+            ngModel name="password" required>
+          </div>
+        <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Login</button>
+      </form>
+        <div style="background-color:rgb(205, 255, 163)">New around here? <a routerLink="/signup"><button class="btn btn-dark"> Sign up </button></a></div>
+      </div>
+     </div>
+  </div>
+</section>
+ -->
+   <div class="wrapper" style="background-color: rgb(214, 182, 255);">
+     <div class="h2 text-center">Quora</div>
+     <div class="h4 text-muted text-center pt-2">Enter your login details</div>
+     <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+       <div class="form-group">
+         <label for="username">Username:</label>
+         <input type="text" class="form-control" 
+         id="username" placeholder="Enter your username"
+         ngModel name="username" required>
+    </div>
+    <div class="form-group">
+      <label for="Password1">Password:</label>
+      <input type="password" class="form-control" 
+      id="password" placeholder="Enter the password" 
+      ngModel name="password" required>
+    </div>       
+    <button type="submit" class="btn btn-block text-center my-3">Log in</button>
+    </form>
+    <div class="text-center pt-3 text-muted">Not a member?  <button class="btn btn-light"><b><a routerLink="/signup">Sign up</a></b></button></div>
+    
+  </div>
