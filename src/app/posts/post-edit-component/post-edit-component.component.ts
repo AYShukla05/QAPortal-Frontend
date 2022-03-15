@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { PostService } from '../posts.service';
 
@@ -35,7 +34,6 @@ export class PostEditComponentComponent implements OnInit {
               })
             }, 
             error=>{
-              // console.log(error)
               this.authService.handleError(error)
 
             })

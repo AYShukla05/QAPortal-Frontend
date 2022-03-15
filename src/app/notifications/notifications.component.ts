@@ -19,7 +19,6 @@ export class NotificationsComponent implements OnInit {
         console.log(response)
         this.notifications = response;
       }, error =>{
-        // console.log(error)
         this.authService.handleError(error)
       }
       )

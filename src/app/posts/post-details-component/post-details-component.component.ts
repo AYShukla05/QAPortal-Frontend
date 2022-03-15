@@ -57,7 +57,6 @@ export class PostDetailsComponent implements OnInit {
                 console.log(resp)
                 this.profile = this.authService.loggedProfile
               }, (error)=>{
-                // console.log(error)
                 this.authService.handleError(error)
 
                 this.post = { 'title': "Dummy",'body': 'string', 'owner': {'name': 'string', 'id': 'string'}, 'vote_total':0, 'vote_ratio':0}
@@ -75,7 +74,6 @@ export class PostDetailsComponent implements OnInit {
           this.comments = comments
           this.comments.map(comment => comment['editCommentMode']=false)
         }, error => {
-          // console.log(error)
           this.authService.handleError(error)
 
         }
@@ -93,7 +91,6 @@ export class PostDetailsComponent implements OnInit {
       .subscribe(
         (response:{ 'title': string,'body': string, 'owner': {'name': string, 'id': string}, 'vote_total':number, 'vote_ratio':number}) => {this.post = response},
         error=>{
-          // console.log(error)
           this.authService.handleError(error)
 
         }
@@ -112,7 +109,6 @@ export class PostDetailsComponent implements OnInit {
         {
         this.comments.push(comment)
       }, error =>{
-        // console.log(error)
         this.authService.handleError(error)
 
       }
@@ -157,7 +153,6 @@ export class PostDetailsComponent implements OnInit {
       }}
       )
         }, err => {
-            // console.log(err)
             this.authService.handleError(err)
 
         },

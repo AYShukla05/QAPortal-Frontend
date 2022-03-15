@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http"
-import { catchError, Observable, of } from "rxjs";
 import { AuthService } from "./auth.service";
-import { ActivatedRoute, Params, Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Observable } from "rxjs/internal/Observable";
 
 @Injectable() 
 export class AuthInterceptorService implements HttpInterceptor {
@@ -37,25 +37,8 @@ export class AuthInterceptorService implements HttpInterceptor {
     }
     console.log("Modified Request",modifiedRequest)
     return next.handle(modifiedRequest)
-    // .pipe(
-    //     catchError(
-    //       (err, caught) => {
-    //         // if (err.status === 401){
-    //           this.authService.handleError(err);
-    //           return of(err);
-            // }
-            // throw err;
-          // }
-        // )
-      // );
     }
-    // private handleAuthError() {
-    //   // this.authService.token = localStorage.getItem('token');
-    //   // this.router.navigate(['posts'])
-    //   localStorage.removeItem('token');
-    //   localStorage.removeItem('Profile');
-    //   this.router.navigate(['login']);
-    // };
+
 }
  
  

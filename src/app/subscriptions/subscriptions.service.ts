@@ -1,6 +1,5 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { ProfilesService } from "../profile/profiles.service";
 
 @Injectable({
     providedIn: 'root'

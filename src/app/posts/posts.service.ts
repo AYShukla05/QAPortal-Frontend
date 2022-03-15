@@ -1,4 +1,4 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
@@ -49,7 +49,7 @@ updatePost(postID: string, post: {title: string, body: string}) {
     this.http.put('http://127.0.0.1:8000/api/update-post/'+postID, post)
     .subscribe(
         ()=>{}, err => {
-            // console.log(err)
+            
             this.authService.handleError(err)
 
         },
@@ -62,7 +62,7 @@ deletePost(id:string){
     this.http.delete('http://127.0.0.1:8000/api/delete-post/'+id)
     .subscribe(
         ()=>{}, err => {
-            // console.log(err)
+            
             this.authService.handleError(err)
 
         },
@@ -79,9 +79,7 @@ vote(id:string,vote:{'value':string}){
 
 addComment(postID:string, comment:{'body':string}){
     return this.http.post('http://127.0.0.1:8000/api/add-comment/'+postID,comment)
-    
-    // this.router.navigate(['posts',postID])
-}
+    }
 
 getComments(postID:string){
     return this.http.get('http://127.0.0.1:8000/api/get-comments/'+postID)
@@ -99,7 +97,6 @@ editComment(commentID:string, comment:{ 'body': string}, id:string){
 
 deleteComment(commentID:string, id:string){
     return this.http.delete<any[]>('http://127.0.0.1:8000/api/delete-comment/'+commentID)
-    // this.router.navigate(['posts', id])
 }
 
 

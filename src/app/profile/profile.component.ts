@@ -10,15 +10,12 @@ import { SubscriptionService } from '../subscriptions/subscriptions.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  // if(this.authService.isLoggedIn:boolean) {
-  // }
   profile = this.authService.isLoggedIn?this.authService.loggedProfile:{'id':'', 'email':'', 'name':'', 'username':''}
   id: string| undefined
   searchQuery: string = '';
   // Pagination Controls
   page: any = 1;
   count: any = 5;
-  // ownerId !: string
   popularProfiles:any[] = []
   isSearching:boolean = false;
   loading = true
@@ -28,7 +25,6 @@ export class ProfileComponent implements OnInit {
     public authService:AuthService) { }
 
   ngOnInit(): void {
-    // this.ownerId = this.authService.profile.id
     this.profilesService.getProfiles().subscribe((profiles:Profile[])=>{
       this.allProfiles = profiles;
       console.log("All Profiles",this.allProfiles)
@@ -45,11 +41,12 @@ export class ProfileComponent implements OnInit {
         this.loading = false;
         this.profilesService.profiles = this.allProfiles
       , (error:any) =>{
-        // console.log(error)
         this.authService.handleError(error)
   
       }
-      }}
+      }},(error:any) =>{
+        this.authService.handleError(error)
+      }
      )
   }
   search(){

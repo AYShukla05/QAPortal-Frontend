@@ -4,27 +4,28 @@
 </div>
 <br>
 <!-- Search Bar -->
-<div class="container" >
-    <div class="d-flex form-inputs"> 
-      <input class="form-control" type="text" [(ngModel)]="searchQuery"
-      placeholder="Search Post" name="searchQuery" (ngModelChange)="search()"> 
-      <button class="btn btn-dark">Search</button> 
-    </div>
+<div class="container  col-md-8" >
+  <div class="d-flex form-inputs"> 
+    <input class="form-control" type="text" [(ngModel)]="searchQuery"
+    placeholder="Search Profile" name="searchQuery" (ngModelChange)="search()"> 
+    <button class="btn btn-dark">Search</button> 
   </div>
-  <br>
-  <!-- Profiles -->
+</div>
+<br>
+<!-- Profiles -->
 
-<div class="container-fluid" style="background-color: rgb(214, 182, 255); height: 100%;width:80%">
+<div class="container col-md-8" style="height: 100%;width:80%;">
+  <h3>All Profiles</h3>
 <div *ngFor="let user of popularProfiles | paginate:{ itemsPerPage: count, currentPage: page}">
   <br>
   <div class="row" >
-    <div class="container col-md-6" style="border: 1px solid #000;padding-top: 15px;background-color:bisque">
+    <div class="container-fluid" >
       <a routerLink="/profiles/{{user.id}}">
-        <h4 class="list-group-item-heading list-group-item-dark">{{ user.name }}</h4>
+        <h4 class="list-group-item-heading btn"><b>{{ user.name }}</b></h4>
       </a>
-      <div *ngIf="authService.isLoggedIn">
-        <button class="btn-secondary" (click)="onSubscribe(user)" *ngIf="!user.isSubscribed">Subscribe</button>
-        <button class="btn-danger" (click)="onSubscribe(user)" *ngIf="user.isSubscribed">Unsubscribe</button>
+      <div *ngIf="authService.isLoggedIn" >
+        <button class="btn-secondary btn-sm" (click)="onSubscribe(user)" *ngIf="!user.isSubscribed">Subscribe</button>
+        <button class="btn-danger btn-sm" (click)="onSubscribe(user)" *ngIf="user.isSubscribed">Unsubscribe</button>
       </div>
     </div>
   </div>

@@ -1,5 +1,3 @@
- 
-
 <div *ngIf="loading" class="d-flex justify-content-center">
     <div class="spinner-border" role="status">
     </div>
@@ -13,9 +11,9 @@
     <div *ngFor="let user of subscribedUsers | paginate: { itemsPerPage: count, currentPage: page }">
         <br>
         <div class="row" >
-    <div class="container col-md-6" style="border: 1px solid #000;padding-top: 15px;background-color:bisque">
+    <div class="container col-md-6" style="padding-top: 15px;">
         <a routerLink="/profiles/{{user.id}}">
-            <h4 class="list-group-item-heading list-group-item-dark">{{ user.name }}</h4>
+            <h4 class="list-group-item-heading" style="color:#00405d">{{ user.name }}</h4>
         </a>
     </div>
 </div>

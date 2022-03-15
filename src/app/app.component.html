@@ -5,10 +5,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
+
 </head>
 <body >
   
-  <nav class="navbar navbar-dark bg-dark">
+  <nav class="navbar navbar-dark bg-dark" >
     <a class="navbar-brand">Quora</a>
     <a class="btn btn-light" routerLinkActive="active" routerLink="posts">Home <span class="sr-only">(current)</span></a>
     <a *ngIf="isLoggedIn" class="btn btn-light" routerLinkActive="active" routerLink="subscriptions">Subscriptions</a>    
@@ -23,16 +25,72 @@
       </li>
   </nav>
   
-  <div class="col-md-12">
+  
+   <!-- <header class="container bg-white">
+	
+    <div class="container-fluid px-0 menuContainer">
+      <nav class="navbar navbar-expand navbar-light align-items-end p-xl-0">
+  
+        <div class=" navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav justify-content-end" id="nav">
+            <li class="nav-item" routerLinkActive="active">
+
+              <a class="nav-link"  routerLink="posts">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item" routerLinkActive="active">
+
+              <a *ngIf="isLoggedIn" class="nav-link" routerLink="subscriptions">Subscriptions <span class="sr-only">(About Us)</span></a>
+            </li>
+            <li class="nav-item" routerLinkActive="active">
+
+              <a *ngIf="isLoggedIn" class="nav-link" routerLink="notifications">Notifications <span class="sr-only">(Programs)</span></a>
+            </li>
+            <li class="nav-item" routerLinkActive="active">
+
+              <a class="nav-link" routerLink="profiles">Profiles</a>
+              
+            </li>
+            <li class="nav-item" routerLinkActive="active">
+
+              <a *ngIf="isLoggedIn" class="nav-link" routerLink="my-profile">My&nbsp;Profile <span class="sr-only">(Programs)</span></a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link" *ngIf="!isLoggedIn" routerLink="login">Log&nbsp;In <span class="sr-only">(Contact Us)</span></a>
+
+              <a class="nav-link" *ngIf="isLoggedIn" (click)="logout()">Log&nbsp;Out <span class="sr-only">(Contact Us)</span></a>
+            </li>						
+          </ul>
+        </div>
+      </nav>
+    </div>
+  
+  </header>
+   -->
+  
+  <!-- popup setting-->
+  
+  <div class="popWrpr" [ngClass]="{'active':authService.isError}" id="pop">
+    <div class="popBg">
+      <div class="popContent">
+        <button aria-hidden="true" class="closePop" id="closePop" (click)="closePop()">x</button>
+        <h2 style="text-align:center">Error</h2>
+        <p style="text-align:center">{{authService.message}}</p>
+        <button class="btn btn-sm btn-secondary" (click)="closePop()">Ok</button>
+
+      </div>
+    </div>
+  </div>
+  
+   <div class="col-md-12">
     <router-outlet ></router-outlet>
   </div>
-  <div class="modal hidden">
+  <!-- <div class="modal hidden">
     <jw-modal id="error">
       <h1>Error</h1>
       <h4>{{authService.message}}</h4>
       
       <button class="btn btn-secondary" (click)="modalService.close('error');">Ok</button>
     </jw-modal>
-  </div>
+  </div> -->
 </body>
 </html>

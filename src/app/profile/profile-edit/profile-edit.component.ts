@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ProfilesService } from '../profiles.service';
 
@@ -35,7 +34,6 @@ export class ProfileEditComponent implements OnInit {
             (response:{"Profile":{'id':string, 'email':string| undefined, 'username':string, 'name':string},"Posts": any[],"Comments":any[]}) => {
             this.profile = response["Profile"]
           }, error =>{
-            // console.log(error)
             this.authService.handleError(error)
           
           }
@@ -43,7 +41,6 @@ export class ProfileEditComponent implements OnInit {
         }
       }
   }, error =>{
-    // console.log(error)
     this.authService.handleError(error)
 
   }

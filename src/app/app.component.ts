@@ -8,6 +8,8 @@ import { ModalService } from './_modal/modal.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  isCollapsed = true;
+
   isLoggedIn: boolean = false;
   title = 'project';
   constructor(public authService: AuthService, public modalService: ModalService){}
@@ -20,8 +22,6 @@ export class AppComponent implements OnInit {
   }
   myInterval = setInterval(() => {
     this.isLoggedIn=this.authService.isLoggedIn
-    // const token = localStorage.getItem('token');
-    // if(token == undefined) {this.logout()}
   },100)
   login(){
     this.isLoggedIn = this.authService.isLoggedIn
@@ -29,5 +29,8 @@ export class AppComponent implements OnInit {
   logout(){
     this.authService.logout()
     this.isLoggedIn = this.authService.isLoggedIn
+  }
+  closePop(){
+    this.authService.isError = false
   }
 }

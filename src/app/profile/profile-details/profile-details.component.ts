@@ -1,4 +1,4 @@
-import { Component, OnInit, ɵɵsetComponentScope } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ModalService } from 'src/app/_modal/modal.service';
@@ -44,14 +44,12 @@ export class ProfileDetailsComponent implements OnInit {
                 this.profileComments = response['Comments']
                 this.loading = false
               }, error =>{
-                // console.log(error)
                 this.authService.handleError(error)
                 this.profile = {'name':'', 'username': '', 'email':''}
               }
               )
             }
           }, error =>{
-            // console.log(error)
             this.authService.handleError(error)
 
           }
@@ -66,7 +64,6 @@ export class ProfileDetailsComponent implements OnInit {
             this.profileComments = response['Comments']
             this.loading = false
           }, error => {
-            // console.log(error)
             this.authService.handleError(error)
 
           }

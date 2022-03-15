@@ -9,7 +9,7 @@
         <button class="btn btn-primary" [ngClass]="{'active':!isSubscribed}">Popular Posts</button>
       </a>
       &nbsp;
-      <a (click)="onSubscribedPosts()" >
+      <a (click)="onSubscribedPosts()" *ngIf="authService.isLoggedIn">
         <button class="btn btn-primary" [ngClass]="{'active':isSubscribed}">Subscribed Posts</button>
       </a>
     </div>
@@ -18,7 +18,7 @@
     </div>
   <!-- </ng-template> -->
    
-    <div class="col" style="margin-right:20px;margin-left:10px;text-align:right">
+    <div class="col" style="margin-right:20px;margin-left:10px;text-align:right"  *ngIf="authService.isLoggedIn">
       <a routerLink="/new">
         <button class="btn btn-success">Create New Post</button>
       </a>
@@ -33,10 +33,10 @@
   </div>
 </div>
 <!-- Search Bar -->
-  <div class="container">
+  <div class="container col-md-8">
     <div class="d-flex form-inputs"> 
       <input class="form-control" type="text" [(ngModel)]="searchQuery"
-      placeholder="Search Post" name="searchQuery" (ngModelChange)="search()"> 
+      placeholder="Search Post" name="searchQuery" (ngModelChange)="search()"> &nbsp;
       <button class="btn btn-dark">Search</button> 
     </div>
   </div>
@@ -44,19 +44,21 @@
 <div *ngFor="let post of popularPosts | paginate:{ itemsPerPage: count, currentPage: page}">
   <br>
   <div class="row" >
-    <div class="container col-md-6" style="border: 1px solid #000;padding-top: 15px;background-color:bisque">
+    <div class="container col-md-8" style="padding-top: 15px;color:rgb(0, 15, 97)">
       <a routerLink="{{post.id}}">
-        <h4 class="list-group-item-heading list-group-item-dark">{{ post.title }}</h4>
+        <h4 class="list-group-item-heading" style="color:rgb(29, 31, 29)">{{ post.title }}</h4>
       </a>
       <a routerLink="/profiles/{{post.owner.id}}">
-        <h5>Made by <b>{{post.owner.name}}</b></h5>
+        <h6 style="color:rgb(167, 166, 175)">Made by <b>{{post.owner.name}}</b></h6>
       </a>
-      <p>{{ post.body.slice(0,50) }}<span *ngIf="post.body.length>51">...</span></p>
+      <p>{{ post.body.slice(0,150) }}<span *ngIf="post.body.length>151">... <a routerLink="{{post.id}}" style="color:#000"><u>Read more</u></a></span></p>
       <div>
         <label for="file">Audience Rating:</label>
-        <div class="progress">
-          <div class="progress-bar progress-bar-striped bg-primary" role="progressbar" [ngStyle]="{width: post.vote_ratio + '%'}"  aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+        <div class="col-md-5">
+        <div class="progress ">
+          <div class="progress-bar progress-bar-striped bg-info" role="progressbar" [ngStyle]="{width: post.vote_ratio + '%'}"  aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
+      </div>
       </div>
       <div><small><b>{{post.vote_ratio}}% Upvotes</b>({{ post.vote_total }})</small></div>
     </div>

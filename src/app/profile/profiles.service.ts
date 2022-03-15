@@ -48,10 +48,8 @@ export class ProfilesService{
             }, error =>{
                 console.log("Error ",error)
                 this.authService.handleError(error)
-                // this.router.navigate(['login'])
             }
         )
-        // this.router.navigate(['profiles'])
     }
 
 
@@ -72,7 +70,6 @@ export class ProfilesService{
         console.log("Deleting")
         this.http.delete('http://127.0.0.1:8000/api/delete-profile/'+id).subscribe(
             ()=>{}, err => {
-                // console.log(err)
                 this.authService.handleError(err)
 
             },

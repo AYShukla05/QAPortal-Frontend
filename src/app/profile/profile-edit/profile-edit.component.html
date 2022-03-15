@@ -1,44 +1,45 @@
-<div class="wrapper" style="background-color: rgb(214, 182, 255);">
+<div class="wrapper" style="font-size:15px">
   <div class="h2 text-center" *ngIf="signingUp">Quora</div>
   <div class="h4 text-muted text-center pt-2" *ngIf="signingUp">Enter your details</div>
   <form (ngSubmit)="onSubmit(fo)" #fo="ngForm">
     <div class="form-group">
       <label for="profile-name">Name</label>
       <input type="text" class="form-control" 
-      id="profile-title" placeholder="Enter your name" 
+      id="profile-title" placeholder=" Enter your name" 
       [ngModel]="profile.name" name="name" required>
     </div>
     <div class="form-group">
       <label for="profile-username">Username</label>
       <input type="text" class="form-control"
-      id="profile-username" placeholder="Enter your username" 
+      id="profile-username" placeholder=" Enter your username" 
       [ngModel]="profile.username" name="username" required>
     </div>
     <div class="form-group">
       <label for="profile-email">Email</label>
       <input type="text" class="form-control" 
-      id="profile-email" placeholder="Enter your email" 
+      id="profile-email" placeholder=" Enter your email" 
       [ngModel]="profile.email" name="email" required email #email="ngModel">
       <span class="help-block" *ngIf="!email.valid && email.touched">Please enter a valid email!</span>
     </div>
     <div class="form-group">
       <label for="Password1">Password</label>
       <input type="password" class="form-control" 
-      id="password" placeholder="Enter the password" 
+      id="password" placeholder=" Enter the password" 
       ngModel name="password" required>
     </div>
     <div class="form-group">
       <label for="Password">Confirm Password</label>
       <input type="password" class="form-control" 
-      id="confirm-password" placeholder="Confirm the password" 
+      id="confirm-password" placeholder=" Confirm the password" 
       ngModel name="confirm-password" required #confirmPassword="ngModel">
       <span class="help-block" *ngIf="!confirmPassword.valid && confirmPassword.touched">Passwords must match!</span>
       
     </div>
   </form>
+  <br>
   <button type="submit" class="btn btn-block text-center my-3" *ngIf="!signingUp">Submit</button>
 
-  <button type="submit" class="btn btn-block text-center my-3" *ngIf="signingUp">Log in</button>
+  <button type="submit" class="btn btn-outline-primabtn btn-outline-primary btn-block text-center my-3ry" *ngIf="signingUp">Sign Up</button>
  <div class="text-center pt-3 text-muted" *ngIf="signingUp">Already a member? <button class="btn btn-light"><b><a routerLink="/login">Login</a></b></button></div>
  
 </div>

@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import {  ElementRef, Injectable } from "@angular/core";
+import {  Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { SubscriptionService } from "../subscriptions/subscriptions.service";
 import { ModalService } from "../_modal/modal.service";
@@ -10,6 +10,7 @@ import { ModalService } from "../_modal/modal.service";
     providedIn: 'root'
   })
 export class AuthService{
+    isError: boolean = false
     token:string | null=localStorage.getItem('token');
     isLoggedIn:boolean = false;
     loggedProfile:any
@@ -50,29 +51,21 @@ export class AuthService{
                             (users:any[]) => {
                                 this.subscriptionService.subscribedUsers = users
                               }, error =>{
-                                //   console.log(error)
                                 this.handleError(error)
                             }
                         )
                         
-                    },     // nextHandler
+                    },     
                     error: 
                     error => { 
 
-                        // console.log("After logging in Error")
                         this.handleError(error)
-                    },    // errorHandler 
+                    },    
                 }
                 )
             },error=>{
-                // console.log("Wrong credentials")
                 this.handleError(error)
             }
-            // (error:{'status':number, 'statusText':string}) => { 
-            //     console.log("Error") 
-            //     console.log(error)
-            //     if(error.status==401){ console.log("Unauthorized")}
-            // } // errorHandler
         )
         
 }
@@ -80,8 +73,7 @@ export class AuthService{
     autoLogin() {
         this.token = localStorage.getItem('token')
         this.isLoggedIn = this.token !== null?true:false
-        // this.LoginChanged.emit(this.isLoggedIn)
-        // console.log(this.LoginChanged)
+        
 
         const temp = localStorage.getItem('Profile')
         if (this.token!=null && temp!=null) {
@@ -91,7 +83,6 @@ export class AuthService{
                 (users:any[]) => {
                     this.subscriptionService.subscribedUsers = users
                   }, error =>{
-                    // console.log(error)
                     this.handleError(error)
                 }
             )
@@ -101,8 +92,6 @@ export class AuthService{
     logout() {
         localStorage.removeItem('token');
         this.isLoggedIn = false;
-        // this.LoginChanged.emit(this.isLoggedIn)
-        // console.log(this.LoginChanged)
         this.token = null;
         localStorage.removeItem('Profile');
         this.router.navigate(['login']);
@@ -110,6 +99,7 @@ export class AuthService{
 
 
     handleError(error:{'status':number, 'message':string, 'statusText':string, 'error':{'details':{'message':string}}}) {
+        this.isError = true;
         switch(error.status)
         {case 0:
           console.log("Server is Down")
@@ -118,12 +108,10 @@ export class AuthService{
           console.log("Error", error)
 
 
-          //   console.log(error.this.message)
           break;
           case 401: 
           console.log("Unauthorized")
-          this.message = error.error.details.message;
-          this.message==''?"Please Log in with proper credentials":''
+          this.message="Please Log in with proper credentials"
           console.log("Error Detail",error.error.details)
           console.log("Error", error)
 
@@ -152,7 +140,7 @@ export class AuthService{
 
 
         }
-        this.modalService.open('error')
+        // this.modalService.open('error')
         
       }
 }

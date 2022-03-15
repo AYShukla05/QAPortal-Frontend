@@ -16,24 +16,16 @@ export class SubscriptionsComponent implements OnInit {
   ngOnInit(): void {
     this.subscribedUsers = this.subscriptionService.subscribedUsers
     this.loading = false
-    // if(this.subscribedUsers.length==0){
-      // this.loading = true
       this.subscriptionService.getSubscribedUsers().subscribe(
           (users:any[]) => {
             this.subscribedUsers = users
             this.loading = false
             this.subscriptionService.subscribedUsers = users
           }, error =>{
-            // console.log(error)
             this.authService.handleError(error)
 
           }
             )
-        // }
-
   }
-
-
-
 }
 

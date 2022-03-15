@@ -10,8 +10,6 @@ import { PostService } from './posts.service';
   styleUrls: ['./posts.component.css']
 })
 export class PostsComponent implements OnInit {
-  // post = {'title':'', 'id':'', 'owner':{'id':''}}
-  // profile={'id':''}
   loading = true;
   isSubscribed!: boolean;
   searchQuery: string = '';
@@ -23,7 +21,8 @@ export class PostsComponent implements OnInit {
     page: any = 1;
     count: any = 5;
   constructor(private postService: PostService, 
-  private subscriptionService: SubscriptionService, private authService: AuthService) { }
+  private subscriptionService: SubscriptionService,
+   public authService: AuthService) { }
 
   ngOnInit(): void {
     this.isSubscribed = false
@@ -36,7 +35,6 @@ export class PostsComponent implements OnInit {
         this.loading=false
       this.postService.posts = this.allPosts
     }, (error)=>{
-      // console.log(error)
       this.authService.handleError(error)
 
     }
