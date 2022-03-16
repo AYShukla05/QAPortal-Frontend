@@ -1,9 +1,13 @@
+
+
+
 <div *ngIf="loading" class="d-flex justify-content-center">
-    <div class="spinner-border" role="status">
-    </div>
+  <div class="spinner-border" role="status">
+  </div>
 </div>
 <br>
-<!-- Search Bar -->
+<section class="page-section bg-light" id="team">
+  <!-- Search Bar -->
 <div class="container  col-md-8" >
   <div class="d-flex form-inputs"> 
     <input class="form-control" type="text" [(ngModel)]="searchQuery"
@@ -12,27 +16,32 @@
   </div>
 </div>
 <br>
-<!-- Profiles -->
-
-<div class="container col-md-8" style="height: 100%;width:80%;">
-  <h3>All Profiles</h3>
-<div *ngFor="let user of popularProfiles | paginate:{ itemsPerPage: count, currentPage: page}">
-  <br>
-  <div class="row" >
-    <div class="container-fluid" >
-      <a routerLink="/profiles/{{user.id}}">
-        <h4 class="list-group-item-heading btn"><b>{{ user.name }}</b></h4>
-      </a>
-      <div *ngIf="authService.isLoggedIn" >
-        <button class="btn-secondary btn-sm" (click)="onSubscribe(user)" *ngIf="!user.isSubscribed">Subscribe</button>
-        <button class="btn-danger btn-sm" (click)="onSubscribe(user)" *ngIf="user.isSubscribed">Unsubscribe</button>
+  <div class="container">
+      <div class="text-center">
+          <h2 class="section-heading text-uppercase">All Profiles</h2>
+          <h3 class="section-subheading text-muted">Subscribe your favourite profiles</h3>
       </div>
-    </div>
-  </div>
-</div>
-<!-- Pagination Control -->
+      <div class="row">
+          <div class="col-lg-4" *ngFor="let user of popularProfiles | paginate:{ itemsPerPage: count, currentPage: page}">
+              <div class="team-member">
+                  <!-- <img class="mx-auto rounded-circle" src="assets/img/team/1.jpg" alt="..." /> -->
+                  <a routerLink="/profiles/{{user.id}}"><h4>{{user.name}}</h4></a>
+                  <p class="text-muted">{{user.email}}</p>
+                  <div *ngIf="authService.isLoggedIn" >
+                    <button class="btn-secondary btn-sm" (click)="onSubscribe(user)" *ngIf="!user.isSubscribed">Subscribe</button>
+                    <button class="btn-danger btn-sm" (click)="onSubscribe(user)" *ngIf="user.isSubscribed">Unsubscribe</button>
+                  </div>
+                  <!-- <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-twitter"></i></a>
+                  <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
+                  <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-linkedin-in"></i></a> -->
+              </div>
+          </div>
+          
+      </div>
+      <!-- Pagination Control -->
 <div class="text-right" *ngIf="popularProfiles.length>count" >
   <pagination-controls (pageChange)="page = $event"></pagination-controls>
 </div>
-<router-outlet></router-outlet>
 </div>
+<router-outlet></router-outlet>
+</section>

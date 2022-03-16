@@ -14,7 +14,7 @@ export class ProfileDetailsComponent implements OnInit {
   loading = true;
   profilePosts:any[] = []
   profileComments:any[] = []
-  profile:any={'username': 'default', 'email': 'default', 'id':'string'}; 
+  profile:any={'username': '', 'email': '', 'id':''}; 
   id: string | undefined;
   ownerId!: string
   constructor(private route: ActivatedRoute,
@@ -32,13 +32,13 @@ export class ProfileDetailsComponent implements OnInit {
           if(this.id!==undefined) {
           this.profile = this.profilesService.getProfile(this.id);
           this.loading=this.profile?false:true
-          console.log("Inside subscribe")
-          console.log("Profile", this.profile)
+          // console.log("Inside subscribe")
+          // console.log("Profile", this.profile)
             this.ownerId = this.authService.isLoggedIn? this.authService.loggedProfile.id: ''
-            console.log("Owner Id")
+            // console.log("Owner Id")
             this.profilesService.getProfileAsync(this.id).subscribe(
               (response) => {
-                console.log("Response",response)
+                // console.log("Response",response)
                 this.profile = response["Profile"]
                 this.profilePosts = response["Posts"]
                 this.profileComments = response['Comments']
@@ -57,7 +57,7 @@ export class ProfileDetailsComponent implements OnInit {
       if(this.router.url == "/my-profile"){
         this.profilesService.getMyProfile().subscribe(
           (response:{"Profile":{'id':string, 'email':string| undefined, 'username':string},"Posts": any[],"Comments":any[]}) => {
-            console.log(response)
+            // console.log(response)
             this.authService.loggedProfile = this.profile = response['Profile']
             this.ownerId = this.authService.loggedProfile.id
             this.profilePosts = response["Posts"]
@@ -72,8 +72,8 @@ export class ProfileDetailsComponent implements OnInit {
   }
 
   onDelete(){
-    console.log("Delete")
-    console.log(this.id)
+    // console.log("Delete")
+    // console.log(this.id)
     if (this.ownerId!==undefined){
       this.profilesService.deleteProfile(this.ownerId)
     }

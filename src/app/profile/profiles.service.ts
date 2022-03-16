@@ -22,9 +22,9 @@ export class ProfilesService{
     }
 
     getProfile(id:string){
-        console.log("From Service", this.profiles)
+        // console.log("From Service", this.profiles)
         let profile = this.profiles.filter(p => p.id == id)
-        console.log("From profile service", profile)
+        // console.log("From profile service", profile)
         return profile[0]
     }
 
@@ -40,13 +40,13 @@ export class ProfilesService{
     ){
         this.http.post('http://127.0.0.1:8000/api/create-profile',profile).subscribe(
             response => {
-                console.log(profile)
-                console.log("Response",response)
+                // console.log(profile)
+                // console.log("Response",response)
                 this.authService.login(
                     {"username":profile.username, "password":profile.password}
                     )
             }, error =>{
-                console.log("Error ",error)
+                // console.log("Error ",error)
                 this.authService.handleError(error)
             }
         )
@@ -67,7 +67,7 @@ export class ProfilesService{
 
     
     deleteProfile(id:string){
-        console.log("Deleting")
+        // console.log("Deleting")
         this.http.delete('http://127.0.0.1:8000/api/delete-profile/'+id).subscribe(
             ()=>{}, err => {
                 this.authService.handleError(err)

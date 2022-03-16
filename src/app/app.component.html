@@ -1,16 +1,22 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
+  <title>Document</title> -->
+  <!-- <script ..="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
+  <!-- Favicons -->
+  <!-- <link href="/../assets/img/favicon.png" rel="icon">
+  <link href="/../assets/img/apple-touch-icon.png" rel="apple-touch-icon"> -->
+
+  <!-- Google Fonts -->
+  <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
 </head>
 <body >
-  
-  <nav class="navbar navbar-dark bg-dark" >
+   -->
+  <!-- <nav class="navbar navbar-dark bg-dark" >
     <a class="navbar-brand">Quora</a>
     <a class="btn btn-light" routerLinkActive="active" routerLink="posts">Home <span class="sr-only">(current)</span></a>
     <a *ngIf="isLoggedIn" class="btn btn-light" routerLinkActive="active" routerLink="subscriptions">Subscriptions</a>    
@@ -23,52 +29,12 @@
       <li class="nav-item btn btn-outline">
         <a class="btn btn-danger" *ngIf="isLoggedIn" (click)="logout()">Logout</a>
       </li>
-  </nav>
-  
-  
-   <!-- <header class="container bg-white">
-	
-    <div class="container-fluid px-0 menuContainer">
-      <nav class="navbar navbar-expand navbar-light align-items-end p-xl-0">
-  
-        <div class=" navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav justify-content-end" id="nav">
-            <li class="nav-item" routerLinkActive="active">
-
-              <a class="nav-link"  routerLink="posts">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item" routerLinkActive="active">
-
-              <a *ngIf="isLoggedIn" class="nav-link" routerLink="subscriptions">Subscriptions <span class="sr-only">(About Us)</span></a>
-            </li>
-            <li class="nav-item" routerLinkActive="active">
-
-              <a *ngIf="isLoggedIn" class="nav-link" routerLink="notifications">Notifications <span class="sr-only">(Programs)</span></a>
-            </li>
-            <li class="nav-item" routerLinkActive="active">
-
-              <a class="nav-link" routerLink="profiles">Profiles</a>
-              
-            </li>
-            <li class="nav-item" routerLinkActive="active">
-
-              <a *ngIf="isLoggedIn" class="nav-link" routerLink="my-profile">My&nbsp;Profile <span class="sr-only">(Programs)</span></a>
-            </li>
-            <li class="nav-item ">
-              <a class="nav-link" *ngIf="!isLoggedIn" routerLink="login">Log&nbsp;In <span class="sr-only">(Contact Us)</span></a>
-
-              <a class="nav-link" *ngIf="isLoggedIn" (click)="logout()">Log&nbsp;Out <span class="sr-only">(Contact Us)</span></a>
-            </li>						
-          </ul>
-        </div>
-      </nav>
-    </div>
-  
-  </header>
-   -->
+  </nav> -->
   
   <!-- popup setting-->
-  
+  <app-header ></app-header>
+  <div class="col-md-12">
+  </div>
   <div class="popWrpr" [ngClass]="{'active':authService.isError}" id="pop">
     <div class="popBg">
       <div class="popContent">
@@ -76,14 +42,13 @@
         <h2 style="text-align:center">Error</h2>
         <p style="text-align:center">{{authService.message}}</p>
         <button class="btn btn-sm btn-secondary" (click)="closePop()">Ok</button>
-
+        
       </div>
     </div>
   </div>
+  <br>
+  <router-outlet></router-outlet>
   
-   <div class="col-md-12">
-    <router-outlet ></router-outlet>
-  </div>
   <!-- <div class="modal hidden">
     <jw-modal id="error">
       <h1>Error</h1>
@@ -92,5 +57,5 @@
       <button class="btn btn-secondary" (click)="modalService.close('error');">Ok</button>
     </jw-modal>
   </div> -->
-</body>
-</html>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>

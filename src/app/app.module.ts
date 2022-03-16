@@ -16,6 +16,7 @@ import { AuthComponent } from './auth/auth.component';
 import { AuthInterceptorService } from './auth/auth.interceptor';
 import { ModalModule } from './_modal';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     PostsComponent,
     PostDetailsComponent,
     PostEditComponentComponent,
-    AuthComponent
+    AuthComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

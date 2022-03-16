@@ -15,7 +15,7 @@ export class ProfileComponent implements OnInit {
   searchQuery: string = '';
   // Pagination Controls
   page: any = 1;
-  count: any = 5;
+  count: any = 6;
   popularProfiles:any[] = []
   isSearching:boolean = false;
   loading = true
@@ -27,17 +27,17 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.profilesService.getProfiles().subscribe((profiles:Profile[])=>{
       this.allProfiles = profiles;
-      console.log("All Profiles",this.allProfiles)
+      // console.log("All Profiles",this.allProfiles)
       this.popularProfiles = this.allProfiles
       this.loading = false;
-      console.log("Popular Profiles", this.popularProfiles)
-      console.log("Subscribed", this.subscriptionService.subscribedUsers)
+      // console.log("Popular Profiles", this.popularProfiles)
+      // console.log("Subscribed", this.subscriptionService.subscribedUsers)
       if(this.authService.isLoggedIn){
         this.popularProfiles
         .map(profile => 
           profile['isSubscribed'] = this.subscriptionService.subscribedUsers
           .map(profile=>profile.id).includes(profile.id)?true:false)
-        console.log(this.popularProfiles)
+        // console.log(this.popularProfiles)
         this.loading = false;
         this.profilesService.profiles = this.allProfiles
       , (error:any) =>{

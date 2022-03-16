@@ -19,7 +19,7 @@ export class PostsComponent implements OnInit {
   subscribedPosts:Post[] = []
     // Pagination Controls
     page: any = 1;
-    count: any = 5;
+    count: any = 6;
   constructor(private postService: PostService, 
   private subscriptionService: SubscriptionService,
    public authService: AuthService) { }
@@ -30,7 +30,7 @@ export class PostsComponent implements OnInit {
       (posts:Post[]) => {
         this.allPosts= posts
         this.allPosts.sort((a,b) =>b.vote_ratio - a.vote_ratio)
-        console.log("All Posts",this.allPosts)
+        // console.log("All Posts",this.allPosts)
         this.popularPosts = this.allPosts
         this.loading=false
       this.postService.posts = this.allPosts

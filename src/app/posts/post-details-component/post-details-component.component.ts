@@ -13,7 +13,7 @@ import { PostService } from '../posts.service';
 export class PostDetailsComponent implements OnInit {
   loading = true;
   loadingComments = true
-  comment:{ 'body': string} = { 'body': 'string'};
+  comment:{ 'body': string} = { 'body': ''};
   editCommentMode: boolean = false;
   comments:any[] = []
   post = { 'title': "",'body': '', 'owner': {'name': '', 'id': ''}, 'vote_total':0, 'vote_ratio':0}; 
@@ -30,31 +30,31 @@ export class PostDetailsComponent implements OnInit {
    ) { }
   profile: any
   ngOnInit(): void {
-    console.log("Post", this.post)
+    // console.log("Post", this.post)
     this.route.params
       .subscribe(
         (params: Params) => {
           this.id = params['id'];
           this.profile = this.authService.loggedProfile
-          console.log("Post", this.post)
+          // console.log("Post", this.post)
 
           if(this.id!==undefined) {
           this.post = this.postService.getPost(this.id)
-          console.log("Post in post Details", this.post)
+          // console.log("Post in post Details", this.post)
           this.loading=this.post?false:true
           if (this.post == undefined){
-            console.log("Post", this.post)
+            // console.log("Post", this.post)
 
             this.postService.getPostAsync(this.id).subscribe(
               (resp)=>{
                 this.post = resp['Post'];
-                console.log("Post", this.post)
+                // console.log("Post", this.post)
 
                 this.loading = false
                 this.comments = resp['Comments'];
                 this.loadingComments = false
-                console.log("Comments",this.comments)
-                console.log(resp)
+                // console.log("Comments",this.comments)
+                // console.log(resp)
                 this.profile = this.authService.loggedProfile
               }, (error)=>{
                 this.authService.handleError(error)
@@ -101,8 +101,8 @@ export class PostDetailsComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     this.comment = {'body':form.value.comment};
-    console.log("New comment",form)
-    console.log("Value", form.value)
+    // console.log("New comment",form)
+    // console.log("Value", form.value)
     if (this.id!==undefined){
       this.postService.addComment(this.id, this.comment).subscribe(
         comment => 
@@ -137,8 +137,8 @@ export class PostDetailsComponent implements OnInit {
   }
 
   onSubmitComment(form: NgForm, comId: string){
-    console.log("Editing Comment",form)
-    console.log("Edited value", form.value)
+    // console.log("Editing Comment",form)
+    // console.log("Edited value", form.value)
     this.comment['body'] = form.value.comment;
     if (this.id!==undefined ){
       this.postService.editComment(comId, this.comment,this.id).subscribe(

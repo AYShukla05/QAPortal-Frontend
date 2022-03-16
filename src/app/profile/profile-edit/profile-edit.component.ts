@@ -57,9 +57,9 @@ export class ProfileEditComponent implements OnInit {
   
   onSubmit(form: NgForm){
     const value = form.value
-    console.log("Profile Edit form",form)
-    console.log("Profile Edit Value", form.value)
-    console.log("Value",value)
+    // console.log("Profile Edit form",form)
+    // console.log("Profile Edit Value", form.value)
+    // console.log("Value",value)
     const profile= {
       name: value['name'],
       username: value['username'],
@@ -69,8 +69,8 @@ export class ProfileEditComponent implements OnInit {
   } 
   this.profile = profile;
   if (this.id==undefined){
-    console.log(profile)
-    console.log(this.profile)
+    // console.log(profile)
+    // console.log(this.profile)
     this.profilesService.createProfile(profile)
       }
       else{

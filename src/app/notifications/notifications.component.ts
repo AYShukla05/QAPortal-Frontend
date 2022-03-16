@@ -16,7 +16,7 @@ export class NotificationsComponent implements OnInit {
     this.http.get<{'id':string,'messages':string, 'owner':any, 'post':{'id':string}}[]>('http://127.0.0.1:8000/api/get-notifications')
     .subscribe(
       (response) => {
-        console.log(response)
+        // console.log(response)
         this.notifications = response;
       }, error =>{
         this.authService.handleError(error)

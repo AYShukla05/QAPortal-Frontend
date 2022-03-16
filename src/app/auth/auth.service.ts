@@ -29,7 +29,7 @@ export class AuthService{
         .subscribe(
             token=>{
                 this.token = token.access;
-                console.log(token)
+                // console.log(token)
                 localStorage.setItem('token',this.token)
                 this.isLoggedIn=true
                 setTimeout(()=>{
@@ -42,10 +42,10 @@ export class AuthService{
                     {
                     next: 
                     response=>{
-                        console.log("Response",response)
+                        // console.log("Response",response)
                         localStorage.setItem('Profile',JSON.stringify(response))
                         this.loggedProfile = response
-                        console.log(this.router)
+                        // console.log(this.router)
                         this.router.navigate(['/my-profile'])
                         this.subscriptionService.getSubscribedUsers().subscribe(
                             (users:any[]) => {
@@ -78,7 +78,7 @@ export class AuthService{
         const temp = localStorage.getItem('Profile')
         if (this.token!=null && temp!=null) {
             this.loggedProfile = JSON.parse(temp)
-            console.log("Getting subscribed initial")
+            // console.log("Getting subscribed initial")
             this.subscriptionService.getSubscribedUsers().subscribe(
                 (users:any[]) => {
                     this.subscriptionService.subscribedUsers = users
@@ -102,41 +102,41 @@ export class AuthService{
         this.isError = true;
         switch(error.status)
         {case 0:
-          console.log("Server is Down")
+        //   console.log("Server is Down")
           this.message="Server is Down"
-          console.log(error.error.details)
-          console.log("Error", error)
+        //   console.log(error.error.details)
+        //   console.log("Error", error)
 
 
           break;
           case 401: 
-          console.log("Unauthorized")
+        //   console.log("Unauthorized")
           this.message="Please Log in with proper credentials"
-          console.log("Error Detail",error.error.details)
-          console.log("Error", error)
+        //   console.log("Error Detail",error.error.details)
+        //   console.log("Error", error)
 
           this.router.navigate(['login']);
 
           break
           case 403: 
-          console.log("User does not have Permission. Login with proper credentials")
+        //   console.log("User does not have Permission. Login with proper credentials")
           this.message="User does not have Permission. Login with proper credentials"
-          console.log("Error", error)
+        //   console.log("Error", error)
 
-          console.log("Error Detail",error.error.details)
+        //   console.log("Error Detail",error.error.details)
           break
           case 404:
-            console.log("URL not found")
+            // console.log("URL not found")
             this.message="URL not found"
-            console.log("Error Detail",error.error.details)
-            console.log("Error", error)
+            // console.log("Error Detail",error.error.details)
+            // console.log("Error", error)
 
             break
             case 500: 
-            console.log("Internal Server Error")
+            // console.log("Internal Server Error")
             this.message="Internal Server Error"
-            console.log("Error Detail",error.error.details)
-            console.log("Error", error)
+            // console.log("Error Detail",error.error.details)
+            // console.log("Error", error)
 
 
         }

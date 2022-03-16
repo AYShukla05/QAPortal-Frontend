@@ -15,21 +15,8 @@ export class AppComponent implements OnInit {
   constructor(public authService: AuthService, public modalService: ModalService){}
 
   ngOnInit() {
-    console.log("Getting token from localStorage...");
-    this.authService.autoLogin();
-    this.authService.token = localStorage.getItem('token');
-    this.isLoggedIn = this.authService.isLoggedIn;
   }
-  myInterval = setInterval(() => {
-    this.isLoggedIn=this.authService.isLoggedIn
-  },100)
-  login(){
-    this.isLoggedIn = this.authService.isLoggedIn
-  }
-  logout(){
-    this.authService.logout()
-    this.isLoggedIn = this.authService.isLoggedIn
-  }
+ 
   closePop(){
     this.authService.isError = false
   }

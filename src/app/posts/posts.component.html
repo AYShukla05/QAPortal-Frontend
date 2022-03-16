@@ -1,8 +1,8 @@
+<!-- 
 <br>
-<br>
-<div class="container" style="height: 150%;width:100%">
+<div class="container" style="height: 150%;width:100%"> -->
 <!-- Toggling between popular and subscribed -->
-<div class="container">
+<!-- <div class="container">
   <div class="row">
     <div class="col" style="margin-left:20px;margin-right:10px">
       <a (click)="onPopularPosts()" >
@@ -12,12 +12,12 @@
       <a (click)="onSubscribedPosts()" *ngIf="authService.isLoggedIn">
         <button class="btn btn-primary" [ngClass]="{'active':isSubscribed}">Subscribed Posts</button>
       </a>
-    </div>
+    </div> -->
     <!-- <ng-template #popular> -->
-    <div class="col" style="margin-left:20px;margin-right:30px">
-    </div>
+    <!-- <div class="col" style="margin-left:20px;margin-right:30px">
+    </div> -->
   <!-- </ng-template> -->
-   
+<!--    
     <div class="col" style="margin-right:20px;margin-left:10px;text-align:right"  *ngIf="authService.isLoggedIn">
       <a routerLink="/new">
         <button class="btn btn-success">Create New Post</button>
@@ -27,21 +27,21 @@
 </div>
 
 <br>
-<!-- Spinner -->
-<div *ngIf="loading" class="d-flex justify-content-center">
+<!- Spinner -->
+<!-- <div *ngIf="loading" class="d-flex justify-content-center">
   <div class="spinner-border" role="status">
   </div>
-</div>
+</div> -->
 <!-- Search Bar -->
-  <div class="container col-md-8">
+  <!-- <div class="container col-md-8">
     <div class="d-flex form-inputs"> 
       <input class="form-control" type="text" [(ngModel)]="searchQuery"
       placeholder="Search Post" name="searchQuery" (ngModelChange)="search()"> &nbsp;
       <button class="btn btn-dark">Search</button> 
     </div>
-  </div>
+  </div>  -->
 <!-- Popular posts -->
-<div *ngFor="let post of popularPosts | paginate:{ itemsPerPage: count, currentPage: page}">
+<!-- <div *ngFor="let post of popularPosts | paginate:{ itemsPerPage: count, currentPage: page}">
   <br>
   <div class="row" >
     <div class="container col-md-8" style="padding-top: 15px;color:rgb(0, 15, 97)">
@@ -63,11 +63,92 @@
       <div><small><b>{{post.vote_ratio}}% Upvotes</b>({{ post.vote_total }})</small></div>
     </div>
   </div>
-</div>
+</div> -->
 <!-- Pagination Control -->
+<!-- <div class="text-right" *ngIf="popularPosts.length>count">
+  <pagination-controls (pageChange)="page = $event" style="color:rgb(0, 0, 0)"></pagination-controls>
+</div>
+
+<router-outlet></router-outlet>
+</div> -->
+
+
+
+<section class="page-section" id="services">
+
+  <div class="container">
+    <!-- Toggling between popular and subscribed -->
+    <div class="container">
+      <div class="row">
+        <div class="col-10">
+          <a (click)="onPopularPosts()" >
+            <button class="btn btn-primary" [ngClass]="{'active':!isSubscribed}">Popular Posts</button>
+          </a>
+          &nbsp;
+          <a (click)="onSubscribedPosts()" *ngIf="authService.isLoggedIn">
+            <button class="btn btn-primary" [ngClass]="{'active':isSubscribed}">Subscribed Posts</button>
+          </a>
+        </div>
+       
+        <div class="col-2" *ngIf="authService.isLoggedIn">
+          <a routerLink="/new">
+            <button class="btn btn-success">Create New Post</button>
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <br>
+    <!-- Spinner -->
+    <div *ngIf="loading" class="d-flex justify-content-center">
+      <div class="spinner-border" role="status">
+      </div>
+    </div>
+  <!-- Search Bar -->
+  
+  
+  <div class="container col-8" style="margin-left:20%">
+    <div class="d-flex form-inputs"> 
+      <input class="form-control" type="text" [(ngModel)]="searchQuery"
+      placeholder="Search Post" name="searchQuery" (ngModelChange)="search()"> &nbsp;
+      <button class="btn btn-dark">Search</button> 
+    </div>
+  </div> 
+
+  <br>
+  <div class="container">
+      <div class="text-center">
+          <h2 class="section-heading text-uppercase">Posts</h2>
+          <!-- <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3> -->
+      </div>
+      <div class="row text-center" >
+          <div class="col-4" *ngFor="let post of popularPosts | paginate:{ itemsPerPage: count, currentPage: page}">
+              <!-- <h4 class="my-3">{{post.title}}</h4> -->
+              <a routerLink="{{post.id}}">
+                <h4 class="my-3" style="color:rgb(29, 31, 29)">{{ post.title }}</h4>
+              </a>
+              <a routerLink="/profiles/{{post.owner.id}}">
+                
+                <h6 style="color:rgb(167, 166, 175)">Made by <b>{{post.owner.name}}</b></h6>
+              </a>
+              <p>{{ post.body.slice(0,150) }}<span *ngIf="post.body.length>151">... <a routerLink="{{post.id}}" style="color:#000"><u>Read more</u></a></span></p>
+              <!-- <p class="text-muted">{{post.body.slice(0,150)}}</p> -->
+              <div>
+                <label for="file">Audience Rating:</label>
+                <div class="progress ">
+                  <div class="progress-bar progress-bar-striped bg-info" role="progressbar" [ngStyle]="{width: post.vote_ratio + '%'}"  aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+              <div><small><b>{{post.vote_ratio}}% Upvotes</b>({{ post.vote_total }})</small></div>
+            </div>
+          </div>
+      </div>
+  </div>
+  
+  <!-- Pagination Control -->
 <div class="text-right" *ngIf="popularPosts.length>count">
   <pagination-controls (pageChange)="page = $event" style="color:rgb(0, 0, 0)"></pagination-controls>
 </div>
 
 <router-outlet></router-outlet>
-</div>
+</section>

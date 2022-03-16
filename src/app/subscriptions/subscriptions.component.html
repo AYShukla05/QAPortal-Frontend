@@ -7,19 +7,40 @@
 <!-- Profiles -->
 
 <div *ngIf="subscribedUsers" class="container-fluid">
-    <h3 class="text-center">Subscribed Users</h3>
-    <div *ngFor="let user of subscribedUsers | paginate: { itemsPerPage: count, currentPage: page }">
-        <br>
-        <div class="row" >
-    <div class="container col-md-6" style="padding-top: 15px;">
-        <a routerLink="/profiles/{{user.id}}">
-            <h4 class="list-group-item-heading" style="color:#00405d">{{ user.name }}</h4>
-        </a>
-    </div>
-</div>
-</div>
-<div *ngIf="subscribedUsers.length == 0">
-    <h2>No Subscription Yet</h2>
+    <!-- Search Bar -->
+    <!-- <div class="container  col-md-8" >
+        <div class="d-flex form-inputs"> 
+          <input class="form-control" type="text" [(ngModel)]="searchQuery"
+          placeholder="Search Profile" name="searchQuery" (ngModelChange)="search()"> 
+          <button class="btn btn-dark">Search</button> 
+        </div>
+      </div> -->
+      <br>
+
+      <div class="container">
+        <div class="text-center">
+            <h4 class="section-heading text-uppercase">Subscribed Profiles</h4>
+            <p class="section-subheading text-muted">View your favourite profiles</p>
+        </div>
+        <div class="row">
+            <div class="col-lg-4" *ngFor="let user of subscribedUsers | paginate: { itemsPerPage: count, currentPage: page }">
+                <div class="team-member">
+                    <!-- <img class="mx-auto rounded-circle" src="assets/img/team/1.jpg" alt="..." /> -->
+                    <a routerLink="/profiles/{{user.id}}"><h4>{{user.name}}</h4></a>
+                    <p class="text-muted">{{user.email}}</p>
+                    
+                    <!-- <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-twitter"></i></a>
+                    <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-linkedin-in"></i></a> -->
+                </div>
+            </div>
+            
+        </div>
+    
+<div class="text-center" *ngIf="subscribedUsers.length == 0">
+    <br>
+    <br>
+    <h2>No Subscription Yet! Subscribe your favourite users.</h2>
 </div>
 <!-- Pagination Control -->
 <div class="text-right" *ngIf="subscribedUsers.length>count" >
