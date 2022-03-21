@@ -2,7 +2,8 @@ import { HttpClient } from "@angular/common/http";
 import {  Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { SubscriptionService } from "../subscriptions/subscriptions.service";
-import { ModalService } from "../_modal/modal.service";
+import { ModalService } from "../modal/modal.service";
+// import { BehaviorSubject } from "rxjs";
 
 
 
@@ -12,7 +13,9 @@ import { ModalService } from "../_modal/modal.service";
 export class AuthService{
     isError: boolean = false
     token:string | null=localStorage.getItem('token');
-    isLoggedIn:boolean = false;
+    isLoggedIn:boolean = false
+    // new BehaviorSubject<boolean>(false);
+    // isAuthenticated:boolean = false;
     loggedProfile:any
     message = ''
 
@@ -31,12 +34,17 @@ export class AuthService{
                 this.token = token.access;
                 // console.log(token)
                 localStorage.setItem('token',this.token)
-                this.isLoggedIn=true
+                this.isLoggedIn = true
+                // this.isLoggedIn = true
                 setTimeout(()=>{
                     localStorage.removeItem('token');
                     localStorage.removeItem('Profile');
                     this.router.navigate(['login']);
+                    this.isLoggedIn= false
+                    // this.isLoggedIn = false
                 }, 86400000 )
+                
+                
                 this.http.get('http://127.0.0.1:8000/api/profile')
                 .subscribe(
                     {
@@ -72,7 +80,7 @@ export class AuthService{
 
     autoLogin() {
         this.token = localStorage.getItem('token')
-        this.isLoggedIn = this.token !== null?true:false
+        this.isLoggedIn= this.token !== null?true:false
         
 
         const temp = localStorage.getItem('Profile')
@@ -91,7 +99,7 @@ export class AuthService{
 
     logout() {
         localStorage.removeItem('token');
-        this.isLoggedIn = false;
+        this.isLoggedIn= false;
         this.token = null;
         localStorage.removeItem('Profile');
         this.router.navigate(['login']);
@@ -112,6 +120,7 @@ export class AuthService{
           case 401: 
         //   console.log("Unauthorized")
           this.message="Please Log in with proper credentials"
+          this.isLoggedIn = false
         //   console.log("Error Detail",error.error.details)
         //   console.log("Error", error)
 
@@ -140,7 +149,7 @@ export class AuthService{
 
 
         }
-        // this.modalService.open('error')
+        this.modalService.open('error')
         
       }
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
-import { ModalService } from 'src/app/_modal/modal.service';
+import { ModalService } from 'src/app/modal/modal.service';
 import { PostService } from '../posts.service';
 
 @Component({
@@ -15,8 +15,13 @@ export class PostDetailsComponent implements OnInit {
   loadingComments = true
   comment:{ 'body': string} = { 'body': ''};
   editCommentMode: boolean = false;
+  commentForm!: FormGroup
   comments:any[] = []
-  post = { 'title': "",'body': '', 'owner': {'name': '', 'id': ''}, 'vote_total':0, 'vote_ratio':0}; 
+  post = { 'title': "",
+          'body': '', 
+          'owner': {'name': '', 'id': ''}, 
+          'vote_total':0, 
+          'vote_ratio':0}; 
   id: string | undefined;
   comId: string = '';
   bodyText: string | undefined;
@@ -80,7 +85,9 @@ export class PostDetailsComponent implements OnInit {
         )
     }
 
-    
+    this.commentForm = new FormGroup({
+      'body': new FormControl(null, Validators.required)
+    })
 
   }
 
@@ -99,8 +106,8 @@ export class PostDetailsComponent implements OnInit {
     }
   }
 
-  onSubmit(form: NgForm) {
-    this.comment = {'body':form.value.comment};
+  onSubmit() {
+    this.comment = {'body':this.commentForm.value.comment};
     // console.log("New comment",form)
     // console.log("Value", form.value)
     if (this.id!==undefined){
@@ -114,7 +121,7 @@ export class PostDetailsComponent implements OnInit {
       }
     )
     }
-    form.reset()
+    this.commentForm.reset()
 
   }
 

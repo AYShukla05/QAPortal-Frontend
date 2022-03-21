@@ -1,61 +1,15 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title> -->
-  <!-- <script ..="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
-  <!-- Favicons -->
-  <!-- <link href="/../assets/img/favicon.png" rel="icon">
-  <link href="/../assets/img/apple-touch-icon.png" rel="apple-touch-icon"> -->
-
-  <!-- Google Fonts -->
-  <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
-</head>
-<body >
-   -->
-  <!-- <nav class="navbar navbar-dark bg-dark" >
-    <a class="navbar-brand">Quora</a>
-    <a class="btn btn-light" routerLinkActive="active" routerLink="posts">Home <span class="sr-only">(current)</span></a>
-    <a *ngIf="isLoggedIn" class="btn btn-light" routerLinkActive="active" routerLink="subscriptions">Subscriptions</a>    
-    <a *ngIf="isLoggedIn" class="btn btn-light" routerLinkActive="active" routerLink="notifications">Notifications</a>
-    <a class="btn btn-light" routerLink="profiles">Profile</a>
-    <a *ngIf="isLoggedIn" class="btn btn-light" routerLinkActive="active" routerLink="my-profile">My Profile</a>
-    <li class="nav-item btn btn-outline">
-      <a routerLink="login" class="btn btn-primary" *ngIf="!isLoggedIn">Login</a>
-    </li>
-      <li class="nav-item btn btn-outline">
-        <a class="btn btn-danger" *ngIf="isLoggedIn" (click)="logout()">Logout</a>
-      </li>
-  </nav> -->
-  
-  <!-- popup setting-->
+ 
   <app-header ></app-header>
-  <div class="col-md-12">
-  </div>
-  <div class="popWrpr" [ngClass]="{'active':authService.isError}" id="pop">
-    <div class="popBg">
-      <div class="popContent">
-        <button aria-hidden="true" class="closePop" id="closePop" (click)="closePop()">x</button>
-        <h2 style="text-align:center">Error</h2>
-        <p style="text-align:center">{{authService.message}}</p>
-        <button class="btn btn-sm btn-secondary" (click)="closePop()">Ok</button>
-        
-      </div>
-    </div>
-  </div>
-  <br>
+
   <router-outlet></router-outlet>
   
-  <!-- <div class="modal hidden">
+  <div class="modal hidden">
     <jw-modal id="error">
       <h1>Error</h1>
       <h4>{{authService.message}}</h4>
       
       <button class="btn btn-secondary" (click)="modalService.close('error');">Ok</button>
     </jw-modal>
-  </div> -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+  </div>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script> -->

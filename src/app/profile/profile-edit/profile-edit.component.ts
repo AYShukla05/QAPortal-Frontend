@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ProfilesService } from '../profiles.service';
@@ -10,11 +10,13 @@ import { ProfilesService } from '../profiles.service';
   styleUrls: ['./profile-edit.component.css']
 })
 export class ProfileEditComponent implements OnInit {
+  profileForm !: FormGroup;
   id: string | undefined
   profile!: {
     "name": string,
     "username": string,
     "email":  string|undefined,
+    "profileImage"?:any
     
   };
   signingUp: boolean = false;
@@ -53,10 +55,22 @@ export class ProfileEditComponent implements OnInit {
       "email": "", 
     }
   }
+
+  this.profileForm = new FormGroup({
+    'profileImage': new FormControl(this.profile?this.profile.profileImage:null),
+    'name': new FormControl(this.profile?this.profile.name:null, Validators.required),
+    'username': new FormControl(this.profile?this.profile.username:null, Validators.required),
+    'email': new FormControl(this.profile?this.profile.email:null, [Validators.required, Validators.email]),
+    'password': new FormControl(null, Validators.required),
+    'confirm-password': new FormControl(null, Validators.required)
+  })
+
   }
-  
-  onSubmit(form: NgForm){
-    const value = form.value
+  ImageChange(event:any) {
+    console.log("Image", event)
+  }
+  onSubmit(){
+    const value = this.profileForm.value
     // console.log("Profile Edit form",form)
     // console.log("Profile Edit Value", form.value)
     // console.log("Value",value)
@@ -65,18 +79,21 @@ export class ProfileEditComponent implements OnInit {
       username: value['username'],
       email:value['email'],
       password: value['password'],
-      password1:value['confirm-password']
-  } 
+      password1:value['confirm-password'],
+      profileImage:value['profileImage']
+  }
+  console.log("Form value", value) 
   this.profile = profile;
+  console.log(this.profile)
   if (this.id==undefined){
-    // console.log(profile)
-    // console.log(this.profile)
-    this.profilesService.createProfile(profile)
+    console.log(profile)
+    console.log(this.profile)
+    // this.profilesService.createProfile(profile)
       }
       else{
-        this.profilesService.updateProfile(this.id,profile)
+        // this.profilesService.updateProfile(this.id,profile)
       }
-    form.reset();
+    this.profileForm.reset();
   }
   
 

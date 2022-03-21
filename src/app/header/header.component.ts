@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 
 @Component({
@@ -7,24 +8,28 @@ import { AuthService } from '../auth/auth.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  isLoggedIn: boolean = false;
+  isLoggedIn:boolean = false;
+  // isAuthenticated: boolean = false
 
   constructor(public authService: AuthService) { }
 
   ngOnInit(): void {
     this.authService.autoLogin();
     this.authService.token = localStorage.getItem('token');
-    this.isLoggedIn = this.authService.isLoggedIn;
+    this.isLoggedIn = this.authService.isLoggedIn
   }
   myInterval = setInterval(() => {
-    this.isLoggedIn=this.authService.isLoggedIn
+    this.isLoggedIn = this.authService.isLoggedIn
   },100)
   login(){
     this.isLoggedIn = this.authService.isLoggedIn
+
   }
   logout(){
     this.authService.logout()
     this.isLoggedIn = this.authService.isLoggedIn
+
   }
-  
+
+
 }

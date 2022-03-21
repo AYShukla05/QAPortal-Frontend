@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
-import { ModalService } from 'src/app/_modal/modal.service';
+import { ModalService } from 'src/app/modal/modal.service';
 import { ProfilesService } from '../profiles.service';
 
 

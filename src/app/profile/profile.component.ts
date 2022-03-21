@@ -26,8 +26,9 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.profilesService.getProfiles().subscribe((profiles:Profile[])=>{
+      console.log("Inside Profile")
       this.allProfiles = profiles;
-      // console.log("All Profiles",this.allProfiles)
+      console.log("All Profiles",this.allProfiles)
       this.popularProfiles = this.allProfiles
       this.loading = false;
       // console.log("Popular Profiles", this.popularProfiles)

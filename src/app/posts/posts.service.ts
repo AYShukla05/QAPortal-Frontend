@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
 
 import { Post } from "./post.model"
 import { Router } from '@angular/router';
@@ -15,20 +14,13 @@ constructor(private http: HttpClient,private router: Router, private authService
 
 posts: Post[] = []
 
-getPosts() { 
-    return this.posts.slice()
-}
-
-setPosts(updatedPosts: Post[]){
-    return this.posts = updatedPosts
-}
 getPostsasync(){
     return this.http.get<Post[]>('http://127.0.0.1:8000/api/posts')
     
 }
 
 getPostAsync(id: string){
-    return this.http.get<{"Post":Post,"Comments":[]}>('http://127.0.0.1:8000/api/posts/'+id)
+    return this.http.get<{"Post":Post,"Comments":[]}>(`http://127.0.0.1:8000/api/posts/${id}`)
 }
 
 getPost(id: string) {
@@ -83,10 +75,7 @@ addComment(postID:string, comment:{'body':string}){
 
 getComments(postID:string){
     return this.http.get('http://127.0.0.1:8000/api/get-comments/'+postID)
-    .pipe(map(result => {
-        return result
-    }),
-    );
+    
 
 }
 
