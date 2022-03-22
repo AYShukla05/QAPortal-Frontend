@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { AuthService } from './auth.service';
 
 @Component({
@@ -9,17 +9,22 @@ import { AuthService } from './auth.service';
 })
 export class AuthComponent implements OnInit {
   isLoggedIn = false;
+  authForm!: FormGroup;
 
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.authForm = new FormGroup({
+      username: new FormControl(null, Validators.required),
+      password: new FormControl(null, Validators.required)
+    })
   }
 
-  onSubmit(form: NgForm){
+  onSubmit(){
     // console.log("Login Form", form)
     // console.log("Form Value", form.value)
     // console.log("Value", form.value)
-    const body = { "username": form.value.username, "password": form.value.password}
+    const body = { "username": this.authForm.value.username, "password": this.authForm.value.password}
     this.authService.login(body)
     
   }

@@ -9,8 +9,7 @@ import { AuthService } from '../auth/auth.service';
 })
 export class HeaderComponent implements OnInit {
   isLoggedIn:boolean = false;
-  // isAuthenticated: boolean = false
-
+  dropDownOpen:boolean = false;
   constructor(public authService: AuthService) { }
 
   ngOnInit(): void {
@@ -30,6 +29,13 @@ export class HeaderComponent implements OnInit {
     this.isLoggedIn = this.authService.isLoggedIn
 
   }
-
+  dropDownClick(){
+    this.dropDownOpen = !this.dropDownOpen
+    const timer = setTimeout(() => {
+      if(this.dropDownOpen){
+        this.dropDownOpen = !this.dropDownOpen
+      }
+    },3000)
+  }
 
 }

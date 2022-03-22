@@ -1,10 +1,11 @@
-
-<div *ngIf="loading" class="d-flex justify-content-center">
+<!-- Spinner -->
+<!-- <div *ngIf="loading" class="d-flex justify-content-center">
   <div class="spinner-border" role="status">
   </div>
 </div>
-<br>
+<br> -->
 <section class="page-section bg-light" id="team">
+
   <!-- Search Bar -->
 <div class="container  col-md-8" >
   <div class="d-flex form-inputs"> 
@@ -22,8 +23,9 @@
       <div class="row">
           <div class="col-lg-4" *ngFor="let user of popularProfiles | paginate:{ itemsPerPage: count, currentPage: page}">
               <div class="team-member">
-                  <!-- <img class="mx-auto rounded-circle" src="assets/img/team/1.jpg" alt="..." /> -->
-                  <a routerLink="/profiles/{{user.id}}"><h4>{{user.name}}</h4></a>
+                <a routerLink="/profiles/{{user.id}}">
+                  <img class="mx-auto rounded-circle" src="http://127.0.0.1:8000{{ user.profileImage }}" alt="..." />
+                  <h4>{{user.name}}</h4></a>
                   <p class="text-muted">{{user.email}}</p>
                   <div *ngIf="authService.isLoggedIn" >
                     <button class="btn-secondary btn-sm" (click)="onSubscribe(user)" *ngIf="!user.isSubscribed">Subscribe</button>

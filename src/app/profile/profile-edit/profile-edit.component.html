@@ -1,12 +1,14 @@
 <div class="wrapper" style="font-size:15px">
   <div class="h2 text-center" *ngIf="signingUp">Quora</div>
   <div class="h4 text-muted text-center pt-2" *ngIf="signingUp">Enter your details</div>
-  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="profileForm"  enctype = "multipart / form-data" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="profile-image">Profile Image</label>
-      <input type="file" class="form-control" ngModel
-      id="profile-image" (ngModelChange)="ImageChange($event)"
-      formControlName="profileImage" >
+      <!-- <input type="file" class="form-control"
+      id="profile-image" (change)="onFileSelect($event)" 
+      formControlName="profileImage" > -->
+      <input type="file" formControlname="profileImage" (change)="onFileSelect($event)" />
+
     </div>
     <div class="form-group">
       <label for="profile-name">Name</label>
@@ -41,12 +43,12 @@
       <span class="help-block" *ngIf="!profileForm.controls['confirm-password'].valid && profileForm.controls['confirm-password'].touched">Passwords must match!</span>
       
     </div>
+    <button type="submit" [disabled]="!profileForm.valid" class="btn btn-block btn-outline-primary text-center my-3" *ngIf="!signingUp">Submit</button>
+    <button type="submit" [disabled]="!profileForm.valid" class="btn btn-outline-primabtn btn-outline-primary btn-block text-center my-3ry" *ngIf="signingUp">Sign Up</button>
 
   </form>
   <br>
   
-  <button type="submit" [disabled]="!profileForm.valid" class="btn btn-block btn-outline-primary text-center my-3" *ngIf="signingUp===false">Submit</button>
-  <button type="submit" [disabled]="!profileForm.valid" class="btn btn-outline-primabtn btn-outline-primary btn-block text-center my-3ry" *ngIf="signingUp">Sign Up</button>
  <div class="text-center pt-3 text-muted" *ngIf="signingUp===true">Already a member? <button class="btn btn-light"><b><a routerLink="/login">Login</a></b></button></div>
  
 </div>

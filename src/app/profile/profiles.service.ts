@@ -32,18 +32,13 @@ export class ProfilesService{
         return this.http.get<{"Profile":{'name':string,'id':string, 'email':string| undefined, 'username':string},"Posts": any[],"Comments":any[]}>('http://127.0.0.1:8000/api/profiles/'+id)
     }
 
-    createProfile(profile:{ "name": string;
-    "username": string;
-    "email":  string;
-    "password":  string;
-    "password1":  string;}
-    ){
+    createProfile(profile:any, username:string, password:string){
         this.http.post('http://127.0.0.1:8000/api/create-profile',profile).subscribe(
             response => {
-                // console.log(profile)
+                console.log("Profile",profile)
                 // console.log("Response",response)
                 this.authService.login(
-                    {"username":profile.username, "password":profile.password}
+                    {"username":username, "password":password}
                     )
             }, error =>{
                 // console.log("Error ",error)
@@ -53,11 +48,7 @@ export class ProfilesService{
     }
 
 
-    updateProfile(id:string,profile:{ "name": string;
-    "username": string;
-    "email":  string;
-    "password":  string;
-    "password1":  string;}){
+    updateProfile(id:string,profile:any){
         const updatedProfileId = id
         const updatedProfile = profile
         this.http.put('http://127.0.0.1:8000/api/update-profile/'+updatedProfileId,updatedProfile)

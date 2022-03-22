@@ -1,13 +1,17 @@
-
-
 <!-- Spinner -->
-<div *ngIf="loading" class="d-flex justify-content-center">
+<!-- <div *ngIf="loading" class="d-flex justify-content-center">
   <div class="spinner-border" role="status">
   </div>
 </div>
+<br> -->
+
 <!-- Profile -->
-<br>
+<section class="page-section bg-light">
+
 <div class="container">
+  <div class="text-center">
+    <img class="mx-auto rounded-circle" height="300px" src="http://127.0.0.1:8000{{ profile.profileImage }}" alt="...">
+  </div>
     <div class="text-center"><h1>{{ profile.name }}</h1></div>
     <!-- <div><h5>{{profile.username}}</h5></div> -->
     <div class="text-center text-muted">{{profile.email}}</div>
@@ -67,7 +71,5 @@
   <ng-template #infoText>
     <p>No activity here</p>
   </ng-template>
-
-
-
 </div>
+</section>

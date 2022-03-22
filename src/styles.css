@@ -11796,15 +11796,16 @@ p {
   }
 }
 header.masthead {
-  padding-top: 10.5rem;
-  padding-bottom: 6rem;
+  height:10px;
+  padding-top: 5rem;
+  padding-bottom: 10rem;
   text-align: center;
   color: #fff;
-  background-image: url("../src/assets/img/header-bg.jpg");
+  background-color: black;
   background-repeat: no-repeat;
-  background-attachment: scroll;
-  background-position: center center;
-  background-size: cover;
+  /* background-attachment: scroll; */
+  background-position: center;
+  /* background-size: cover; */
 }
 header.masthead .masthead-subheading {
   font-size: 1.5rem;
@@ -11826,10 +11827,10 @@ header.masthead .masthead-heading {
 }
 
 @media (min-width: 768px) {
-  header.masthead {
+  /* header.masthead {
     padding-top: 17rem;
     padding-bottom: 12.5rem;
-  }
+  } */
   header.masthead .masthead-subheading {
     font-size: 2.25rem;
     font-style: italic;

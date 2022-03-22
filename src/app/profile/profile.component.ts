@@ -30,6 +30,7 @@ export class ProfileComponent implements OnInit {
       this.allProfiles = profiles;
       console.log("All Profiles",this.allProfiles)
       this.popularProfiles = this.allProfiles
+      console.log("Popular", this.popularProfiles)
       this.loading = false;
       // console.log("Popular Profiles", this.popularProfiles)
       // console.log("Subscribed", this.subscriptionService.subscribedUsers)

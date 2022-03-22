@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -19,11 +20,14 @@ export class ProfileEditComponent implements OnInit {
     "profileImage"?:any
     
   };
+  file!:File
   signingUp: boolean = false;
+
   constructor(private profilesService: ProfilesService,
     private route: ActivatedRoute, 
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private http: HttpClient
     ) { }
 
   ngOnInit(): void {
@@ -66,32 +70,39 @@ export class ProfileEditComponent implements OnInit {
   })
 
   }
-  ImageChange(event:any) {
-    console.log("Image", event)
+
+
+
+  onFileSelect(event:any) {
+      if (event.target.files.length > 0) {
+        this.file = event.target.files[0];
+        this.profileForm?.get('profileImage')?.setValue(this.file);
+        console.log("File", this.file)
+      }
   }
+    
   onSubmit(){
-    const value = this.profileForm.value
-    // console.log("Profile Edit form",form)
-    // console.log("Profile Edit Value", form.value)
-    // console.log("Value",value)
-    const profile= {
-      name: value['name'],
-      username: value['username'],
-      email:value['email'],
-      password: value['password'],
-      password1:value['confirm-password'],
-      profileImage:value['profileImage']
-  }
-  console.log("Form value", value) 
-  this.profile = profile;
+    console.log("Inside submit")
+  const value = this.profileForm.value
+  const formData = new FormData();
+  formData.append('name', value['name'])
+  formData.append('username', value['username'])
+  formData.append('password', value['password'])
+  formData.append('password1', value['confirm-password'])
+  formData.append('email', value['email'])
+  formData.append('profileImage', this.file, this.file.name)
+  console.log("Image in Formdata", formData.get('profileImage'))
+  console.log("Form Data", formData);
+  // this.http.post('http://127.0.0.1:8000/api/create-profile',formData)
+
+  // console.log("Form value", value) 
+  // this.profile = formData;
   console.log(this.profile)
   if (this.id==undefined){
-    console.log(profile)
-    console.log(this.profile)
-    // this.profilesService.createProfile(profile)
+    this.profilesService.createProfile(formData, value['username'], value['password'])
       }
       else{
-        // this.profilesService.updateProfile(this.id,profile)
+        this.profilesService.updateProfile(this.id,formData)
       }
     this.profileForm.reset();
   }

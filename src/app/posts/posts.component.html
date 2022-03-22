@@ -1,4 +1,4 @@
-<section class="page-section" id="services">
+<section class="page-section bg-light" id="services">
 
   <div class="container">
     <!-- Toggling between popular and subscribed -->
@@ -16,7 +16,7 @@
        
         <div class="col-2" *ngIf="authService.isLoggedIn">
           <a routerLink="/new">
-            <button class="btn btn-success">Create New Post</button>
+            <button class="btn btn-outline-success ">Create New Post</button>
           </a>
         </div>
       </div>
@@ -24,10 +24,10 @@
     
     <br>
     <!-- Spinner -->
-    <div *ngIf="loading" class="d-flex justify-content-center">
+    <!-- <div *ngIf="loading" class="d-flex justify-content-center">
       <div class="spinner-border" role="status">
       </div>
-    </div>
+    </div> -->
   <!-- Search Bar -->
   
   
