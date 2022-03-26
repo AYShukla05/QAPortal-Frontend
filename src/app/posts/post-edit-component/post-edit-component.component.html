@@ -16,7 +16,7 @@
        name="body" id="body" formControlName="body"
         cols="175" rows="10" placeholder="Enter the post content" ></textarea>
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary" [disabled]="!postEdit.valid">Submit</button>
     </form>
 
   </div>

@@ -19,7 +19,8 @@ const routes: Routes = [
   { path: 'new', component: PostEditComponentComponent, canActivate:[AuthGuard] },
   { path: 'signup', component: ProfileEditComponent},
   { path: 'login', component: AuthComponent},
-  { path: 'my-profile', component: ProfileDetailsComponent, canActivate:[AuthGuard]}
+  { path: 'my-profile', component: ProfileDetailsComponent, canActivate:[AuthGuard]},
+  { path: '**', redirectTo: '/posts'}
   
 
 ];

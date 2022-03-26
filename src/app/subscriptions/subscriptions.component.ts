@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
+import { Profile } from '../profile/profile.model';
 import { SubscriptionService } from './subscriptions.service'
 @Component({
   selector: 'app-subscriptions',
@@ -21,11 +22,23 @@ export class SubscriptionsComponent implements OnInit {
             this.subscribedUsers = users
             this.loading = false
             this.subscriptionService.subscribedUsers = users
+            this.subscribedUsers.map(profile=>profile.isSubscribed=true)
           }, error =>{
             this.authService.handleError(error)
 
           }
             )
   }
+
+  onUnsubscribe(user: Profile){
+    console.log("User in subscribed",user)
+    this.subscriptionService.subscribeProfile(user.id).subscribe(res=>{
+      this.subscribedUsers = this.subscribedUsers.filter(u=>u!==user)
+      console.log("Subscribed in component", this.subscribedUsers)
+      this.subscriptionService.subscribedUsers = this.subscribedUsers.filter(u=>u!==user)
+      console.log("Subscribed in service", this.subscriptionService.subscribedUsers)
+    })
+
+}
 }
 

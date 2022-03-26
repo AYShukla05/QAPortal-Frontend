@@ -1,26 +1,28 @@
 <div class="wrapper" style="font-size:15px">
   <div class="h2 text-center" *ngIf="signingUp">Quora</div>
   <div class="h4 text-muted text-center pt-2" *ngIf="signingUp">Enter your details</div>
+  <br>
   <form [formGroup]="profileForm"  enctype = "multipart / form-data" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="profile-image">Profile Image</label>
-      <!-- <input type="file" class="form-control"
-      id="profile-image" (change)="onFileSelect($event)" 
-      formControlName="profileImage" > -->
       <input type="file" formControlname="profileImage" (change)="onFileSelect($event)" />
-
+    </div>
+    <div class="justify-content-end">
+      <img *ngIf="imgPath" [src]="imgPath" alt="Preview" height="100px">
     </div>
     <div class="form-group">
       <label for="profile-name">Name</label>
       <input type="text" class="form-control" 
       id="profile-title" placeholder=" Enter your name" 
       formControlName="name" >
+      <span class="help-block" *ngIf="!profileForm.controls['name'].valid && profileForm.controls['name'].touched">Name should not be empty!</span>
     </div>
     <div class="form-group">
       <label for="profile-username">Username</label>
       <input type="text" class="form-control"
       id="profile-username" placeholder=" Enter your username" 
       formControlName="username" >
+      <span class="help-block" *ngIf="!profileForm.controls['username'].valid && profileForm.controls['username'].touched">Username should not be empty!</span>
     </div>
     <div class="form-group">
       <label for="profile-email">Email</label>
@@ -34,22 +36,34 @@
       <input type="password" class="form-control" 
       id="password" placeholder=" Enter the password" 
       formControlName="password" >
+      <span class="help-block" *ngIf="!profileForm.controls['password'].valid && profileForm.controls['password'].touched">Password should not be empty!</span>
     </div>
-    <div class="form-group">
-      <label for="Password">Confirm Password</label>
-      <input type="password" class="form-control" 
-      id="confirm-password" placeholder=" Confirm the password" 
-      formControlName="confirm-password" >
-      <span class="help-block" *ngIf="!profileForm.controls['confirm-password'].valid && profileForm.controls['confirm-password'].touched">Passwords must match!</span>
-      
-    </div>
+    <br>
+    <button type="button" *ngIf="!changingPassword && !signingUp" class="btn btn-outline-secondary btn-sm" (click)="onChangePassword()">Change Password</button>
+      <div class="form-group" *ngIf="changingPassword&&!signingUp">
+        <label for="Password1">New Password</label>
+        <input type="password" class="form-control" 
+        placeholder=" Enter the password" 
+        formControlName="newpassword" >
+        <span class="help-block" *ngIf="!profileForm.controls['newpassword'].valid && profileForm.controls['newpassword'].touched">Password should not be empty!</span>
+      </div>
+      <div class="form-group" *ngIf="signingUp||changingPassword">
+        <label for="Password">Confirm Password</label>
+        <input type="password" class="form-control" 
+        id="confirm-password" placeholder=" Confirm the password" 
+        formControlName="confirm-password" >
+        <span class="help-block" *ngIf="!profileForm.controls['confirm-password'].valid && profileForm.controls['confirm-password'].touched">Passwords must match!</span>
+        <button #changePassword class="btn"></button>
+      </div>
+    <br>
+    <!-- changingPassword&&profileForm.value['new-password']!==profileForm.value['confirm-password']) -->
     <button type="submit" [disabled]="!profileForm.valid" class="btn btn-block btn-outline-primary text-center my-3" *ngIf="!signingUp">Submit</button>
-    <button type="submit" [disabled]="!profileForm.valid" class="btn btn-outline-primabtn btn-outline-primary btn-block text-center my-3ry" *ngIf="signingUp">Sign Up</button>
+    <button type="submit" [disabled]="!profileForm.valid || profileForm.value['password']!==profileForm.value['confirm-password']" class="btn btn-outline-primabtn btn-outline-primary btn-block text-center my-3ry" *ngIf="signingUp">Sign Up</button>
 
   </form>
   <br>
   
- <div class="text-center pt-3 text-muted" *ngIf="signingUp===true">Already a member? <button class="btn btn-light"><b><a routerLink="/login">Login</a></b></button></div>
+ <div class="text-center pt-3 text-muted" *ngIf="signingUp">Already a member? <button class="btn btn-light"><b><a routerLink="/login">Login</a></b></button></div>
  
 </div>
 

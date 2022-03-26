@@ -15,7 +15,7 @@
       id="password" placeholder=" Enter the password" 
       formControlName="password" required>
     </div>       
-    <button type="submit" class="btn btn-outline-primary btn-block text-center my-3">Log in</button>
+    <button type="submit" class="btn btn-outline-primary btn-block text-center my-3" [disabled]="!authForm.valid">Log in</button>
     </form>
     <div class="text-center pt-3 text-muted" >Not a member?  <button class="btn btn-light"><b><a routerLink="/signup">Sign up</a></b></button></div>
     

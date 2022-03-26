@@ -28,18 +28,14 @@ export class ProfileComponent implements OnInit {
     this.profilesService.getProfiles().subscribe((profiles:Profile[])=>{
       console.log("Inside Profile")
       this.allProfiles = profiles;
-      console.log("All Profiles",this.allProfiles)
       this.popularProfiles = this.allProfiles
-      console.log("Popular", this.popularProfiles)
       this.loading = false;
-      // console.log("Popular Profiles", this.popularProfiles)
-      // console.log("Subscribed", this.subscriptionService.subscribedUsers)
+      // Getting Profile
       if(this.authService.isLoggedIn){
         this.popularProfiles
         .map(profile => 
           profile['isSubscribed'] = this.subscriptionService.subscribedUsers
           .map(profile=>profile.id).includes(profile.id)?true:false)
-        // console.log(this.popularProfiles)
         this.loading = false;
         this.profilesService.profiles = this.allProfiles
       , (error:any) =>{
@@ -51,22 +47,29 @@ export class ProfileComponent implements OnInit {
       }
      )
   }
+
   search(){
     this.isSearching = true
     this.popularProfiles = this.allProfiles.filter(profile => this.allProfiles.map(profile => profile.name.toLocaleLowerCase())
     .filter(name => name.includes(this.searchQuery.toLowerCase())).includes(profile.name.toLowerCase()))
   }
-  onSubscribe(user: Profile){
 
-    
+  onSubscribe(user: Profile){
       this.profilesService.subscribeProfile(user.id).subscribe(resp =>
-      user.isSubscribed = !user.isSubscribed, 
+      {user.isSubscribed = !user.isSubscribed
+      if(user.isSubscribed){
+        console.log("True",user)
+        this.subscriptionService.subscribedUsers.push(user)
+        console.log("onSubscribing", this.subscriptionService.subscribedUsers)
+      }
+      else{
+        this.subscriptionService.subscribedUsers = this.subscriptionService.subscribedUsers.filter(u=>u.id!==user.id)
+      }
+    },
       err => {
         this.authService.handleError(err)
-
       }
       )
-
   }
 
 }

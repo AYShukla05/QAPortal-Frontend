@@ -1,9 +1,8 @@
 <!-- Spinner -->
-<!-- <div *ngIf="loading" class="d-flex justify-content-center">
+<div *ngIf="loading" class="d-flex justify-content-center">
   <div class="spinner-border" role="status">
   </div>
-</div> -->
-<!-- <br> -->
+</div>
 <!-- Post -->
 <div class="container">
     <div style="padding:10px;">
@@ -15,20 +14,20 @@
       {{post.body}}
     </div>
     <br>
-    <span class="badge rounded-pill bg-success"style="cursor: pointer;" (click)="vote('up')">Upvote</span>
-    {{post.vote_ratio}}%
-    <span class="badge rounded-pill bg-danger"style="cursor: pointer;" (click)="vote('down')">Downvote</span>
+    <span  class="badge rounded-pill bg-success"style="cursor: pointer;" (click)="vote('up')">Upvote</span>
+    <b>{{post.vote_ratio}}% ({{post.vote_total}})</b>
+    <span  class="badge rounded-pill bg-danger"style="cursor: pointer;" (click)="vote('down')">Downvote</span>
 <!-- Comment Form -->
 <br>
 <br>
-    <form [formGroup]="commentForm" (ngSubmit)="onSubmit()" >
+
+    <form *ngIf="authService.isLoggedIn" (ngSubmit)="onSubmit(f)" #f="ngForm">
       <div class="form-group">
         <input type="text" class="form-control" 
         id="comment" placeholder="Comment on this post"
-        formControlName ="comment">
+        ngModel name="comment" required>
       </div>
-      <button type="submit" class="btn btn-primary" [disabled]="!commentForm.valid || (commentForm.value['comment']?.trim().length == 0)">Comment</button>
-
+      <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Comment</button>
     </form>
     <hr />
     <br>
@@ -64,7 +63,7 @@
   </div>
   </div>
   <div *ngIf="comment.editCommentMode">
-    <form (ngSubmit)="onSubmitComment(f, comment.id)" #f="ngForm" >
+    <form (ngSubmit)="onSubmitComment(f,comment.id)" #f="ngForm" >
       <div class="form-group">
         <input type="text" class="form-control" 
         id="comment" 
@@ -85,13 +84,13 @@
   <p>No comments Yet! Be the first to comment.</p>
 </ng-template>
 <div class="container-fluid" *ngIf="!authService.isLoggedIn">
-  <p>Login to see the comments</p>
+  <p>Login to comment on the post or see the comments</p>
 
 </div>
 <br />
 
-<div *ngIf="authService.isLoggedIn && post.owner['id'] == profile['id']">
-  <a routerLink="edit"><button class="btn btn-sm btn-secondary">Edit Post</button></a>
+<div class="container center col-3" *ngIf="authService.isLoggedIn && post.owner['id'] == profile['id']">
+  <a routerLink="edit" ><button class="btn btn-sm btn-secondary">Edit Post</button></a>&nbsp;
   <button class="btn btn-sm btn-danger" (click)="modalService.open('Delete-post')">Delete Post</button>
 </div>
 

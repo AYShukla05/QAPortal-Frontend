@@ -3,7 +3,6 @@ import {  Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { SubscriptionService } from "../subscriptions/subscriptions.service";
 import { ModalService } from "../modal/modal.service";
-// import { BehaviorSubject } from "rxjs";
 
 
 
@@ -14,8 +13,6 @@ export class AuthService{
     isError: boolean = false
     token:string | null=localStorage.getItem('token');
     isLoggedIn:boolean = false
-    // new BehaviorSubject<boolean>(false);
-    // isAuthenticated:boolean = false;
     loggedProfile:any
     message = ''
 
@@ -35,7 +32,6 @@ export class AuthService{
                 // console.log(token)
                 localStorage.setItem('token',this.token)
                 this.isLoggedIn = true
-                // this.isLoggedIn = true
                 setTimeout(()=>{
                     localStorage.removeItem('token');
                     localStorage.removeItem('Profile');
@@ -113,42 +109,56 @@ export class AuthService{
         //   console.log("Server is Down")
           this.message="Server is Down"
         //   console.log(error.error.details)
-        //   console.log("Error", error)
+          console.log("Error", error)
 
 
           break;
+          case 400: 
+          this.message= error.error.details['message']
+          console.log("Error", error)
+          console.log(error.error.details)
+          break
           case 401: 
         //   console.log("Unauthorized")
-          this.message="Please Log in with proper credentials"
-          this.isLoggedIn = false
+        this.isLoggedIn = false
+        console.log("Error", error)
+          this.message= error.error.details['message']==undefined?"Please Log in with proper credentials":error.error.details.message
+          // console.log(error.error.details['message'])
         //   console.log("Error Detail",error.error.details)
-        //   console.log("Error", error)
+          this.message="Please login with proper credentials"
 
           this.router.navigate(['login']);
 
           break
           case 403: 
         //   console.log("User does not have Permission. Login with proper credentials")
-          this.message="User does not have Permission. Login with proper credentials"
-        //   console.log("Error", error)
+
+        this.message= error.error.details['message']==undefined?"User does not have Permission. Login with proper credentials":error.error.details.message
+
+          console.log("Error", error)
 
         //   console.log("Error Detail",error.error.details)
           break
           case 404:
             // console.log("URL not found")
-            this.message="URL not found"
+            this.message= error.error.details['message']==undefined?"URL not found":error.error.details.message
+
             // console.log("Error Detail",error.error.details)
-            // console.log("Error", error)
+            console.log("Error", error)
 
             break
             case 500: 
             // console.log("Internal Server Error")
-            this.message="Internal Server Error"
+            this.message= error.error.details['message']==undefined?"Internal Server Error":error.error.details.message
             // console.log("Error Detail",error.error.details)
-            // console.log("Error", error)
-
+            // this.message == error.message
+            console.log("Error", error)
+            break
+            default:
+              console.log("Error", error)
 
         }
+        
         this.modalService.open('error')
         
       }

@@ -15,7 +15,6 @@ export class PostDetailsComponent implements OnInit {
   loadingComments = true
   comment:{ 'body': string} = { 'body': ''};
   editCommentMode: boolean = false;
-  commentForm!: FormGroup
   comments:any[] = []
   post = { 'title': "",
           'body': '', 
@@ -85,9 +84,6 @@ export class PostDetailsComponent implements OnInit {
         )
     }
 
-    this.commentForm = new FormGroup({
-      'body': new FormControl(null, Validators.required)
-    })
 
   }
 
@@ -106,10 +102,12 @@ export class PostDetailsComponent implements OnInit {
     }
   }
 
-  onSubmit() {
-    this.comment = {'body':this.commentForm.value.comment};
+  onSubmit(form: NgForm) {
+    console.log(form)
+    this.comment = {'body':form.value['comment']};
     // console.log("New comment",form)
     // console.log("Value", form.value)
+    console.log("Comment",this.comment)
     if (this.id!==undefined){
       this.postService.addComment(this.id, this.comment).subscribe(
         comment => 
@@ -121,7 +119,7 @@ export class PostDetailsComponent implements OnInit {
       }
     )
     }
-    this.commentForm.reset()
+    form.reset()
 
   }
 
@@ -144,8 +142,8 @@ export class PostDetailsComponent implements OnInit {
   }
 
   onSubmitComment(form: NgForm, comId: string){
-    // console.log("Editing Comment",form)
-    // console.log("Edited value", form.value)
+    console.log("Editing Comment",form)
+    console.log("Edited value", form.value)
     this.comment['body'] = form.value.comment;
     if (this.id!==undefined ){
       this.postService.editComment(comId, this.comment,this.id).subscribe(
@@ -160,6 +158,7 @@ export class PostDetailsComponent implements OnInit {
       }}
       )
         }, err => {
+            // console.log(err)
             this.authService.handleError(err)
 
         },
@@ -178,13 +177,13 @@ export class PostDetailsComponent implements OnInit {
       this.postService.deleteComment(this.comId,this.id).subscribe(
         com => 
         {
+          console.log("Comments", com)
           this.comments = com.filter(comment => comment.post.id == this.id)
           this.comId = ''
         }, error =>{
           this.authService.handleError(error)
 
-        }
-    )
+        })
     }
   }
 

@@ -47,6 +47,7 @@ export class PostsComponent implements OnInit {
     .filter(title => title.includes(this.searchQuery.toLowerCase())).includes(post.title.toLowerCase()))
   }
   onSubscribedPosts(){
+    console.log("Subscribed users in posts",this.subscriptionService.subscribedUsers)
     this.isSubscribed = true
     this.popularPosts = this.allPosts
     .filter

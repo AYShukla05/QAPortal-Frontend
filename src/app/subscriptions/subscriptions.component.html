@@ -1,3 +1,4 @@
+<!-- Spinner -->
 <div *ngIf="loading" class="d-flex justify-content-center">
     <div class="spinner-border" role="status">
     </div>
@@ -21,10 +22,8 @@
                     <img class="mx-auto rounded-circle" src="http://127.0.0.1:8000{{ user.profileImage }}" alt="..." />
                     <a routerLink="/profiles/{{user.id}}"><h4>{{user.name}}</h4></a>
                     <p class="text-muted">{{user.email}}</p>
+                    <button class="btn-danger btn-sm" (click)="onUnsubscribe(user)" *ngIf="user.isSubscribed">Unsubscribe</button>
                     
-                    <!-- <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-twitter"></i></a>
-                    <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-linkedin-in"></i></a> -->
                 </div>
             </div>
             

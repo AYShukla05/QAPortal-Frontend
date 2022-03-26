@@ -14,11 +14,11 @@ export class ProfilesService{
         private subscriptionService:SubscriptionService,
         private authService:AuthService){}
 
-
+    url = 'http://127.0.0.1:8000/api/'
 
 
     getProfiles(){
-        return this.http.get<Profile[]>('http://127.0.0.1:8000/api/profiles')
+        return this.http.get<Profile[]>(this.url+'profiles')
     }
 
     getProfile(id:string){
@@ -33,7 +33,7 @@ export class ProfilesService{
     }
 
     createProfile(profile:any, username:string, password:string){
-        this.http.post('http://127.0.0.1:8000/api/create-profile',profile).subscribe(
+        this.http.post(this.url+'create-profile',profile).subscribe(
             response => {
                 console.log("Profile",profile)
                 // console.log("Response",response)
@@ -49,17 +49,24 @@ export class ProfilesService{
 
 
     updateProfile(id:string,profile:any){
-        const updatedProfileId = id
-        const updatedProfile = profile
-        this.http.put('http://127.0.0.1:8000/api/update-profile/'+updatedProfileId,updatedProfile)
-    .subscribe()
-    this.router.navigate(['profiles'])
+    this.http.put(this.url+'update-profile/'+id,profile)
+    .subscribe(
+        res=>
+        this.router.navigate(['profiles'])
+    )
+    }
+
+    changePassword(password:string,body:any){
+        body.append('password',password)
+        this.http.put(this.url+'change-password', body).subscribe(
+            res=>console.log("Done", res)
+        )
     }
 
     
     deleteProfile(id:string){
         // console.log("Deleting")
-        this.http.delete('http://127.0.0.1:8000/api/delete-profile/'+id).subscribe(
+        this.http.delete(this.url+'delete-profile/'+id).subscribe(
             ()=>{}, err => {
                 this.authService.handleError(err)
 
@@ -73,7 +80,7 @@ export class ProfilesService{
         const profId = {'id':profileId}
         this.subscriptionService.getSubscribedUsers()
         this.router.navigate(['profiles'])
-        return this.http.post('http://127.0.0.1:8000/api/subscribe',profId)
+        return this.http.post(this.url+'subscribe',profId)
     }
 
     getMyProfile(){

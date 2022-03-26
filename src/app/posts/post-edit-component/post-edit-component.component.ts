@@ -12,7 +12,8 @@ import { PostService } from '../posts.service';
 export class PostEditComponentComponent implements OnInit {
   id: string | undefined
   postEdit!:FormGroup
-  post!: {title: string, body: string}
+  loggedInId: string = this.authService.loggedProfile.id
+  post: {title: string, body: string, owner?:{}} = {'title':'', 'body':'', 'owner':{}}
   constructor(private route: ActivatedRoute, 
     private router: Router,
     private authService: AuthService,
@@ -27,10 +28,13 @@ export class PostEditComponentComponent implements OnInit {
           this.postService.getPostAsync(this.id).subscribe(
             (resp)=>{
               this.post = resp['Post'];
+              console.log(this.post)
+              // if(this.router.url.includes('edit')&&this.post.owner!==this.authService.loggedProfile){
+              //   this.router.navigate([this.router.url.substring(0, this.router.url.indexOf('/edit'))])
+              // }
               this.postEdit = new FormGroup({
                 'title': new FormControl(this.post?this.post.title:null, Validators.required),
                 'body': new FormControl(this.post?this.post.body:null, Validators.required)
-              
               })
             }, 
             error=>{
@@ -46,11 +50,15 @@ export class PostEditComponentComponent implements OnInit {
             'body':''
     }
   }
+  // if(this.router.url.includes('edit')&&this.post.owner!==this.authService.loggedProfile){
+  //   this.router.navigate([this.router.url.substring(0, this.router.url.indexOf('/edit'))])
+  // }
   this.postEdit = new FormGroup({
     'title': new FormControl(this.post?this.post.title:null, Validators.required),
     'body': new FormControl(this.post?this.post.body:null, Validators.required)
   
   })
+  console.log(this.post)
 }
 
   onSubmit(){
