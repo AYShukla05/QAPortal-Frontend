@@ -8,12 +8,16 @@ import { AuthComponent } from './auth/auth.component';
 import { AuthInterceptorService } from './auth/auth.interceptor';
 import { ModalModule } from './modal';
 import { HeaderComponent } from './header/header.component';
+import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
+import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
     HeaderComponent,
+    ResetPasswordComponent,
+    ForgotPasswordComponent,
   ],
   imports: [
     BrowserModule,

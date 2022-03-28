@@ -15,7 +15,7 @@ export class AuthService{
     isLoggedIn:boolean = false
     loggedProfile:any
     message = ''
-
+    url = 'http://127.0.0.1:8000/api/'
     constructor(private http: HttpClient,
         private router: Router,
         private subscriptionService: SubscriptionService, 
@@ -45,12 +45,12 @@ export class AuthService{
                 .subscribe(
                     {
                     next: 
-                    response=>{
+                    (response:{})=>{
                         // console.log("Response",response)
                         localStorage.setItem('Profile',JSON.stringify(response))
                         this.loggedProfile = response
                         // console.log(this.router)
-                        this.router.navigate(['/my-profile'])
+                        this.router.navigate(['/posts'])
                         this.subscriptionService.getSubscribedUsers().subscribe(
                             (users:any[]) => {
                                 this.subscriptionService.subscribedUsers = users
@@ -101,6 +101,14 @@ export class AuthService{
         this.router.navigate(['login']);
     }
 
+    forgotPassword(formValue:{}){
+      // console.log(formValue)
+      return this.http.post<{'message':string}>(this.url + 'forgot-password',formValue)
+    }
+    resetPassword(formValue:{}, id:string){
+      this.http.post(this.url + 'reset-password/'+id,formValue).subscribe()
+      this.router.navigate(['login']);
+    }
 
     handleError(error:{'status':number, 'message':string, 'statusText':string, 'error':{'details':{'message':string}}}) {
         this.isError = true;

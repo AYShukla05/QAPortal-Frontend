@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 import { AuthComponent } from './auth/auth.component';
 import { AuthGuard } from './auth/auth.guard';
+import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 import { PostEditComponentComponent } from './posts/post-edit-component/post-edit-component.component';
 import { ProfileDetailsComponent } from './profile/profile-details/profile-details.component';
 import { ProfileEditComponent } from './profile/profile-edit/profile-edit.component';
@@ -19,6 +21,8 @@ const routes: Routes = [
   { path: 'new', component: PostEditComponentComponent, canActivate:[AuthGuard] },
   { path: 'signup', component: ProfileEditComponent},
   { path: 'login', component: AuthComponent},
+  { path: 'forgot-password', component: ForgotPasswordComponent},
+  { path: 'reset-password/:id', component: ResetPasswordComponent},
   { path: 'my-profile', component: ProfileDetailsComponent, canActivate:[AuthGuard]},
   { path: '**', redirectTo: '/posts'}
   

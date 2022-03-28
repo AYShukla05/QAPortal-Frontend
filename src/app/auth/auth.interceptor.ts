@@ -24,6 +24,8 @@ export class AuthInterceptorService implements HttpInterceptor {
     "http://127.0.0.1:8000/api/posts/",
     "http://127.0.0.1:8000/api/profiles",
     "http://127.0.0.1:8000/api/profiles/",
+    "http://127.0.0.1:8000/api/forgot-password",
+    "http://127.0.0.1:8000/api/reset-password"
   ]
   // console.log("Excempt URLs",exemptURLs)
   // console.log("Request url", req.url)
@@ -32,10 +34,10 @@ export class AuthInterceptorService implements HttpInterceptor {
   
   
   if((!req.url.includes('edit'))&&(exemptURLs.some(url=>{return req.url.includes(url)}))){
-    // console.log("Sent Request", req)
+    console.log("Sent Request", req)
       return next.handle(req)
     }
-    // console.log("Modified Request",modifiedRequest)
+    console.log("Modified Request",modifiedRequest)
     return next.handle(modifiedRequest)
     }
 

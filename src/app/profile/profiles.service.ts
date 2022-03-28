@@ -36,7 +36,7 @@ export class ProfilesService{
         this.http.post(this.url+'create-profile',profile).subscribe(
             response => {
                 console.log("Profile",profile)
-                // console.log("Response",response)
+                console.log("Response",response)
                 this.authService.login(
                     {"username":username, "password":password}
                     )
