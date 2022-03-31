@@ -1,77 +1,118 @@
 <!-- Spinner -->
-<!-- <div *ngIf="loading" class="d-flex justify-content-center">
+<div *ngIf="loading" class="d-flex justify-content-center">
   <div class="spinner-border" role="status">
   </div>
 </div>
-<br> -->
+<br>
 
 <!-- Profile -->
 <section class="page-section bg-light">
-
-<div class="container">
-  <div class="text-center">
-    <img class="mx-auto rounded-circle" height="300px" src="http://127.0.0.1:8000{{ profile.profileImage }}" alt="...">
-  </div>
-    <div class="text-center"><h1>{{ profile.name }}</h1></div>
+  <div class="container">
+    <div class="text-center">
+      <img
+        class="mx-auto rounded-circle"
+        style="object-fit: cover"
+        height="300px"
+        width="300px"
+        src="http://127.0.0.1:8000{{ profile.profileImage }}"
+        alt="..."
+      />
+    </div>
+    <div class="text-center">
+      <h1>{{ profile.name }}</h1>
+    </div>
     <!-- <div><h5>{{profile.username}}</h5></div> -->
-    <div class="text-center text-muted">{{profile.email}}</div>
-    <div *ngIf="profile.id==ownerId" class="justify-content-center" style="margin-left:40%; margin-right:40%">
-      <a routerLink="/profiles/{{profile.id}}/edit">
-      <button class="btn btn-secondary btn-sm">Edit Profile</button></a>&nbsp;&nbsp;
-      <button class="btn btn-danger btn-sm" (click)="modalService.open('Delete-profile');">Delete Profile</button>
+    <div class="text-center text-muted">{{ profile.email }}</div>
+    <div
+      *ngIf="profile.id == ownerId"
+      class="justify-content-center"
+      style="margin-left: 40%; margin-right: 40%"
+    >
+      <a routerLink="/profiles/{{ profile.id }}/edit">
+        <button class="btn btn-secondary btn-sm">Edit Profile</button></a
+      >&nbsp;&nbsp;
+      <button
+        class="btn btn-danger btn-sm"
+        (click)="modalService.open('Delete-profile')"
+      >
+        Delete Profile
+      </button>
+    </div>
+    <!-- Confirmation modal -->
+    <div class="modal hidden">
+      <jw-modal id="Delete-profile">
+        <h4>Warning</h4>
+
+        <p>Are you sure you want to delete your profile?</p>
+
+        <button
+          class="btn btn-sm btn-secondary"
+          (click)="modalService.close('Delete-profile')"
+        >
+          Cancel</button
+        >&nbsp;
+        <button
+          class="btn btn-sm btn-danger"
+          (click)="modalService.close('Delete-profile')"
+          (click)="onDelete()"
+        >
+          Delete Profile
+        </button>
+      </jw-modal>
+    </div>
   </div>
-  <!-- Confirmation modal -->
-  <div class="modal hidden">
-    <jw-modal id="Delete-profile">
-      <h4>Warning</h4>
-      
-      <p>Are you sure you want to delete your profile?</p>
-      
-      
-      <button class="btn btn-sm btn-secondary" (click)="modalService.close('Delete-profile');">Cancel</button>&nbsp;
-      <button class="btn btn-sm btn-danger" (click)="modalService.close('Delete-profile');" (click)="onDelete()">Delete Profile</button>
-    </jw-modal>
-  </div>
-</div>
-<br>
-<div class="container">
-  <div class="row">
-    <div class="col-7">
-      <h4>{{profile.name}}'s Posts</h4>
-      <hr>
-      <div *ngIf="profilePosts.length>0; else infoText">
-      <div class="container-fluid" *ngFor="let post of profilePosts">
-        <div class="row" style="padding: 10px">
-          <a routerLink="/posts/{{post.id}}">
-            {{post.title}}
-          </a>
+  <br />
+  <div class="container">
+    <div class="row">
+      <div class="col-7">
+        <h4>{{ profile.name }}'s Posts</h4>
+        <hr />
+        <div *ngIf="profilePosts.length > 0; else infoText">
+          <div class="container-fluid" *ngFor="let post of profilePosts">
+            <div class="row" style="padding: 10px">
+              <a routerLink="/posts/{{ post.id }}">
+                {{ post.title }}
+              </a>
+            </div>
+            <div style="padding-left: 10px">
+              <small
+                ><b>{{ post.vote_ratio }}% Upvotes</b>({{
+                  post.vote_total
+                }})</small
+              >
+            </div>
+            <hr />
+          </div>
         </div>
-        <div style="padding-left: 10px"><small><b>{{post.vote_ratio}}% Upvotes</b>({{ post.vote_total }})</small></div>
-        <hr>
       </div>
-    </div>
-    </div>
-    <div class="col-5">
-      <div *ngIf="authService.isLoggedIn">
-        <h5>{{profile.name}}'s Comments</h5>
-        <hr>
-        <div *ngIf="profileComments.length > 0; else infoText">
-          <div *ngFor="let comment of profileComments">
-            <hr>
-            <div class="container-fluid" style="padding: 10px">
-              <div class="row" style="padding-left: 10px">{{comment.body}}</div>
-              <div class="row">
-                <span class="text-muted">Comment on&nbsp;<a routerLink="/posts/{{comment.post.id}}"><b>{{comment.post.title}}</b></a></span>
+      <div class="col-5">
+        <div *ngIf="authService.isLoggedIn">
+          <h5>{{ profile.name }}'s Comments</h5>
+          <hr>
+          <div *ngIf="profileComments.length > 0; else infoText">
+            <div *ngFor="let comment of profileComments">
+              <div class="container-fluid" style="padding: 10px">
+                <div class="row" style="padding-left: 10px">
+                  {{ comment.body }}
+                </div>
+                <div class="row">
+                  <span class="text-muted"
+                    >Comment on&nbsp;<a
+                      routerLink="/posts/{{ comment.post.id }}"
+                      ><b>{{ comment.post.title }}</b></a
+                    ></span
+                  >
+                </div>
               </div>
+              <hr>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <ng-template #infoText>
-    <p>No activity here</p>
-  </ng-template>
-</div>
+    <ng-template #infoText>
+      <p>No activity here</p>
+    </ng-template>
+  </div>
 </section>

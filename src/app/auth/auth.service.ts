@@ -3,6 +3,7 @@ import {  Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { SubscriptionService } from "../subscriptions/subscriptions.service";
 import { ModalService } from "../modal/modal.service";
+import { BehaviorSubject } from "rxjs";
 
 
 
@@ -13,6 +14,8 @@ export class AuthService{
     isError: boolean = false
     token:string | null=localStorage.getItem('token');
     isLoggedIn:boolean = false
+    loginChanged = new BehaviorSubject(false)
+    readNotification = new BehaviorSubject(0)
     loggedProfile:any
     message = ''
     url = 'http://127.0.0.1:8000/api/'
@@ -25,31 +28,31 @@ export class AuthService{
     }
 
     login(body:{'username':string, 'password':string}){
-        this.http.post<{"access":string, "refresh":string}>('http://127.0.0.1:8000/api/token',body)
+        this.http.post<{"access":string, "refresh":string}>(
+          'http://127.0.0.1:8000/api/token',body)
         .subscribe(
             token=>{
                 this.token = token.access;
-                // console.log(token)
                 localStorage.setItem('token',this.token)
                 this.isLoggedIn = true
+                this.loginChanged.next(true)
                 setTimeout(()=>{
                     localStorage.removeItem('token');
                     localStorage.removeItem('Profile');
                     this.router.navigate(['login']);
                     this.isLoggedIn= false
-                    // this.isLoggedIn = false
+                    this.loginChanged.next(false)
+
                 }, 86400000 )
                 
-                
+                // Get Profile Details
                 this.http.get('http://127.0.0.1:8000/api/profile')
                 .subscribe(
                     {
                     next: 
                     (response:{})=>{
-                        // console.log("Response",response)
                         localStorage.setItem('Profile',JSON.stringify(response))
                         this.loggedProfile = response
-                        // console.log(this.router)
                         this.router.navigate(['/posts'])
                         this.subscriptionService.getSubscribedUsers().subscribe(
                             (users:any[]) => {
@@ -67,6 +70,14 @@ export class AuthService{
                     },    
                 }
                 )
+
+                // Get unread notifications Count
+                this.http.get<{'unreadNotification':number}>(
+                  'http://127.0.0.1:8000/api/get-unread-notifications-count').subscribe(
+                  response => {
+                    this.readNotification.next(response['unreadNotification'])
+                  }
+                )
             },error=>{
                 this.handleError(error)
             }
@@ -77,12 +88,11 @@ export class AuthService{
     autoLogin() {
         this.token = localStorage.getItem('token')
         this.isLoggedIn= this.token !== null?true:false
-        
+        this.loginChanged.next(this.token !== null?true:false)
 
         const temp = localStorage.getItem('Profile')
         if (this.token!=null && temp!=null) {
             this.loggedProfile = JSON.parse(temp)
-            // console.log("Getting subscribed initial")
             this.subscriptionService.getSubscribedUsers().subscribe(
                 (users:any[]) => {
                     this.subscriptionService.subscribedUsers = users
@@ -90,19 +100,26 @@ export class AuthService{
                     this.handleError(error)
                 }
             )
+            this.http.get<{'unreadNotification':number}>(
+              'http://127.0.0.1:8000/api/get-unread-notifications-count').subscribe(
+              response => {
+                this.readNotification.next(response['unreadNotification'])
+              }
+            )
+            
         }
     }
 
     logout() {
         localStorage.removeItem('token');
         this.isLoggedIn= false;
+        this.loginChanged.next(false)
         this.token = null;
         localStorage.removeItem('Profile');
         this.router.navigate(['login']);
     }
 
     forgotPassword(formValue:{}){
-      // console.log(formValue)
       return this.http.post<{'message':string}>(this.url + 'forgot-password',formValue)
     }
     resetPassword(formValue:{}, id:string){
@@ -110,60 +127,57 @@ export class AuthService{
       this.router.navigate(['login']);
     }
 
-    handleError(error:{'status':number, 'message':string, 'statusText':string, 'error':{'details':{'message':string}}}) {
+    handleError(
+      error:{'status':number, 
+      'message':string, 
+      'statusText':string, 
+      'error':{'details':{'message':string}}
+    }) 
+    {
         this.isError = true;
         switch(error.status)
         {case 0:
-        //   console.log("Server is Down")
           this.message="Server is Down"
-        //   console.log(error.error.details)
-          console.log("Error", error)
+          
 
 
           break;
           case 400: 
           this.message= error.error.details['message']
-          console.log("Error", error)
-          console.log(error.error.details)
+          
+          
           break
           case 401: 
-        //   console.log("Unauthorized")
         this.isLoggedIn = false
-        console.log("Error", error)
-          this.message= error.error.details['message']==undefined?"Please Log in with proper credentials":error.error.details.message
-          // console.log(error.error.details['message'])
-        //   console.log("Error Detail",error.error.details)
-          this.message="Please login with proper credentials"
+        this.loginChanged.next(false)
+        
+        
 
+
+          this.message= (typeof error.error.details['message'] != "string")?"Please Log in with proper credentials":error.error.details['message']
+          
           this.router.navigate(['login']);
 
           break
           case 403: 
-        //   console.log("User does not have Permission. Login with proper credentials")
 
-        this.message= error.error.details['message']==undefined?"User does not have Permission. Login with proper credentials":error.error.details.message
+        this.message= (typeof error.error.details['message'] != "string")?"User does not have Permission. Login with proper credentials":error.error.details.message
+          
+          
 
-          console.log("Error", error)
-
-        //   console.log("Error Detail",error.error.details)
           break
           case 404:
-            // console.log("URL not found")
-            this.message= error.error.details['message']==undefined?"URL not found":error.error.details.message
+            this.message= (typeof error.error.details['message'] != "string")?"URL not found":error.error.details.message
 
-            // console.log("Error Detail",error.error.details)
-            console.log("Error", error)
+            
 
             break
             case 500: 
-            // console.log("Internal Server Error")
-            this.message= error.error.details['message']==undefined?"Internal Server Error":error.error.details.message
-            // console.log("Error Detail",error.error.details)
-            // this.message == error.message
-            console.log("Error", error)
+            this.message= (typeof error.error.details['message'] != "string")?"Internal Server Error":error.error.details.message
+            
             break
             default:
-              console.log("Error", error)
+              
 
         }
         

@@ -2,6 +2,7 @@
   <div class="h2 text-center" *ngIf="signingUp">Quora</div>
   <div class="h4 text-muted text-center pt-2" *ngIf="signingUp">Enter your details</div>
   <br>
+
   <form [formGroup]="profileForm"  enctype = "multipart / form-data" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="profile-image">Profile Image</label>

@@ -9,16 +9,18 @@ import { SubscriptionService } from './subscriptions.service'
 })
 export class SubscriptionsComponent implements OnInit {
   loading = true
+  profile!:Profile;
   constructor(private subscriptionService: SubscriptionService, private authService: AuthService) { }
   subscribedUsers:any[] = []
   // Pagination Controls
   page: any = 1;
   count: any = 5;
   ngOnInit(): void {
+    this.profile = this.authService.loggedProfile
     this.subscribedUsers = this.subscriptionService.subscribedUsers
     this.loading = false
       this.subscriptionService.getSubscribedUsers().subscribe(
-          (users:any[]) => {
+          (users:Profile[]) => {
             this.subscribedUsers = users
             this.loading = false
             this.subscriptionService.subscribedUsers = users
@@ -31,12 +33,9 @@ export class SubscriptionsComponent implements OnInit {
   }
 
   onUnsubscribe(user: Profile){
-    console.log("User in subscribed",user)
     this.subscriptionService.subscribeProfile(user.id).subscribe(res=>{
       this.subscribedUsers = this.subscribedUsers.filter(u=>u!==user)
-      console.log("Subscribed in component", this.subscribedUsers)
       this.subscriptionService.subscribedUsers = this.subscribedUsers.filter(u=>u!==user)
-      console.log("Subscribed in service", this.subscriptionService.subscribedUsers)
     })
 
 }

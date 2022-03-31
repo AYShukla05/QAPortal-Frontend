@@ -22,26 +22,21 @@ export class ProfilesService{
     }
 
     getProfile(id:string){
-        // console.log("From Service", this.profiles)
         let profile = this.profiles.filter(p => p.id == id)
-        // console.log("From profile service", profile)
         return profile[0]
     }
 
     getProfileAsync(id:string){
-        return this.http.get<{"Profile":{'name':string,'id':string, 'email':string| undefined, 'username':string},"Posts": any[],"Comments":any[]}>('http://127.0.0.1:8000/api/profiles/'+id)
+        return this.http.get<{"Profile":{'name':string,'id':string, 'email':string| undefined, 'username':string},"Posts": any[],"Comments":any[]}>(this.url+'profiles/'+id)
     }
 
     createProfile(profile:any, username:string, password:string){
         this.http.post(this.url+'create-profile',profile).subscribe(
             response => {
-                console.log("Profile",profile)
-                console.log("Response",response)
                 this.authService.login(
                     {"username":username, "password":password}
                     )
             }, error =>{
-                // console.log("Error ",error)
                 this.authService.handleError(error)
             }
         )
@@ -59,13 +54,11 @@ export class ProfilesService{
     changePassword(password:string,body:any){
         body.append('password',password)
         this.http.put(this.url+'change-password', body).subscribe(
-            res=>console.log("Done", res)
         )
     }
 
     
     deleteProfile(id:string){
-        // console.log("Deleting")
         this.http.delete(this.url+'delete-profile/'+id).subscribe(
             ()=>{}, err => {
                 this.authService.handleError(err)
@@ -79,12 +72,12 @@ export class ProfilesService{
     subscribeProfile(profileId:string){
         const profId = {'id':profileId}
         this.subscriptionService.getSubscribedUsers()
-        this.router.navigate(['profiles'])
+        // this.router.navigate(['profiles'])
         return this.http.post(this.url+'subscribe',profId)
     }
 
     getMyProfile(){
-        return this.http.get<{"Profile":{'id':string, 'email':string| undefined, 'username':string},"Posts": any[],"Comments":any[]}>('http://127.0.0.1:8000/api/get-my-profile')
+        return this.http.get<{"Profile":{'id':string, 'email':string| undefined, 'username':string},"Posts": any[],"Comments":any[]}>(this.url + 'get-my-profile')
     }
 
 

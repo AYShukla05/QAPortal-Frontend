@@ -24,7 +24,6 @@ export class ResetPasswordComponent implements OnInit {
           this.id = params['id'];})
   }
   onSubmit(){
-    console.log(this.resetPassword.value)
     this.authService.resetPassword(this.resetPassword.value, this.id)
   }
 

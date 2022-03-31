@@ -7,6 +7,7 @@ import { ResetPasswordComponent } from './auth/reset-password/reset-password.com
 import { PostEditComponentComponent } from './posts/post-edit-component/post-edit-component.component';
 import { ProfileDetailsComponent } from './profile/profile-details/profile-details.component';
 import { ProfileEditComponent } from './profile/profile-edit/profile-edit.component';
+import { SearchResultComponent } from './search-result/search-result.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/posts',  pathMatch: 'full' },
@@ -14,6 +15,8 @@ const routes: Routes = [
   { path: 'posts', loadChildren: () => import('./posts/post.module').then(m=>m.PostModule)},
   // Lazy loading Subscriptions
   { path: 'subscriptions', loadChildren: () => import('./subscriptions/subscriptions.module').then(m=>m.SubscriptionsModule)},
+  { path: 'subscribers', loadChildren: () => import('./subscribers/subscribers.module').then(m=>m.SubscribersModule)},
+
   // Lazy loading Notifications
   { path: 'notifications', loadChildren: () => import('./notifications/notifications.module').then(m => m.NotificationsModule)},
   // Lazy loading Profiles
@@ -24,6 +27,8 @@ const routes: Routes = [
   { path: 'forgot-password', component: ForgotPasswordComponent},
   { path: 'reset-password/:id', component: ResetPasswordComponent},
   { path: 'my-profile', component: ProfileDetailsComponent, canActivate:[AuthGuard]},
+  { path: 'search', component: SearchResultComponent},
+
   { path: '**', redirectTo: '/posts'}
   
 

@@ -21,9 +21,7 @@ export class AuthComponent implements OnInit {
   }
 
   onSubmit(){
-    // console.log("Login Form", form)
-    // console.log("Form Value", form.value)
-    // console.log("Value", form.value)
+
     const body = { "username": this.authForm.value.username, "password": this.authForm.value.password}
     this.authService.login(body)
     

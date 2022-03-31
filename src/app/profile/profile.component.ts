@@ -26,8 +26,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.profilesService.getProfiles().subscribe((profiles:Profile[])=>{
-      console.log("Inside Profile")
-      this.allProfiles = profiles;
+      this.allProfiles = profiles.filter(profile=>profile.id!=this.profile.id);
       this.popularProfiles = this.allProfiles
       this.loading = false;
       // Getting Profile
@@ -35,13 +34,16 @@ export class ProfileComponent implements OnInit {
         this.popularProfiles
         .map(profile => 
           profile['isSubscribed'] = this.subscriptionService.subscribedUsers
-          .map(profile=>profile.id).includes(profile.id)?true:false)
-        this.loading = false;
-        this.profilesService.profiles = this.allProfiles
+          .map(profile=>profile.id)
+          .includes(profile.id)||profile.id==this.profile.id?true:false)
+        
+        this.loading = false
       , (error:any) =>{
         this.authService.handleError(error)
   
       }
+      this.profilesService.profiles = this.allProfiles
+
       }},(error:any) =>{
         this.authService.handleError(error)
       }
@@ -58,9 +60,7 @@ export class ProfileComponent implements OnInit {
       this.profilesService.subscribeProfile(user.id).subscribe(resp =>
       {user.isSubscribed = !user.isSubscribed
       if(user.isSubscribed){
-        console.log("True",user)
         this.subscriptionService.subscribedUsers.push(user)
-        console.log("onSubscribing", this.subscriptionService.subscribedUsers)
       }
       else{
         this.subscriptionService.subscribedUsers = this.subscriptionService.subscribedUsers.filter(u=>u.id!==user.id)

@@ -9,18 +9,21 @@ import { AuthService } from '../auth/auth.service';
   })
 export class PostService{
 subscribedUsers: any;
-constructor(private http: HttpClient,private router: Router, private authService: AuthService){}
+url = "http://127.0.0.1:8000/api/"
+constructor(private http: HttpClient,
+    private router: Router, 
+    private authService: AuthService){}
 
 
 posts: Post[] = []
 
 getPostsasync(){
-    return this.http.get<Post[]>('http://127.0.0.1:8000/api/posts')
+    return this.http.get<{"Post":Post, "Vote":string}[]>(this.url+'posts')
     
 }
 
 getPostAsync(id: string){
-    return this.http.get<{"Post":Post,"Comments":[]}>(`http://127.0.0.1:8000/api/posts/${id}`)
+    return this.http.get<{"Post":Post,"Comments":[], "Vote":string}>(this.url+`posts/${id}`)
 }
 
 getPost(id: string) {
@@ -31,14 +34,14 @@ getPost(id: string) {
 
 
 createPost(post: {title: string, body: string}){
-    this.http.post('http://127.0.0.1:8000/api/create-post',post)
+    this.http.post(this.url+'create-post',post)
     .subscribe()
     this.router.navigate(['posts'])
 }
 
 
 updatePost(postID: string, post: {title: string, body: string}) {
-    this.http.put('http://127.0.0.1:8000/api/update-post/'+postID, post)
+    this.http.put(this.url+'update-post/'+postID, post)
     .subscribe(
         ()=>{}, err => {
             
@@ -51,7 +54,7 @@ updatePost(postID: string, post: {title: string, body: string}) {
 }
 
 deletePost(id:string){
-    this.http.delete('http://127.0.0.1:8000/api/delete-post/'+id)
+    this.http.delete(this.url+'delete-post/'+id)
     .subscribe(
         ()=>{}, err => {
             
@@ -64,28 +67,28 @@ deletePost(id:string){
 }
 
 vote(id:string,vote:{'value':string}){
-    return this.http.post<{ 'title': string,'body': string, 'owner': {'name': string, 'id': string}, 'vote_total':number, 'vote_ratio':number}>('http://127.0.0.1:8000/api/add-vote/'+id,vote)
+    return this.http.post<{"Post":Post, "Vote":string}>(this.url+'add-vote/'+id,vote)
     
 }
 
 
 addComment(postID:string, comment:{'body':string}){
-    return this.http.post('http://127.0.0.1:8000/api/add-comment/'+postID,comment)
+    return this.http.post(this.url+'add-comment/'+postID,comment)
     }
 
 getComments(postID:string){
-    return this.http.get('http://127.0.0.1:8000/api/get-comments/'+postID)
+    return this.http.get(this.url+'get-comments/'+postID)
     
 
 }
 
 editComment(commentID:string, comment:{ 'body': string}, id:string){
     this.router.navigate(['posts', id])
-    return this.http.put<{'body':string}>('http://127.0.0.1:8000/api/edit-comment/'+commentID, comment)
+    return this.http.put<{'body':string}>(this.url+'edit-comment/'+commentID, comment)
 }
 
 deleteComment(commentID:string, id:string){
-    return this.http.delete<any[]>('http://127.0.0.1:8000/api/delete-comment/'+commentID)
+    return this.http.delete<any[]>(this.url+'delete-comment/'+commentID)
 }
 
 

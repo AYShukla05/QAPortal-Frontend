@@ -47,12 +47,10 @@ export class ProfileEditComponent implements OnInit {
       this.id = params['id']
       if(this.id!==undefined){
         this.profile = this.profilesService.getProfile(this.id)
-        console.log(this.profile)
         if (this.profile==undefined){
           this.profilesService.getProfileAsync(this.id).subscribe(
             (response:{"Profile":{'id':string, 'email':string| undefined, 'username':string, 'name':string},"Posts": any[],"Comments":any[]}) => {
             this.profile = response["Profile"]
-            console.log(this.profile)
 
           }, error =>{
             this.authService.handleError(error)
@@ -66,11 +64,6 @@ export class ProfileEditComponent implements OnInit {
 
   }
   )
-  console.log("URL", this.router.url, this.router.url.includes('edit'))
-  console.log(this.router.url.includes('edit')&&this.id==undefined)
-  // if(this.router.url.includes('edit')&&this.id==undefined){
-  //   this.router.navigate([this.router.url.substring(0, this.router.url.indexOf('/edit'))])
-  // }
   if (this.router.url == "/signup"){
     this.signingUp = true
     this.profile = {
@@ -90,9 +83,7 @@ export class ProfileEditComponent implements OnInit {
       if (event.target.files.length > 0) {
         this.file = event.target.files[0];
         this.profileForm?.get('profileImage')?.setValue(this.file);
-        console.log("File", this.file)
         this.imgPath= event.target.result;
-        console.log("ImagePath", this.imgPath)
           let reader = new FileReader();
           reader.onload = (event: any) => {
               this.imgPath = event.target.result;
@@ -105,7 +96,6 @@ export class ProfileEditComponent implements OnInit {
     this.changingPassword=true
   }
   onSubmit(){
-    console.log("Inside submit")
     const value = this.profileForm.value
     const formData = new FormData();
     formData.append('name', value['name'])
@@ -126,8 +116,6 @@ export class ProfileEditComponent implements OnInit {
       passwordFormData.append('confirm-password', value['confirm-password'])
       this.profilesService.changePassword(value['password'],passwordFormData)
     }
-    // console.log(this.profile)
-    console.log("Form Data", formData)
     if (this.id==undefined){
       this.profilesService.createProfile(formData, value['username'], value['password'])
     }

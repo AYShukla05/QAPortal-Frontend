@@ -7,36 +7,37 @@
 
 <!-- Profiles -->
 
-<div *ngIf="subscribedUsers">
+<div *ngIf="subscribers">
 
       <br><br>
 
       <div class="container">
         <div class="text-center">
-            <h4 class="section-heading text-uppercase">Subscribed Profiles</h4>
-            <p class="section-subheading text-muted">View your favourite profiles</p>
+            <h4 class="section-heading text-uppercase">Your Subscribers</h4>
+            <p class="section-subheading text-muted">Visit your Subscriber's Profiles</p>
+
         </div>
         <br><br>
         <div class="row">
-            <div class="col-lg-4" *ngFor="let user of subscribedUsers | paginate: { itemsPerPage: count, currentPage: page }">
+            <div class="col-lg-4" *ngFor="let user of subscribers | paginate: { itemsPerPage: count, currentPage: page }">
                 <div class="team-member">
                     <img class="mx-auto rounded-circle" src="http://127.0.0.1:8000{{ user.profileImage }}" alt="..." />
                     <a routerLink="/profiles/{{user.id}}"><h4>{{user.name}}</h4></a>
                     <p class="text-muted">{{user.email}}</p>
-                    <button class="btn-danger btn-sm" (click)="onUnsubscribe(user)" *ngIf="user.isSubscribed && user.id!=profile.id">Unsubscribe</button>
-                    
+                    <button class="btn-secondary btn-sm" (click)="onSubscribe(user)" *ngIf="!user.isSubscribed">Subscribe</button>
+                    <button class="btn-danger btn-sm" (click)="onSubscribe(user)" *ngIf="user.isSubscribed">Unsubscribe</button>                    
                 </div>
             </div>
             
         </div>
     
-<div class="text-center" *ngIf="subscribedUsers.length == 0">
+<div class="text-center" *ngIf="subscribers.length == 0">
     <br>
     <br>
     <h2>No Subscription Yet! Subscribe your favourite users.</h2>
 </div>
 <!-- Pagination Control -->
-<div class="text-right" *ngIf="subscribedUsers.length>count" >
+<div class="text-right" *ngIf="subscribers.length>count" >
     <pagination-controls (pageChange)="page = $event"></pagination-controls>
 </div>
 </div>

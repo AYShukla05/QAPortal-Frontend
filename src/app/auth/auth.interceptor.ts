@@ -13,31 +13,30 @@ export class AuthInterceptorService implements HttpInterceptor {
     
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     
-    
+    const url = "http://127.0.0.1:8000/"
     const modifiedRequest = req.clone({
         headers: req.headers.append('Authorization',`Bearer ${this.authService.token}`)
     })
     const exemptURLs = [
-    "http://127.0.0.1:8000/api/token",
-    "http://127.0.0.1:8000/api/create-profile", 
-    "http://127.0.0.1:8000/api/posts",
-    "http://127.0.0.1:8000/api/posts/",
-    "http://127.0.0.1:8000/api/profiles",
-    "http://127.0.0.1:8000/api/profiles/",
-    "http://127.0.0.1:8000/api/forgot-password",
-    "http://127.0.0.1:8000/api/reset-password"
+    url +"api/token",
+    url +"api/create-profile", 
+    url +"api/posts",
+    url +"api/posts/",
+    url +"api/profiles",
+    url +"api/profiles/",
+    url +"api/forgot-password",
+    url +"api/reset-password"
   ]
-  // console.log("Excempt URLs",exemptURLs)
-  // console.log("Request url", req.url)
-  // console.log(exemptURLs.some(url=>{return req.url.includes(url)}))
+   
     
   
   
-  if((!req.url.includes('edit'))&&(exemptURLs.some(url=>{return req.url.includes(url)}))){
-    console.log("Sent Request", req)
+  if(
+    (!req.url.includes('edit'))&&
+    (exemptURLs.some(url=>{return req.url.includes(url)}))&&
+    this.authService.token==null){
       return next.handle(req)
     }
-    console.log("Modified Request",modifiedRequest)
     return next.handle(modifiedRequest)
     }
 

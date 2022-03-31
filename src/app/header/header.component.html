@@ -1,35 +1,173 @@
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-  <div class="container">
-      <a class="navbar-brand" >Quora</a>
-      <button class="navbar-toggler" (click)="dropDownClick()"  type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          Menu
-      </button>
-      <div class="collapse navbar-collapse" [ngClass]="{'show':dropDownOpen}" id="navbarResponsive">
-          <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-            <li class="nav-item"><a class="nav-link" routerLinkActive="active" routerLink="posts">Home</a></li>
-            <li class="nav-item" *ngIf="isLoggedIn"><a class="nav-link" routerLinkActive="active" routerLink="subscriptions">Subscriptions</a></li>
-            <li class="nav-item" *ngIf="isLoggedIn"><a class="nav-link" routerLinkActive="active" routerLink="notifications">Notifications</a></li>
-            <li class="nav-item"><a class="nav-link" routerLinkActive="active" routerLink="profiles">Profiles</a></li>
-            <li class="nav-item"><a *ngIf="isLoggedIn" class="nav-link" routerLink="my-profile">My&nbsp;Profile</a></li>
-
-            <li class="nav-item" style="cursor: pointer;">
-              <a class="nav-link" *ngIf="!isLoggedIn" routerLink="login">Log&nbsp;In</a>
-              
-              <a class="nav-link" *ngIf="isLoggedIn" (click)="logout()">Log&nbsp;Out</a>
-            </li>
-          </ul>
+<!-- Responsive -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container-fluid">
+    <button
+    class="navbar-toggler"
+    (click)="dropDownClick()"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#navbarResponsive"
+    aria-controls="navbarResponsive"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+    <a routerLink="posts" class="navbar-brand">Quora</a>
+  
+    <div
+      class="collapse navbar-collapse"
+      [ngClass]="{ show: dropDownOpen }"
+      id="navbarResponsive"
+    >
+      <ul
+        class="navbar-nav mr-auto"
+        [ngClass]="{ show: dropDownOpen }"
+        id="navbarSupportedContent"
+      >
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLinkActive="active"
+            routerLink="posts"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title="Home"
+          >
+            <i class="bi bi-house-fill"></i>
+            <span class="d-lg-none">&nbsp;&nbsp;Home</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLinkActive="active"
+            routerLink="profiles"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title="All Profiles"
+          >
+            <i class="bi bi-people"></i>
+            <span class="d-lg-none">&nbsp;&nbsp;All Profiles</span>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="isLoggedIn">
+          <a
+            class="nav-link"
+            routerLinkActive="active"
+            routerLink="subscriptions"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title="Your Subscribed Profiles"
+            ><i class="bi bi-bookmark-plus"></i>
+            <span class="d-lg-none">&nbsp;&nbsp;Subscribed Profiles</span>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="isLoggedIn">
+          <a
+            class="nav-link"
+            routerLinkActive="active"
+            routerLink="subscribers"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title="Your Subscribers"
+            ><i class="bi bi-person-video2"></i>
+            <span class="d-lg-none">&nbsp;&nbsp;Subscribers</span>
+          </a>
+        </li>
+      </ul>
+      <div class="form-inline my-2 my-lg-0 d-none d-lg-block mr-auto">
+        <input
+          class="form-control mr-sm-3"
+          style="width: 450px"
+          type="search"
+          [(ngModel)]="searchQuery"
+          name="searchQuery"
+          (ngModelChange)="search()"
+          placeholder="Search Quora"
+          aria-label="Search"
+        />
       </div>
+      <ul
+        class="navbar-nav mr-3"
+        [ngClass]="{ show: dropDownOpen }"
+        id="navbarSupportedContent"
+      >
+        <li class="nav-item mt-1">
+          <a
+            class="nav-link"
+            *ngIf="isLoggedIn"
+            class="nav-link"
+            routerLinkActive="active"
+            routerLink="/new"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title="Create New Post"
+          >
+            <i class="bi bi-plus-square"></i>
+            <span class="d-lg-none">&nbsp;&nbsp;Create New Post</span>
+          </a>
+        </li>
+
+        <li class="nav-item"></li>
+        <a
+          *ngIf="isLoggedIn"
+          class="nav-link position-relative mt-1"
+          routerLinkActive="active"
+          routerLink="notifications"
+          data-toggle="tooltip"
+          data-placement="bottom"
+          title="Notifications"
+        >
+          <i class="bi bi-bell-fill"></i>
+          <span
+            class="position-absolute top-40 start-10 translate-middle badge rounded-pill bg-danger"
+            *ngIf="unreadNotification"
+            >{{ unreadNotification }}</span
+          >
+          <span class="d-lg-none">&nbsp;&nbsp;Notifications</span>
+        </a>
+
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            *ngIf="isLoggedIn"
+            routerLink="my-profile"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title="{{ authService.loggedProfile.name }}"
+            ><span
+              ><img
+                height="35px"
+                width="35px"
+                class="mx-auto mt-2 rounded-circle"
+                style="background-color: white"
+                src="http://127.0.0.1:8000{{
+                  authService.loggedProfile.profileImage
+                }}"
+                alt="My Profile" /></span
+            ><span class="d-lg-none"
+              >&nbsp;&nbsp;{{ authService.loggedProfile.name }}</span
+            ></a
+          >
+        </li>
+      </ul>
+      &nbsp;
+    </div>
+    <a
+      class="btn btn-secondary btn-sm"
+      *ngIf="!isLoggedIn"
+      style="cursor: pointer; color: white"
+      routerLink="login"
+      >Log&nbsp;In/Sign&nbsp;Up</a
+    >
+
+    <a
+      class="btn btn-secondary btn-sm"
+      *ngIf="isLoggedIn"
+      style="cursor: pointer; color: white"
+      (click)="logout()"
+      >Log&nbsp;Out</a
+    >
   </div>
 </nav>
-
-
-<!-- Masthead-->
-<header class="masthead">
-  <div class="container">
-      <div class="masthead-subheading">Quora</div>
-      <p>Engage with other people.
-       Make your own posts and comment on other people's posts.</p>
-        <p>Enjoy yourself!</p>
-      
-  </div>
-</header>

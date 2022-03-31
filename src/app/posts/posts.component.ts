@@ -27,10 +27,15 @@ export class PostsComponent implements OnInit {
   ngOnInit(): void {
     this.isSubscribed = false
     this.postService.getPostsasync().subscribe(
-      (posts:Post[]) => {
-        this.allPosts= posts
+      (response:{"Post":Post, "Vote":string}[]) => {
+        this.allPosts= response.map(
+          response=>{
+            let tempPost:any = response['Post'];
+            // tempPost.vote='None'
+            tempPost.vote=response['Vote'];
+            return tempPost}
+            )
         this.allPosts.sort((a,b) =>b.vote_ratio - a.vote_ratio)
-        // console.log("All Posts",this.allPosts)
         this.popularPosts = this.allPosts
         this.loading=false
       this.postService.posts = this.allPosts
@@ -47,7 +52,6 @@ export class PostsComponent implements OnInit {
     .filter(title => title.includes(this.searchQuery.toLowerCase())).includes(post.title.toLowerCase()))
   }
   onSubscribedPosts(){
-    console.log("Subscribed users in posts",this.subscriptionService.subscribedUsers)
     this.isSubscribed = true
     this.popularPosts = this.allPosts
     .filter

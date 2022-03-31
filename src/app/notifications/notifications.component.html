@@ -3,13 +3,17 @@
   <div class="spinner-border" role="status">
   </div>
 </div>
-<br>
-<div *ngIf="notifications.length>0; else infoText">
+<br><br>
+<div class="container" *ngIf="notifications.length>0; else infoText">
+  <br>
   <h4 class="text-center">All Notifications</h4>
   <br>
-<div class="container" *ngFor="let notification of notifications">
-  <div class="row" style=" padding: 10px;color:#080808">{{notification.messages}}. &nbsp;
-    <a routerLink="/posts/{{notification.post.id}}" style="color:rgb(0, 0, 0)">Check it out</a>
+  <button class="btn btn-secondary btn-sm ml-4 col-2" (click)="readAll()">Mark All as Read</button>
+  <hr>
+<div id="notification" class="container col-6" *ngFor="let notification of notifications">
+  <div [ngClass]="{'unread': !notification.isRead}" style=" padding: 10px;color:#080808">
+    {{notification.messages}}.&nbsp;<a routerLink="/posts/{{notification.post.id}}" (click)="read(notification.id)" style="color:rgb(0, 0, 0)">Check it out</a>
+    
   </div>
   <br>
 </div>

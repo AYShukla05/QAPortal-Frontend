@@ -1,3 +1,7 @@
-.row:hover{
+#notification:hover{
     background-color:lightgray;
+}
+
+.unread{
+    background-color:rgb(189, 236, 252);
 }

@@ -1,0 +1,10 @@
+.navbar {
+  position: fixed;
+  z-index: 100;
+  width: 100%;
+  top: 0px;
+}
+
+.bi {
+  font-size: 25px
+}
