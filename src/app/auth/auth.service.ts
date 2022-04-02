@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { SubscriptionService } from "../subscriptions/subscriptions.service";
 import { ModalService } from "../modal/modal.service";
 import { BehaviorSubject } from "rxjs";
+import { Profile } from "../profile/profile.model";
 
 
 
@@ -13,10 +14,11 @@ import { BehaviorSubject } from "rxjs";
 export class AuthService{
     isError: boolean = false
     token:string | null=localStorage.getItem('token');
+    isAuthenticated: boolean = false
     isLoggedIn:boolean = false
     loginChanged = new BehaviorSubject(false)
     readNotification = new BehaviorSubject(0)
-    loggedProfile:any
+    loggedProfile!:any
     message = ''
     url = 'http://127.0.0.1:8000/api/'
     constructor(private http: HttpClient,
@@ -25,6 +27,12 @@ export class AuthService{
         public modalService: ModalService
         ){
 
+    }
+
+    verify(profile: Profile){
+      this.loggedProfile = profile
+      console.log(this.loggedProfile)
+      localStorage.setItem('Profile',JSON.stringify(this.loggedProfile))
     }
 
     login(body:{'username':string, 'password':string}){
@@ -53,6 +61,8 @@ export class AuthService{
                     (response:{})=>{
                         localStorage.setItem('Profile',JSON.stringify(response))
                         this.loggedProfile = response
+                        this.isAuthenticated = this.loggedProfile.is_verified
+                        console.log(this.loggedProfile, this.isAuthenticated)
                         this.router.navigate(['/posts'])
                         this.subscriptionService.getSubscribedUsers().subscribe(
                             (users:any[]) => {
@@ -89,10 +99,11 @@ export class AuthService{
         this.token = localStorage.getItem('token')
         this.isLoggedIn= this.token !== null?true:false
         this.loginChanged.next(this.token !== null?true:false)
-
         const temp = localStorage.getItem('Profile')
         if (this.token!=null && temp!=null) {
-            this.loggedProfile = JSON.parse(temp)
+          this.loggedProfile = JSON.parse(temp)
+          this.isAuthenticated = this.loggedProfile.is_verified
+          console.log(this.isAuthenticated, this.loggedProfile, this.isLoggedIn)
             this.subscriptionService.getSubscribedUsers().subscribe(
                 (users:any[]) => {
                     this.subscriptionService.subscribedUsers = users
@@ -138,19 +149,20 @@ export class AuthService{
         switch(error.status)
         {case 0:
           this.message="Server is Down"
+          console.log(error)
           
 
 
           break;
           case 400: 
           this.message= error.error.details['message']
-          
+          console.log(error)
           
           break
           case 401: 
         this.isLoggedIn = false
         this.loginChanged.next(false)
-        
+        console.log(error)
         
 
 
@@ -162,19 +174,19 @@ export class AuthService{
           case 403: 
 
         this.message= (typeof error.error.details['message'] != "string")?"User does not have Permission. Login with proper credentials":error.error.details.message
-          
+        console.log(error)
           
 
           break
           case 404:
             this.message= (typeof error.error.details['message'] != "string")?"URL not found":error.error.details.message
-
+            console.log(error)
             
 
             break
             case 500: 
             this.message= (typeof error.error.details['message'] != "string")?"Internal Server Error":error.error.details.message
-            
+            console.log(error)
             break
             default:
               

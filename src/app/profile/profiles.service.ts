@@ -33,6 +33,7 @@ export class ProfilesService{
     createProfile(profile:any, username:string, password:string){
         this.http.post(this.url+'create-profile',profile).subscribe(
             response => {
+                this.router.navigate(['verify'],{queryParams:{"username":username, "password":password}, skipLocationChange:true})
                 this.authService.login(
                     {"username":username, "password":password}
                     )
@@ -77,7 +78,7 @@ export class ProfilesService{
     }
 
     getMyProfile(){
-        return this.http.get<{"Profile":{'id':string, 'email':string| undefined, 'username':string},"Posts": any[],"Comments":any[]}>(this.url + 'get-my-profile')
+        return this.http.get<{"Profile":{'id':string, 'email':string| undefined, 'username':string, 'is_verified':boolean},"Posts": any[],"Comments":any[]}>(this.url + 'get-my-profile')
     }
 
 

@@ -8,6 +8,7 @@ import { PostEditComponentComponent } from './posts/post-edit-component/post-edi
 import { ProfileDetailsComponent } from './profile/profile-details/profile-details.component';
 import { ProfileEditComponent } from './profile/profile-edit/profile-edit.component';
 import { SearchResultComponent } from './search-result/search-result.component';
+import { VerificationPendingComponent } from './verification-pending/verification-pending.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/posts',  pathMatch: 'full' },
@@ -28,7 +29,8 @@ const routes: Routes = [
   { path: 'reset-password/:id', component: ResetPasswordComponent},
   { path: 'my-profile', component: ProfileDetailsComponent, canActivate:[AuthGuard]},
   { path: 'search', component: SearchResultComponent},
-
+  { path: 'verify', component: VerificationPendingComponent},
+  { path: 'verifying/:id/:token', component: VerificationPendingComponent},
   { path: '**', redirectTo: '/posts'}
   
 

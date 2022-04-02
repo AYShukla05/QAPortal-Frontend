@@ -15,6 +15,7 @@ export class ProfileDetailsComponent implements OnInit {
   profilePosts:any[] = []
   profileComments:any[] = []
   profile:any={'username': '', 'email': '', 'id':''}; 
+  verified!: boolean;
   id: string | undefined;
   ownerId!: string
   constructor(private route: ActivatedRoute,
@@ -52,9 +53,11 @@ export class ProfileDetailsComponent implements OnInit {
       );
       if(this.router.url == "/my-profile"){
         this.profilesService.getMyProfile().subscribe(
-          (response:{"Profile":{'id':string, 'email':string| undefined, 'username':string},"Posts": any[],"Comments":any[]}) => {
+          (response:{"Profile":{'id':string, 'email':string| undefined, 'username':string, 'is_verified':boolean},"Posts": any[],"Comments":any[]}) => {
             this.authService.loggedProfile = this.profile = response['Profile']
+            this.authService.isAuthenticated = response['Profile'].is_verified
             this.ownerId = this.authService.loggedProfile.id
+            this.verified = response['Profile'].is_verified
             this.profilePosts = response["Posts"]
             this.profileComments = response['Comments']
             this.loading = false

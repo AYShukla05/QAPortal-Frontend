@@ -20,7 +20,7 @@ export class PostDetailsComponent implements OnInit {
   post : Post = { 'title': "",
   'id':'',
   'body': '', 
-  'owner': {'name': '', 'id': '', 'email':'', 'username':'', 'isSubscribed':false, 'profileImage':''}, 
+  'owner': {'name': '', 'id': '', 'email':'', 'username':'', 'isSubscribed':false, 'profileImage':'', 'isVerified':true}, 
   'vote_total':0, 
   'vote_ratio':0,
   'vote': 'up'
@@ -59,7 +59,7 @@ export class PostDetailsComponent implements OnInit {
               }, (error)=>{
                 this.authService.handleError(error)
 
-                this.post = { 'title': "Dummy",'body': 'string', 'owner': {'name': '', 'id': '', 'email':'', 'username':'', 'isSubscribed':false, 'profileImage':''}, 'vote_total':0, 'vote_ratio':0, 'id':'', 'vote':'up'}
+                this.post = { 'title': "Dummy",'body': 'string', 'owner': {'name': '', 'isVerified':true,'id': '', 'email':'', 'username':'', 'isSubscribed':false, 'profileImage':''}, 'vote_total':0, 'vote_ratio':0, 'id':'', 'vote':'up'}
               })
             }
           }

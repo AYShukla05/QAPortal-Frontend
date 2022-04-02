@@ -2,19 +2,19 @@
 <nav class="navbar navbar-expand-lg navbar-dark">
   <div class="container-fluid">
     <button
-    class="navbar-toggler"
-    (click)="dropDownClick()"
-    type="button"
-    data-bs-toggle="collapse"
-    data-bs-target="#navbarResponsive"
-    aria-controls="navbarResponsive"
-    aria-expanded="false"
-    aria-label="Toggle navigation"
-  >
-    <span class="navbar-toggler-icon"></span>
-  </button>
+      class="navbar-toggler"
+      (click)="dropDownClick()"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarResponsive"
+      aria-controls="navbarResponsive"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
     <a routerLink="posts" class="navbar-brand">Quora</a>
-  
+
     <div
       class="collapse navbar-collapse"
       [ngClass]="{ show: dropDownOpen }"
@@ -93,7 +93,7 @@
         [ngClass]="{ show: dropDownOpen }"
         id="navbarSupportedContent"
       >
-        <li class="nav-item mt-1">
+        <li class="nav-item mt-1" *ngIf="authService.isAuthenticated">
           <a
             class="nav-link"
             *ngIf="isLoggedIn"
@@ -141,6 +141,7 @@
                 height="35px"
                 width="35px"
                 class="mx-auto mt-2 rounded-circle"
+                [ngClass]="{ unverified: !authService.isAuthenticated }"
                 style="background-color: white"
                 src="http://127.0.0.1:8000{{
                   authService.loggedProfile.profileImage
@@ -154,6 +155,7 @@
       </ul>
       &nbsp;
     </div>
+
     <a
       class="btn btn-secondary btn-sm"
       *ngIf="!isLoggedIn"
@@ -164,8 +166,15 @@
 
     <a
       class="btn btn-secondary btn-sm"
+      [ngClass]="{ unverified: !authService.isAuthenticated }"
       *ngIf="isLoggedIn"
       style="cursor: pointer; color: white"
+      data-toggle="tooltip"
+      [attr.title]="
+        authService.isAuthenticated ? null : 'Verify Your Email Address'
+      "
+      data-placement="bottom"
+      tooltip-trigger="{!authService.isAuthenticated:true}"
       (click)="logout()"
       >Log&nbsp;Out</a
     >

@@ -8,6 +8,7 @@
 <!-- Profile -->
 <section class="page-section bg-light">
   <div class="container">
+    <div class="alert alert-danger" *ngIf="verified==false">Verify your email address</div>
     <div class="text-center">
       <img
         class="mx-auto rounded-circle"
@@ -26,15 +27,15 @@
     <div
       *ngIf="profile.id == ownerId"
       class="justify-content-center"
-      style="margin-left: 40%; margin-right: 40%"
+      style="margin-left: 40%; margin-right: 30%"
     >
       <a routerLink="/profiles/{{ profile.id }}/edit">
-        <button class="btn btn-secondary btn-sm">Edit Profile</button></a
+        <button class="btn btn-secondary btn-sm"><i class="bi bi-pencil-square"></i>&nbsp;Edit Profile</button></a
       >&nbsp;&nbsp;
       <button
         class="btn btn-danger btn-sm"
         (click)="modalService.open('Delete-profile')"
-      >
+      ><i class="bi bi-x-circle"></i>
         Delete Profile
       </button>
     </div>
@@ -86,7 +87,7 @@
         </div>
       </div>
       <div class="col-5">
-        <div *ngIf="authService.isLoggedIn">
+        <div *ngIf="authService.isLoggedIn&&authService.isAuthenticated">
           <h5>{{ profile.name }}'s Comments</h5>
           <hr>
           <div *ngIf="profileComments.length > 0; else infoText">

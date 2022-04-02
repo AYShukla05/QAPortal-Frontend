@@ -44,7 +44,7 @@
   <br />
   <br />
 
-  <form *ngIf="authService.isLoggedIn" (ngSubmit)="onSubmit(f)" #f="ngForm">
+  <form *ngIf="authService.isLoggedIn&&authService.isAuthenticated" (ngSubmit)="onSubmit(f)" #f="ngForm">
     <div class="form-group">
       <input
         type="text"
@@ -97,7 +97,7 @@
               class="btn btn-sm btn-light"
               (click)="onEditComment(comment.id)"
               style="margin: 10px"
-            >
+            ><i class="bi bi-pencil-square"></i>
               Edit
             </button>
             <button
@@ -106,7 +106,7 @@
               (click)="modalService.open('Delete-comment')"
               (click)="DeleteInit(comment.id)"
               style="margin: 10px"
-            >
+            ><i class="bi bi-x-circle"></i>
               Delete
             </button>
             <div class="modal hidden">
@@ -168,12 +168,12 @@
     *ngIf="authService.isLoggedIn && post.owner['id'] == profile['id']"
   >
     <a routerLink="edit"
-      ><button class="btn btn-sm btn-secondary">Edit Post</button></a
+      ><button class="btn btn-sm btn-secondary"><i class="bi bi-pencil-square"></i>&nbsp;Edit Post</button></a
     >&nbsp;
     <button
       class="btn btn-sm btn-danger"
       (click)="modalService.open('Delete-post')"
-    >
+    ><i class="bi bi-x-circle"></i>&nbsp;
       Delete Post
     </button>
   </div>

@@ -11,7 +11,7 @@
 
       <br><br>
 
-      <div class="container">
+      <div class="container" *ngIf="subscribedUsers.length > 0;else infoText">
         <div class="text-center">
             <h4 class="section-heading text-uppercase">Subscribed Profiles</h4>
             <p class="section-subheading text-muted">View your favourite profiles</p>
@@ -20,8 +20,9 @@
         <div class="row">
             <div class="col-lg-4" *ngFor="let user of subscribedUsers | paginate: { itemsPerPage: count, currentPage: page }">
                 <div class="team-member">
+                    <a routerLink="/profiles/{{user.id}}">
                     <img class="mx-auto rounded-circle" src="http://127.0.0.1:8000{{ user.profileImage }}" alt="..." />
-                    <a routerLink="/profiles/{{user.id}}"><h4>{{user.name}}</h4></a>
+                    <h4>{{user.name}}</h4></a>
                     <p class="text-muted">{{user.email}}</p>
                     <button class="btn-danger btn-sm" (click)="onUnsubscribe(user)" *ngIf="user.isSubscribed && user.id!=profile.id">Unsubscribe</button>
                     
@@ -40,3 +41,11 @@
     <pagination-controls (pageChange)="page = $event"></pagination-controls>
 </div>
 </div>
+
+
+<ng-template #infoText>
+    <div class="text-center">
+        <h2>No Subscription Yet! Subscribe your favourite users.</h2>
+    </div>
+  </ng-template>
+  

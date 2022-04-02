@@ -12,6 +12,7 @@ import { ResetPasswordComponent } from './auth/reset-password/reset-password.com
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { VerificationPendingComponent } from './verification-pending/verification-pending.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ResetPasswordComponent,
     ForgotPasswordComponent,
     SearchResultComponent,
+    VerificationPendingComponent,
   ],
   imports: [
     BrowserModule,

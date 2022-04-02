@@ -1,17 +1,11 @@
+<br />
+<br />
+
 <!-- Spinner -->
 <div *ngIf="loading" class="d-flex justify-content-center">
   <div class="spinner-border" role="status"></div>
 </div>
 <section class="page-section bg-light" id="team">
-  <!-- Search Bar -->
-  <!-- <div class="container  col-md-8" >
-  <div class="d-flex form-inputs"> 
-    <input class="form-control" type="text" [(ngModel)]="searchQuery"
-    placeholder="Search Profile" name="searchQuery" (ngModelChange)="search()">&nbsp;
-    <button class="btn btn-dark">Search</button> 
-  </div>
-</div> -->
-  <br />
   <div class="container">
     <div class="text-center">
       <h2 class="section-heading text-uppercase">All Profiles</h2>
@@ -38,7 +32,7 @@
             <h4>{{ user.name }}</h4></a
           >
           <p class="text-muted">{{ user.email }}</p>
-          <div *ngIf="authService.isLoggedIn && user.id != profile.id">
+          <div *ngIf="authService.isLoggedIn&&authService.isAuthenticated && user.id != profile.id">
             <button
               class="btn-secondary btn-sm"
               (click)="onSubscribe(user)"

@@ -25,18 +25,21 @@ export class AuthInterceptorService implements HttpInterceptor {
     url +"api/profiles",
     url +"api/profiles/",
     url +"api/forgot-password",
-    url +"api/reset-password"
+    url +"api/reset-password",
+    url + "api/verify"
   ]
    
     
   
   
   if(
-    (!req.url.includes('edit'))&&
-    (exemptURLs.some(url=>{return req.url.includes(url)}))&&
+    ((!req.url.includes('edit'))&&
+    exemptURLs.some(url=>{return req.url.includes(url)}))||
     this.authService.token==null){
+      console.log(req)
       return next.handle(req)
     }
+    console.log(modifiedRequest)
     return next.handle(modifiedRequest)
     }
 

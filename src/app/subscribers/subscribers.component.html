@@ -11,7 +11,7 @@
 
       <br><br>
 
-      <div class="container">
+      <div class="container" *ngIf="subscribers.length > 0;else infoText">
         <div class="text-center">
             <h4 class="section-heading text-uppercase">Your Subscribers</h4>
             <p class="section-subheading text-muted">Visit your Subscriber's Profiles</p>
@@ -21,8 +21,9 @@
         <div class="row">
             <div class="col-lg-4" *ngFor="let user of subscribers | paginate: { itemsPerPage: count, currentPage: page }">
                 <div class="team-member">
+                    <a routerLink="/profiles/{{user.id}}">
                     <img class="mx-auto rounded-circle" src="http://127.0.0.1:8000{{ user.profileImage }}" alt="..." />
-                    <a routerLink="/profiles/{{user.id}}"><h4>{{user.name}}</h4></a>
+                    <h4>{{user.name}}</h4></a>
                     <p class="text-muted">{{user.email}}</p>
                     <button class="btn-secondary btn-sm" (click)="onSubscribe(user)" *ngIf="!user.isSubscribed">Subscribe</button>
                     <button class="btn-danger btn-sm" (click)="onSubscribe(user)" *ngIf="user.isSubscribed">Unsubscribe</button>                    
@@ -31,13 +32,19 @@
             
         </div>
     
-<div class="text-center" *ngIf="subscribers.length == 0">
+<!-- <div class="text-center" *ngIf="subscribers.length == 0">
     <br>
     <br>
-    <h2>No Subscription Yet! Subscribe your favourite users.</h2>
-</div>
+    <h2>No One has subscribed you yet.</h2>
+</div> -->
 <!-- Pagination Control -->
 <div class="text-right" *ngIf="subscribers.length>count" >
     <pagination-controls (pageChange)="page = $event"></pagination-controls>
 </div>
 </div>
+
+<ng-template #infoText>
+    <div class="text-center">
+        <h2>No One has subscribed you yet.</h2>    </div>
+  </ng-template>
+  
