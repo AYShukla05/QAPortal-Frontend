@@ -5,6 +5,7 @@ import { SubscriptionService } from '../subscriptions/subscriptions.service';
 import { Profile } from "./profile.model";
 import { Router } from "@angular/router";
 import { AuthService } from "../auth/auth.service";
+import { backEndURL } from "../config";
 
 @Injectable( {providedIn: 'root'})
 export class ProfilesService{
@@ -14,7 +15,7 @@ export class ProfilesService{
         private subscriptionService:SubscriptionService,
         private authService:AuthService){}
 
-    url = 'http://127.0.0.1:8000/api/'
+    url = backEndURL
 
 
     getProfiles(){
@@ -61,12 +62,18 @@ export class ProfilesService{
     
     deleteProfile(id:string){
         this.http.delete(this.url+'delete-profile/'+id).subscribe(
-            ()=>{}, err => {
+            ()=>{
+                this.authService.logout()
+            }, err => {
                 this.authService.handleError(err)
 
             },
         )
         this.router.navigate(['login'])
+    }
+
+    resendVerification(id:string){
+        this.http.get(this.url+'resend-mail/'+id).subscribe()
     }
 
 

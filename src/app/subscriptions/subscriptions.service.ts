@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { backEndURL } from "../config";
 
 @Injectable({
     providedIn: 'root'
@@ -7,8 +8,7 @@ import { Injectable } from "@angular/core";
 export class SubscriptionService{
     subscribedUsers:any[] = []
     constructor(private http: HttpClient){}
-    url = 'http://127.0.0.1:8000/api/'
-
+    url = backEndURL
     getSubscribedUsers(){
         return this.http.get<any[]>(this.url+'get-subscribed')
      }

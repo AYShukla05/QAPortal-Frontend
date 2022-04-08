@@ -5,6 +5,7 @@ import { SubscriptionService } from "../subscriptions/subscriptions.service";
 import { ModalService } from "../modal/modal.service";
 import { BehaviorSubject } from "rxjs";
 import { Profile } from "../profile/profile.model";
+import { backEndURL } from "../config";
 
 
 
@@ -20,7 +21,7 @@ export class AuthService{
     readNotification = new BehaviorSubject(0)
     loggedProfile!:any
     message = ''
-    url = 'http://127.0.0.1:8000/api/'
+    url = backEndURL
     constructor(private http: HttpClient,
         private router: Router,
         private subscriptionService: SubscriptionService, 
@@ -37,7 +38,7 @@ export class AuthService{
 
     login(body:{'username':string, 'password':string}){
         this.http.post<{"access":string, "refresh":string}>(
-          'http://127.0.0.1:8000/api/token',body)
+          this.url+'token',body)
         .subscribe(
             token=>{
                 this.token = token.access;
@@ -54,7 +55,7 @@ export class AuthService{
                 }, 86400000 )
                 
                 // Get Profile Details
-                this.http.get('http://127.0.0.1:8000/api/profile')
+                this.http.get(this.url+ 'profile')
                 .subscribe(
                     {
                     next: 
@@ -83,7 +84,7 @@ export class AuthService{
 
                 // Get unread notifications Count
                 this.http.get<{'unreadNotification':number}>(
-                  'http://127.0.0.1:8000/api/get-unread-notifications-count').subscribe(
+                  this.url + 'get-unread-notifications-count').subscribe(
                   response => {
                     this.readNotification.next(response['unreadNotification'])
                   }
@@ -112,7 +113,7 @@ export class AuthService{
                 }
             )
             this.http.get<{'unreadNotification':number}>(
-              'http://127.0.0.1:8000/api/get-unread-notifications-count').subscribe(
+              backEndURL+'get-unread-notifications-count').subscribe(
               response => {
                 this.readNotification.next(response['unreadNotification'])
               }

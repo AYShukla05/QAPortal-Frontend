@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
+import { backEndURL } from '../config';
 import { Profile } from '../profile/profile.model';
 import { ProfilesService } from '../profile/profiles.service';
 
@@ -37,7 +38,7 @@ token: string = ''
           
           console.log(this.id, this.token)
 
-            this.http.get<Profile>('http://127.0.0.1:8000/api/verify/'+this.id+'/'+this.token).subscribe(
+            this.http.get<Profile>(backEndURL+'verify/'+this.id+'/'+this.token).subscribe(
               response => {
                 console.log(response)
                 this.authService.loggedProfile = response

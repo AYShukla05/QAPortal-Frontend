@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
+import { backEndURL } from '../config';
 
 @Component({
   selector: 'app-notifications',
@@ -13,7 +14,7 @@ export class NotificationsComponent implements OnInit {
   constructor(private http: HttpClient, private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.http.get<{'id':string,'messages':string, 'owner':any, 'post':{'id':string},'isRead':boolean}[]>('http://127.0.0.1:8000/api/get-notifications')
+    this.http.get<{'id':string,'messages':string, 'owner':any, 'post':{'id':string},'isRead':boolean}[]>(backEndURL+'get-notifications')
     .subscribe(
       (response) => {
         this.notifications = response;
@@ -27,7 +28,7 @@ export class NotificationsComponent implements OnInit {
 
   read(id:string){
     this.http.get<{'unreadNotification':number}>(
-      'http://127.0.0.1:8000/api/read-notifications/'+id).subscribe(
+      backEndURL+'read-notifications/'+id).subscribe(
       response => {
         
         this.authService.readNotification.next(response.unreadNotification)
@@ -36,7 +37,7 @@ export class NotificationsComponent implements OnInit {
   }
 
   readAll(){
-    this.http.get('http://127.0.0.1:8000/api/read-all-notifications').subscribe(
+    this.http.get(backEndURL+'read-all-notifications').subscribe(
       res=>{
       this.notifications = this.notifications.map(
       not=>

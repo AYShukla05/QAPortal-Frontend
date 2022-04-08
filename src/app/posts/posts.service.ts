@@ -4,12 +4,13 @@ import { HttpClient } from '@angular/common/http';
 import { Post } from "./post.model"
 import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
+import { backEndURL } from '../config';
 @Injectable({
     providedIn: 'root'
   })
 export class PostService{
 subscribedUsers: any;
-url = "http://127.0.0.1:8000/api/"
+url = backEndURL
 constructor(private http: HttpClient,
     private router: Router, 
     private authService: AuthService){}

@@ -3,6 +3,7 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/c
 import { AuthService } from "./auth.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable } from "rxjs/internal/Observable";
+import { backEndURL } from "../config";
 
 @Injectable() 
 export class AuthInterceptorService implements HttpInterceptor {
@@ -13,7 +14,7 @@ export class AuthInterceptorService implements HttpInterceptor {
     
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     
-    const url = "http://127.0.0.1:8000/"
+    const url = backEndURL
     const modifiedRequest = req.clone({
         headers: req.headers.append('Authorization',`Bearer ${this.authService.token}`)
     })

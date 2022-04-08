@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
+import { backEndURL } from '../config';
 import { Profile } from '../profile/profile.model';
 import { ProfilesService } from '../profile/profiles.service';
 import { SubscriptionService } from '../subscriptions/subscriptions.service';
@@ -20,7 +21,7 @@ export class SubscribersComponent implements OnInit {
   constructor(private profilesService:ProfilesService,private subscriptionService:SubscriptionService,  private authService: AuthService, private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.http.get<Profile[]>('http://127.0.0.1:8000/api/get-followers').subscribe((response) => {
+    this.http.get<Profile[]>(backEndURL+'get-followers').subscribe((response) => {
       this.subscribers = response
       this.subscribers
       .map(profile => 

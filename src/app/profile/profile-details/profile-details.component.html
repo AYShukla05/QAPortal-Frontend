@@ -8,7 +8,10 @@
 <!-- Profile -->
 <section class="page-section bg-light">
   <div class="container">
-    <div class="alert alert-danger" *ngIf="verified==false">Verify your email address</div>
+    <div class="alert alert-danger" *ngIf="verified==false">
+      Verify your email address
+      <button class="btn btn-sm btn-secondary" (click)="resendVerification()">Resend Verification Mail</button>
+    </div>
     <div class="text-center">
       <img
         class="mx-auto rounded-circle"

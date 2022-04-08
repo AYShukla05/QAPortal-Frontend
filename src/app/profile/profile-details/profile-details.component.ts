@@ -75,5 +75,8 @@ export class ProfileDetailsComponent implements OnInit {
     }
 
   } 
+  resendVerification(){
+    this.profilesService.resendVerification(this.ownerId)
+  }
 
 }
